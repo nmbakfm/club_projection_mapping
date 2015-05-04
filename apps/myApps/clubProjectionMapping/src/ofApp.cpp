@@ -5,6 +5,9 @@ void ofApp::setup(){
     ofSetBackgroundColor(0);
     ofSetVerticalSync(true);
     ofSetFrameRate(30);
+    
+    Settings::load("settings.xml");
+    Settings::rect_vertices;
 }
 
 //--------------------------------------------------------------

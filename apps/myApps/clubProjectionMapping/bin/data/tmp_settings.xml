@@ -1,0 +1,22 @@
+<settings>
+  <calibration>
+    <rect>
+      <leftTop>
+        <x>0</x>
+        <y>0</y>
+      </leftTop>
+      <rightTop>
+        <x>640</x>
+        <y>0</y>
+      </rightTop>
+      <rightBottom>
+        <x>640</x>
+        <y>480</y>
+      </rightBottom>
+      <leftBottom>
+        <x>0</x>
+        <y>480</y>
+      </leftBottom>
+    </rect>
+  </calibration>
+</settings>

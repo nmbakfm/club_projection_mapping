@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Settings.h"
 
 class ofApp : public ofBaseApp{
 
