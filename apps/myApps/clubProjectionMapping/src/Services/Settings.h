@@ -14,10 +14,13 @@
 
 class Settings {
     static ofxXmlSettings xml;
+    static ofPoint loadPoint(const string tagPath);
 public:
     static void load(const string file_name);
-    static ofPoint loadPoint(const string tagPath);
     static ofPoint rect_vertices[4];
+    static int mainFileNum;
+    static vector<string> mainFileNames;
+    static vector<int> mainFileOrder;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

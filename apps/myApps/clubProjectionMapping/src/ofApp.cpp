@@ -7,16 +7,19 @@ void ofApp::setup(){
     ofSetFrameRate(30);
     
     Settings::load("settings.xml");
+    mainMovieManager.setup(Settings::mainFileNames, Settings::mainFileOrder);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    mainMovieManager.update();
+//    subMovieManager.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    mainMovieManager.draw();
+//    subMovieManager.draw();
 }
 
 //--------------------------------------------------------------

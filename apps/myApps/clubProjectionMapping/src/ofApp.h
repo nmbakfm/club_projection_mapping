@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Settings.h"
+#include "MovieManager.h"
 
 class ofApp : public ofBaseApp{
 
@@ -19,5 +20,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+    MovieManager mainMovieManager;
+    MovieManager subMovieManager;
 		
 };
