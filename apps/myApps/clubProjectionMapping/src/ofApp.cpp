@@ -7,7 +7,6 @@ void ofApp::setup(){
     ofSetFrameRate(30);
     
     Settings::load("settings.xml");
-    Settings::rect_vertices;
 }
 
 //--------------------------------------------------------------
