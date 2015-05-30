@@ -27,13 +27,15 @@ class MovieManager {
     
     int currentIndex;
     
+    bool isZima;
+    
     void switchMovie();
     
     void assignFileNames(vector<string> _file_names);
     void assignFileOrder(vector<int> _file_order);
 public:
     MovieManager();
-    void setup(vector<string> _file_names, vector<int> _file_order);
+    void setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name);
     void update();
     void draw();
     void startZima();

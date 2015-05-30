@@ -12,10 +12,9 @@ MovieManager::MovieManager(){
     
 }
 
-void MovieManager::setup(vector<string> _file_names, vector<int> _file_order){
+void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name){
     assignFileNames(_file_names);
     assignFileOrder(_file_order);
-    
     currentIndex = 0;
     int nextIndex = 1 % Settings::mainFileNum;
     currentMovieId = Settings::mainFileOrder[currentIndex];
@@ -23,26 +22,53 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order){
     currentPlayer.load(file_names[currentIndex]);
     nextPlayer.loadAsync(file_names[nextMovieId]);
     currentPlayer.play();
-//    currentPlayer.setLoopState(OF_LOOP_NORMAL);
     currentPlayer.setUseTexture(true);
+    
+    zimaPlayer.load(_zima_file_name);
+    isZima = false;
+    zimaPlayer.setUseTexture(true);
 }
 
 void MovieManager::update(){
-//    cout << currentPlayer.isPlaying() << endl;
-    if(currentPlayer.getIsMovieDone()){
-        switchMovie();
+    if(isZima){
+        zimaPlayer.update();
+        if (zimaPlayer.getIsMovieDone()) {
+            isZima = false;
+            
+            currentPlayer.play();
+            currentPlayer.setFrame(0);
+            currentPlayer.update();
+        }
+    }else{
+        if(currentPlayer.getIsMovieDone()){
+            switchMovie();
+        }
+        
+        currentPlayer.update();
     }
-    
-    currentPlayer.update();
-    
 }
 
 void MovieManager::draw(){
-    currentPlayer.draw(0, 0, 640, 480);
+    if (isZima) {
+        if(zimaPlayer.isFrameNew()) zimaPlayer.draw(0, 0, 320, 240);
+    }else{
+        if (currentPlayer.isFrameNew()) currentPlayer.draw(0, 0, 320, 240);
+    }
 }
 
 void MovieManager::setMoviePosition(double position_pct){
     currentPlayer.setPosition(position_pct);
+}
+
+/**
+ *
+ */
+void MovieManager::startZima(){
+    isZima = true;
+    
+    zimaPlayer.play();
+    zimaPlayer.setFrame(0);
+    zimaPlayer.update();
 }
 
 
@@ -74,6 +100,6 @@ void MovieManager::switchMovie(){
     currentPlayer = nextPlayer;
     nextPlayer.loadAsync(file_names[nextMovieId]);
     nextPlayer.setUseTexture(true);
-    currentPlayer.setPosition(0);
+    currentPlayer.setFrame(0);
     currentPlayer.play();
 }

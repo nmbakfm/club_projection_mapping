@@ -17,10 +17,17 @@ class Settings {
     static ofPoint loadPoint(const string tagPath);
 public:
     static void load(const string file_name);
-    static ofPoint rect_vertices[4];
+    static ofPoint mainRectVertices[4];
     static int mainFileNum;
     static vector<string> mainFileNames;
     static vector<int> mainFileOrder;
+    static string mainZimaFileName;
+    
+    static ofPoint subRectVertices[4];
+    static int subFileNum;
+    static vector<string> subFileNames;
+    static vector<int> subFileOrder;
+    static string subZimaFileName;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

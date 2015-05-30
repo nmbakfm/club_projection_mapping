@@ -22,6 +22,15 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     MovieManager mainMovieManager;
+    ofFbo mainFbo;
+    ofMesh mainMesh;
+    
     MovieManager subMovieManager;
+    ofFbo subFbo;
+    ofMesh subMesh;
+    
+    ofPoint originalMeshVertex(int x, int y);
+    ofPoint mainRectMeshVertex(int x, int y);
+    ofPoint subRectMeshVertex(int x, int y);
 		
 };
