@@ -100,7 +100,7 @@ ofPoint ofApp::subRectMeshVertex(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    if(ofGetFrameNum() % 500 == 0){
+    if(60*60*30 % 500 == 0){
         mainMovieManager.startZima();
         subMovieManager.startZima();
     }

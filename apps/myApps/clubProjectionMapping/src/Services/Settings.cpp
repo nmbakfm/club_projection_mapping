@@ -27,43 +27,59 @@ string Settings::subZimaFileName;
 void Settings::load(const string file_name){
     xml.load(file_name);
     
-    string dir_name = "480pi/";
+    string rootPath = "settings";
     
-    mainRectVertices[0] = ofPoint(100,150);
-    mainRectVertices[1] = ofPoint(320,70);
-    mainRectVertices[2] = ofPoint(480,500);
-    mainRectVertices[3] = ofPoint(50,240);
+    string dir_name = xml.getValue(rootPath + ":moviePath", "");
+    
+    // main
+    string mainPath = rootPath + ":main";
+    
+    string mainCalibrationPath = mainPath + ":calibration:rect";
+    mainRectVertices[0] = loadPoint(mainCalibrationPath + ":leftTop");
+    mainRectVertices[1] = loadPoint(mainCalibrationPath + ":rightTop");
+    mainRectVertices[2] = loadPoint(mainCalibrationPath + ":rightBottom");
+    mainRectVertices[3] = loadPoint(mainCalibrationPath + ":leftBottom");
+    
+    string mainMoviesPath = mainPath + ":movies";
+    mainFileNum = xml.getAttribute(mainMoviesPath, "count", 0);
+    for (int i=0; i<mainFileNum; ++i) {
+        mainFileNames.push_back(dir_name + xml.getAttribute(mainMoviesPath + ":movie", "filename", "", i));
+    }
+    
+    string mainOrderPath = mainPath + ":order";
+    int mainOrderNum = xml.getAttribute(mainOrderPath, "count", 0);
+    for (int i=0; i<mainOrderNum; ++i) {
+        mainFileOrder.push_back(xml.getValue(mainOrderPath + "movieId", 0, i));
+    }
+    
+    string mainZimaPath = mainPath + ":zimaMovies";
+    mainZimaFileName = dir_name + xml.getAttribute(mainZimaPath + ":movie", "filename", "", 0);
     
     
-    mainFileNum = 5;
-    mainFileNames.push_back(dir_name+"6.mov");
-    mainFileNames.push_back(dir_name+"1_fixed.mov");
-    mainFileNames.push_back(dir_name+"zima_2.mov");
-    mainFileOrder.push_back(0);
-    mainFileOrder.push_back(1);
-    mainFileOrder.push_back(2);
-    mainFileOrder.push_back(1);
-    mainFileOrder.push_back(0);
     
-    mainZimaFileName = dir_name+"zima_2.mov";
+    // sub
+    string subPath = rootPath + ":sub";
     
+    string subCalibrationPath = subPath + ":calibration:rect";
+    subRectVertices[0] = loadPoint(subCalibrationPath + ":leftTop");
+    subRectVertices[1] = loadPoint(subCalibrationPath + ":rightTop");
+    subRectVertices[2] = loadPoint(subCalibrationPath + ":rightBottom");
+    subRectVertices[3] = loadPoint(subCalibrationPath + ":leftBottom");
     
-    subRectVertices[0] = ofPoint(300,150);
-    subRectVertices[1] = ofPoint(620,70);
-    subRectVertices[2] = ofPoint(680,500);
-    subRectVertices[3] = ofPoint(350,240);
+    string subMoviesPath = subPath + ":movies";
+    subFileNum = xml.getAttribute(subMoviesPath, "count", 0);
+    for (int i=0; i<subFileNum; ++i) {
+        subFileNames.push_back(dir_name + xml.getAttribute(subMoviesPath + ":movie", "filename", "", i));
+    }
     
-    subFileNum = 5;
-    subFileNames.push_back(dir_name+"1_fixed.mov");
-    subFileNames.push_back(dir_name+"6.mov");
-    subFileNames.push_back(dir_name+"zima_2.mov");
-    subFileOrder.push_back(0);
-    subFileOrder.push_back(1);
-    subFileOrder.push_back(2);
-    subFileOrder.push_back(1);
+    string subOrderPath = subPath + ":order";
+    int subOrderNum = xml.getAttribute(subOrderPath, "count", 0);
+    for (int i=0; i<subOrderNum; ++i) {
+        subFileOrder.push_back(xml.getValue(subOrderPath + "movieId", 0, i));
+    }
     
-    subZimaFileName = dir_name+"zima_2.mov";
-    
+    string subZimaPath = subPath + ":zimaMovies";
+    subZimaFileName = dir_name + xml.getAttribute(subZimaPath + ":movie", "filename", "", 0);
     
 }
 
@@ -71,5 +87,5 @@ void Settings::load(const string file_name){
  * 
  */
 ofPoint Settings::loadPoint(const string tagPath){
-    return ofPoint(xml.getValue(tagPath+":x", 0.0), xml.getValue(tagPath+":y", 0.0));
+    return ofPoint(xml.getAttribute(tagPath, "x", 0.0), xml.getAttribute(tagPath, "y", 0.0));
 }
