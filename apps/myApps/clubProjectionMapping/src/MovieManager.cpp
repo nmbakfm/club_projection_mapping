@@ -16,6 +16,11 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     assignFileNames(_file_names);
     assignFileOrder(_file_order);
     
+    if(Settings::bMainScreen){
+        sender.setup(Settings::sendHost, Settings::sendPort);
+    }else{
+        receiver.setup(Settings::receivePort);
+    }
     movieWidth = Settings::movieWidth;
     movieHeight = Settings::movieHeight;
     
@@ -34,35 +39,54 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     zimaPlayer.load(_zima_file_name);
     isZima = false;
     zimaPlayer.setUseTexture(true);
+    zimaAlpha = 0;
+    zimaPlayer.setLoopState(OF_LOOP_NORMAL);
     
     ofLog(OF_LOG_NOTICE) << "start `" << file_names[currentMovieId] << "`";
 }
 
 void MovieManager::update(){
+    if(!Settings::bMainScreen){
+        while(receiver.hasWaitingMessages()){
+            ofxOscMessage msg;
+            receiver.getNextMessage(&msg);
+           int test = msg.getNumArgs();
+            if (msg.getAddress() == "startZima") {
+                if(msg.getArgAsInt32(0) == 0){
+                    stopZima();
+                }else{
+                    startZima();
+                }
+            }
+        }
+    }
+    
     if(isZima){
+        if(zimaAlpha < 255){
+            zimaAlpha = MIN(zimaAlpha + 5, 255);
+        }
         zimaPlayer.update();
-        if (zimaPlayer.getIsMovieDone()) {
-            isZima = false;
-            
-            currentPlayer.play();
-            currentPlayer.firstFrame();
-            currentPlayer.update();
+        if(Settings::bMainScreen){
+            if (zimaPlayer.getIsMovieDone()) {
+                stopZima();
+            }
         }
     }else{
-        if(currentPlayer.getIsMovieDone()){
-            switchMovie();
+        if (zimaAlpha > 0) {
+            zimaAlpha = MAX(zimaAlpha - 5, 0);
         }
-        
-        currentPlayer.update();
     }
+    if(currentPlayer.getIsMovieDone()){
+        switchMovie();
+    }
+    currentPlayer.update();
 }
 
 void MovieManager::draw(){
-    if (isZima) {
-        if(zimaPlayer.isFrameNew()) zimaPlayer.draw(0, 0, movieWidth, movieHeight);
-    }else{
-        if (currentPlayer.isFrameNew()) currentPlayer.draw(0, 0, movieWidth, movieHeight);
-    }
+    ofSetColor(255);
+    currentPlayer.draw(0, 0, movieWidth, movieHeight);
+    ofSetColor(255, zimaAlpha);
+    zimaPlayer.draw(0, 0, movieWidth, movieHeight);
 }
 
 void MovieManager::setMoviePosition(double position_pct){
@@ -80,8 +104,26 @@ void MovieManager::startZima(){
     zimaPlayer.setFrame(0);
     zimaPlayer.update();
     
+    if(Settings::bMainScreen){
+        ofxOscMessage msg;
+        msg.setAddress("startZima");
+        msg.addIntArg(1);
+        sender.sendMessage(msg);
+    }
     
-    ofLog(OF_LOG_NOTICE) << "switch to `" << file_names[currentMovieId] << "`(ZIMA MOVIE)";
+    ofLog(OF_LOG_NOTICE) << "start `" << Settings::zimaFileName << "`(ZIMA MOVIE)";
+}
+
+void MovieManager::stopZima(){
+    isZima = false;
+    
+    if(Settings::bMainScreen){
+        ofxOscMessage msg;
+        msg.setAddress("startZima");
+        msg.addIntArg(0);
+        sender.sendMessage(msg);
+    }
+    ofLog(OF_LOG_NOTICE) << "stop `" << Settings::zimaFileName << "`(ZIMA MOVIE)";
 }
 
 
@@ -127,3 +169,4 @@ void MovieManager::switchMovie(){
     
     ofLog(OF_LOG_NOTICE) << "switch to `" << file_names[currentMovieId] << "`";
 }
+

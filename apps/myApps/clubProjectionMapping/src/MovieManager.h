@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "Settings.h"
 #include "Constant.h"
+#include "ofxOsc.h"
 
 class MovieManager {
     vector<string> file_names;
@@ -36,12 +37,19 @@ class MovieManager {
     void assignFileOrder(vector<int> _file_order);
     
     float movieWidth, movieHeight;
+    
+    ofxOscSender sender;
+    ofxOscReceiver receiver;
+    
+    int zimaAlpha;
+    
 public:
     MovieManager();
     void setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name);
     void update();
     void draw();
     void startZima();
+    void stopZima();
     void setMoviePosition(double position_pct);
 };
 

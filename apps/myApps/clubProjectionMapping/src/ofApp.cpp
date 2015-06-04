@@ -66,9 +66,13 @@ void ofApp::update(){
         bReload = false;
     }
 #endif
-    
-    if(ofGetFrameNum() % 60*60*30 == 60*60*30-1){
-        movieManager.startZima();
+    if(Settings::bMainScreen){
+        int test = ofGetFrameNum();
+        cout << 60*1*30 << endl;
+        cout << ofGetFrameNum() % (60*1*30) << endl;
+        if(ofGetFrameNum() % (60*1*30) == 60*1*30-1){
+            movieManager.startZima();
+        }
     }
     
     movieManager.update();
@@ -138,3 +142,4 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+

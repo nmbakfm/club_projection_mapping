@@ -27,9 +27,9 @@ public:
     static bool bMainScreen;
     
     static string sendHost;
-    static string sendPort;
+    static int sendPort;
     
-    static string receivePort;
+    static int receivePort;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

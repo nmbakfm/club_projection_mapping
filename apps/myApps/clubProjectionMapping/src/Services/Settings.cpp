@@ -15,14 +15,12 @@ vector<int> Settings::fileOrder;
 string Settings::zimaFileName;
 float Settings::movieWidth, Settings::movieHeight;
 bool Settings::bMainScreen;
-string Settings::sendPort;
+int Settings::sendPort;
 string Settings::sendHost;
-string Settings::receivePort;
+int Settings::receivePort;
 
 void Settings::load(const string file_name){
     xml.load(file_name);
-    
-    
     
     xml.pushTag("settings");
     
@@ -81,9 +79,12 @@ void Settings::load(const string file_name){
     movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
     movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
     
-    sendHost = xml.getValue("settings:networking:send:host", "");
-    sendPort = xml.getValue("settings:networking:send:host", "");
-    receivePort = xml.getValue("settings:networking:send:host", "");
+    if (bMainScreen) {
+        sendHost = xml.getValue("settings:networking:send:host", "");
+        sendPort = 57689;
+    }else{
+        receivePort = 57689;
+    }
 }
 
 /**
