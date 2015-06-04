@@ -25,6 +25,11 @@ public:
     
     static float movieWidth, movieHeight;
     static bool bMainScreen;
+    
+    static string sendHost;
+    static string sendPort;
+    
+    static string receivePort;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */
