@@ -11,9 +11,12 @@ void ofApp::setup(){
     ofLogToFile(LOG_FILENAME);
     Settings::load(SETTINGS_XML_FILENAME);
     
+    movieWidth = Settings::movieWidth;
+    movieHeight = Settings::movieHeight;
+    
     movieManager.setup(Settings::fileNames, Settings::fileOrder, Settings::zimaFileName);
     
-    fbo.allocate(ORIGINAL_WIDTH, ORIGINAL_HEIGHT, GL_RGB);
+    fbo.allocate(movieWidth, movieHeight, GL_RGB);
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     
     for(int i=0; i<MESH_RESOLUTION_X; ++i){
@@ -64,8 +67,7 @@ void ofApp::update(){
     }
 #endif
     
-    
-    if(ofGetHeight() % 60*1*30 == 60*1*30-1){
+    if(ofGetFrameNum() % 60*60*30 == 60*60*30-1){
         movieManager.startZima();
     }
     

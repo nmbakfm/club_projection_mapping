@@ -30,5 +30,7 @@ class ofApp : public ofBaseApp{
     
     ofPoint originalMeshVertex(int x, int y);
     ofPoint rectMeshVertex(int x, int y);
+    
+    int movieWidth, movieHeight;
 		
 };

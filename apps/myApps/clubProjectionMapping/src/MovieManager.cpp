@@ -15,7 +15,9 @@ MovieManager::MovieManager(){
 void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name){
     assignFileNames(_file_names);
     assignFileOrder(_file_order);
-    fileCount = Settings::fileNames.size();
+    
+    movieWidth = Settings::movieWidth;
+    movieHeight = Settings::movieHeight;
     
     currentIndex = 0;
     int nextIndex = 1 % Settings::fileNames.size();
@@ -24,7 +26,7 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     nextMovieId = Settings::fileOrder[nextIndex];
     
     currentPlayer.load(file_names[currentIndex]);
-    nextPlayer.loadAsync(file_names[nextMovieId]);
+    nextPlayer.load(file_names[nextMovieId]);
     
     currentPlayer.play();
     currentPlayer.setUseTexture(true);
@@ -32,6 +34,8 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     zimaPlayer.load(_zima_file_name);
     isZima = false;
     zimaPlayer.setUseTexture(true);
+    
+    ofLog(OF_LOG_NOTICE) << "start `" << file_names[currentMovieId] << "`";
 }
 
 void MovieManager::update(){
@@ -41,7 +45,7 @@ void MovieManager::update(){
             isZima = false;
             
             currentPlayer.play();
-            currentPlayer.setFrame(0);
+            currentPlayer.firstFrame();
             currentPlayer.update();
         }
     }else{
@@ -55,9 +59,9 @@ void MovieManager::update(){
 
 void MovieManager::draw(){
     if (isZima) {
-        if(zimaPlayer.isFrameNew()) zimaPlayer.draw(0, 0, 320, 240);
+        if(zimaPlayer.isFrameNew()) zimaPlayer.draw(0, 0, movieWidth, movieHeight);
     }else{
-        if (currentPlayer.isFrameNew()) currentPlayer.draw(0, 0, 320, 240);
+        if (currentPlayer.isFrameNew()) currentPlayer.draw(0, 0, movieWidth, movieHeight);
     }
 }
 
@@ -87,6 +91,7 @@ void MovieManager::startZima(){
  */
 void MovieManager::assignFileNames(vector<string> _file_names){
     file_names = _file_names;
+    fileCount = _file_names.size();
 }
 
 /**
@@ -94,6 +99,7 @@ void MovieManager::assignFileNames(vector<string> _file_names){
  */
 void MovieManager::assignFileOrder(vector<int> _file_order){
     file_order = _file_order;
+    orderCount = _file_order.size();
 }
 
 
@@ -101,15 +107,22 @@ void MovieManager::assignFileOrder(vector<int> _file_order){
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
-    currentIndex = (currentIndex + 1 < fileCount) ? currentIndex + 1 : 0;
-    int nextIndex = (currentIndex + 1) % fileCount;
+    
+    // 現在の動画の次の順番へ
+    currentIndex = (currentIndex + 1) % orderCount;
+    int nextIndex = (currentIndex + 1) % orderCount;
+    
+    // 現在と次の動画のIDを取得
     currentMovieId = Settings::fileOrder[currentIndex];
     nextMovieId = Settings::fileOrder[nextIndex];
     
+    // 動画の切り替え
     currentPlayer = nextPlayer;
-    nextPlayer.loadAsync(file_names[nextMovieId]);
+    nextPlayer.load(file_names[nextMovieId]);
     nextPlayer.setUseTexture(true);
-    currentPlayer.setFrame(0);
+    
+    // 動画を作成
+    currentPlayer.firstFrame();
     currentPlayer.play();
     
     ofLog(OF_LOG_NOTICE) << "switch to `" << file_names[currentMovieId] << "`";

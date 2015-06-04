@@ -13,16 +13,20 @@ ofPoint Settings::rectVertices[4];
 vector<string> Settings::fileNames;
 vector<int> Settings::fileOrder;
 string Settings::zimaFileName;
+float Settings::movieWidth, Settings::movieHeight;
+bool Settings::bMainScreen;
 
 
 void Settings::load(const string file_name){
     xml.load(file_name);
     
-    string rootPath = "settings";
+    
+    
     xml.pushTag("settings");
     
-    string dir_name = xml.getValue("moviePath", "");
+    bMainScreen = (xml.getValue("mainScreenFlag", 1) != 0);
     
+    string dir_name = xml.getValue("moviePath", "");
     
     // calibration
     xml.pushTag("calibration");
@@ -68,9 +72,13 @@ void Settings::load(const string file_name){
     zimaFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
     ofLog(OF_LOG_NOTICE) << zimaFileName;
     xml.popTag();// zimaMovies
-
     xml.popTag(); // orderPath
     xml.popTag();//settings
+    
+    
+    movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
+    movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
+    
 }
 
 /**

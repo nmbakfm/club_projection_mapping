@@ -22,6 +22,9 @@ public:
     static vector<string> fileNames;
     static vector<int> fileOrder;
     static string zimaFileName;
+    
+    static float movieWidth, movieHeight;
+    static bool bMainScreen;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */
