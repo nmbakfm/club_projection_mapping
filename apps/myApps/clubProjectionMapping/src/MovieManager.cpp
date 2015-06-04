@@ -15,12 +15,17 @@ MovieManager::MovieManager(){
 void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name){
     assignFileNames(_file_names);
     assignFileOrder(_file_order);
+    fileCount = Settings::fileNames.size();
+    
     currentIndex = 0;
-    int nextIndex = 1 % Settings::fileNum;
+    int nextIndex = 1 % Settings::fileNames.size();
+    
     currentMovieId = Settings::fileOrder[currentIndex];
     nextMovieId = Settings::fileOrder[nextIndex];
+    
     currentPlayer.load(file_names[currentIndex]);
     nextPlayer.loadAsync(file_names[nextMovieId]);
+    
     currentPlayer.play();
     currentPlayer.setUseTexture(true);
     
@@ -64,11 +69,15 @@ void MovieManager::setMoviePosition(double position_pct){
  *
  */
 void MovieManager::startZima(){
+    if(isZima) return;
     isZima = true;
     
     zimaPlayer.play();
     zimaPlayer.setFrame(0);
     zimaPlayer.update();
+    
+    
+    ofLog(OF_LOG_NOTICE) << "switch to `" << file_names[currentMovieId] << "`(ZIMA MOVIE)";
 }
 
 
@@ -92,8 +101,8 @@ void MovieManager::assignFileOrder(vector<int> _file_order){
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
-    currentIndex = (currentIndex + 1 < Settings::fileNum) ? currentIndex + 1 : 0;
-    int nextIndex = (currentIndex + 1) % Settings::fileNum;
+    currentIndex = (currentIndex + 1 < fileCount) ? currentIndex + 1 : 0;
+    int nextIndex = (currentIndex + 1) % fileCount;
     currentMovieId = Settings::fileOrder[currentIndex];
     nextMovieId = Settings::fileOrder[nextIndex];
     
@@ -102,4 +111,6 @@ void MovieManager::switchMovie(){
     nextPlayer.setUseTexture(true);
     currentPlayer.setFrame(0);
     currentPlayer.play();
+    
+    ofLog(OF_LOG_NOTICE) << "switch to `" << file_names[currentMovieId] << "`";
 }

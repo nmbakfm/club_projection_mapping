@@ -19,7 +19,6 @@ class Settings {
 public:
     static void load(const string file_name);
     static ofPoint rectVertices[4];
-    static int fileNum;
     static vector<string> fileNames;
     static vector<int> fileOrder;
     static string zimaFileName;

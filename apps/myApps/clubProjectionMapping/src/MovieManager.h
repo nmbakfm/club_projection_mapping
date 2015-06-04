@@ -21,6 +21,8 @@ class MovieManager {
     ofVideoPlayer nextPlayer; // 次に流す映像
     ofVideoPlayer zimaPlayer; // zimaの映像
     
+    int fileCount;
+    
     int currentMovieId;
     int nextMovieId;
     

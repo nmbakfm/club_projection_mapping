@@ -60,11 +60,12 @@ void ofApp::update(){
 #if CALIBRATION
     if(bReload){
         Settings::load(SETTINGS_XML_FILENAME);
+        bReload = false;
     }
 #endif
     
     
-    if(ofGetHeight() % 60*60*30 == 0){
+    if(ofGetHeight() % 60*1*30 == 60*1*30-1){
         movieManager.startZima();
     }
     
@@ -95,7 +96,9 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 #if CALIBRATION
-    if(key == ' ')
+    if(key == ' '){
+        bReload = true;
+    }
 #endif
 }
 
