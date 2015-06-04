@@ -10,6 +10,7 @@
 #define __clubProjectionMapping__Settings__
 
 #include "ofMain.h"
+#include "Constant.h"
 #include "ofxXmlSettings.h"
 
 class Settings {
@@ -17,17 +18,20 @@ class Settings {
     static ofPoint loadPoint(const string tagPath);
 public:
     static void load(const string file_name);
-    static ofPoint mainRectVertices[4];
-    static int mainFileNum;
-    static vector<string> mainFileNames;
-    static vector<int> mainFileOrder;
-    static string mainZimaFileName;
+    static ofPoint rectVertices[4];
+    static vector<string> fileNames;
+    static vector<int> fileOrder;
+    static string zimaFileName;
     
-    static ofPoint subRectVertices[4];
-    static int subFileNum;
-    static vector<string> subFileNames;
-    static vector<int> subFileOrder;
-    static string subZimaFileName;
+    static float movieWidth, movieHeight;
+    static bool bMainScreen;
+    
+    static string sendHost;
+    static int sendPort;
+    
+    static int receivePort;
+    
+    static int zimaInterval;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

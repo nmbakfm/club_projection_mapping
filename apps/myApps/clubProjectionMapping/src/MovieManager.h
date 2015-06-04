@@ -9,10 +9,10 @@
 #ifndef __clubProjectionMapping__MovieManager__
 #define __clubProjectionMapping__MovieManager__
 
-#define debugMode TRUE
-
 #include "ofMain.h"
 #include "Settings.h"
+#include "Constant.h"
+#include "ofxOsc.h"
 
 class MovieManager {
     vector<string> file_names;
@@ -21,6 +21,8 @@ class MovieManager {
     ofVideoPlayer currentPlayer; // 今の映像
     ofVideoPlayer nextPlayer; // 次に流す映像
     ofVideoPlayer zimaPlayer; // zimaの映像
+    
+    int fileCount, orderCount;
     
     int currentMovieId;
     int nextMovieId;
@@ -33,12 +35,21 @@ class MovieManager {
     
     void assignFileNames(vector<string> _file_names);
     void assignFileOrder(vector<int> _file_order);
+    
+    float movieWidth, movieHeight;
+    
+    ofxOscSender sender;
+    ofxOscReceiver receiver;
+    
+    int zimaAlpha;
+    
 public:
     MovieManager();
     void setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name);
     void update();
     void draw();
     void startZima();
+    void stopZima();
     void setMoviePosition(double position_pct);
 };
 

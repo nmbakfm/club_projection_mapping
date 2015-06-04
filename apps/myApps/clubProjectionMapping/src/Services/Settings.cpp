@@ -9,67 +9,89 @@
 #include "Settings.h"
 
 ofxXmlSettings Settings::xml;
-ofPoint Settings::mainRectVertices[4];
-vector<string> Settings::mainFileNames;
-int Settings::mainFileNum;
-vector<int> Settings::mainFileOrder;
-string Settings::mainZimaFileName;
+ofPoint Settings::rectVertices[4];
+vector<string> Settings::fileNames;
+vector<int> Settings::fileOrder;
+string Settings::zimaFileName;
+float Settings::movieWidth, Settings::movieHeight;
+bool Settings::bMainScreen;
+int Settings::sendPort;
+string Settings::sendHost;
+int Settings::receivePort;
+int Settings::zimaInterval;
 
-ofPoint Settings::subRectVertices[4];
-vector<string> Settings::subFileNames;
-int Settings::subFileNum;
-vector<int> Settings::subFileOrder;
-string Settings::subZimaFileName;
-
-/**
- * @todo xmlからデータをロードする
- */
 void Settings::load(const string file_name){
     xml.load(file_name);
     
-    string dir_name = "480pi/";
+    xml.pushTag("settings");
     
-    mainRectVertices[0] = ofPoint(100,150);
-    mainRectVertices[1] = ofPoint(320,70);
-    mainRectVertices[2] = ofPoint(480,500);
-    mainRectVertices[3] = ofPoint(50,240);
+    bMainScreen = (xml.getValue("mainScreenFlag", 1) != 0);
+    
+    string dir_name = xml.getValue("moviePath", "");
+    
+    // calibration
+    xml.pushTag("calibration");
+    
+    xml.pushTag("rect");
+    rectVertices[0] = loadPoint("leftTop");
+    rectVertices[1] = loadPoint("rightTop");
+    rectVertices[2] = loadPoint("rightBottom");
+    rectVertices[3] = loadPoint("leftBottom");
+    xml.popTag();
+    
+    xml.popTag(); //calibration
+    
+    xml.pushTag("movies");
+    int fileNum = xml.getNumTags("movie");
+    
+    if (fileNum == 0) {
+        ofLog(OF_LOG_WARNING) << "動画ファイルが1つも読み込まれていません。`data/settings.xml`内を確認して下さい" << endl;
+    }
+    
+    for (int i=0; i<fileNum; ++i) {
+        fileNames.push_back(dir_name + xml.getAttribute("movie","filename","",i));
+    }
+    xml.popTag(); // movies
+    
+    xml.pushTag("order");
+    
+    int orderNum = xml.getNumTags("movieId");
+    if (orderNum == 0) {
+        ofLog(OF_LOG_WARNING) << "動画ファイルの順番が確認できません。`data/settings.xml`内を確認して下さい" << endl;
+    }
+    
+    ofLog(OF_LOG_NOTICE) << "MOVIE ORDERS =================================";
+    for (int i=0; i<orderNum; ++i) {
+        int movie_id = xml.getValue("movieId",0,i);
+        fileOrder.push_back(movie_id);
+        ofLog(OF_LOG_NOTICE) << i << ":\t" << movie_id << ":\t" << fileNames[movie_id];
+    }
+    xml.popTag();// order
+    
+    ofLog(OF_LOG_NOTICE) << "LOAD ZIMA =================================";
+    xml.pushTag("zimaMovies");
+    zimaFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    ofLog(OF_LOG_NOTICE) << zimaFileName;
+    xml.popTag();// zimaMovies
+    xml.popTag(); // orderPath
+    xml.popTag();//settings
     
     
-    mainFileNum = 5;
-    mainFileNames.push_back(dir_name+"6.mov");
-    mainFileNames.push_back(dir_name+"1_fixed.mov");
-    mainFileNames.push_back(dir_name+"zima_2.mov");
-    mainFileOrder.push_back(0);
-    mainFileOrder.push_back(1);
-    mainFileOrder.push_back(2);
-    mainFileOrder.push_back(1);
-    mainFileOrder.push_back(0);
+    movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
+    movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
     
-    mainZimaFileName = dir_name+"zima_2.mov";
-    
-    
-    subRectVertices[0] = ofPoint(300,150);
-    subRectVertices[1] = ofPoint(620,70);
-    subRectVertices[2] = ofPoint(680,500);
-    subRectVertices[3] = ofPoint(350,240);
-    
-    subFileNum = 5;
-    subFileNames.push_back(dir_name+"1_fixed.mov");
-    subFileNames.push_back(dir_name+"6.mov");
-    subFileNames.push_back(dir_name+"zima_2.mov");
-    subFileOrder.push_back(0);
-    subFileOrder.push_back(1);
-    subFileOrder.push_back(2);
-    subFileOrder.push_back(1);
-    
-    subZimaFileName = dir_name+"zima_2.mov";
-    
-    
+    if (bMainScreen) {
+        zimaInterval = xml.getValue("settings:zimaInterval", 0);
+        sendHost = xml.getValue("settings:networking:send:host", "");
+        sendPort = 57689;
+    }else{
+        receivePort = 57689;
+    }
 }
 
 /**
  * 
  */
 ofPoint Settings::loadPoint(const string tagPath){
-    return ofPoint(xml.getValue(tagPath+":x", 0.0), xml.getValue(tagPath+":y", 0.0));
+    return ofPoint(xml.getAttribute(tagPath, "x", 0.0), xml.getAttribute(tagPath, "y", 0.0));
 }
