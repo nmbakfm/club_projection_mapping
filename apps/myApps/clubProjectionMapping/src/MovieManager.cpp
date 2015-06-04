@@ -16,9 +16,9 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     assignFileNames(_file_names);
     assignFileOrder(_file_order);
     currentIndex = 0;
-    int nextIndex = 1 % Settings::mainFileNum;
-    currentMovieId = Settings::mainFileOrder[currentIndex];
-    nextMovieId = Settings::mainFileOrder[nextIndex];
+    int nextIndex = 1 % Settings::fileNum;
+    currentMovieId = Settings::fileOrder[currentIndex];
+    nextMovieId = Settings::fileOrder[nextIndex];
     currentPlayer.load(file_names[currentIndex]);
     nextPlayer.loadAsync(file_names[nextMovieId]);
     currentPlayer.play();
@@ -92,10 +92,10 @@ void MovieManager::assignFileOrder(vector<int> _file_order){
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
-    currentIndex = (currentIndex + 1 < Settings::mainFileNum) ? currentIndex + 1 : 0;
-    int nextIndex = (currentIndex + 1) % Settings::mainFileNum;
-    currentMovieId = Settings::mainFileOrder[currentIndex];
-    nextMovieId = Settings::mainFileOrder[nextIndex];
+    currentIndex = (currentIndex + 1 < Settings::fileNum) ? currentIndex + 1 : 0;
+    int nextIndex = (currentIndex + 1) % Settings::fileNum;
+    currentMovieId = Settings::fileOrder[currentIndex];
+    nextMovieId = Settings::fileOrder[nextIndex];
     
     currentPlayer = nextPlayer;
     nextPlayer.loadAsync(file_names[nextMovieId]);

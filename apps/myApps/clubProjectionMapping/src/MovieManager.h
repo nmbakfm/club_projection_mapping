@@ -9,10 +9,9 @@
 #ifndef __clubProjectionMapping__MovieManager__
 #define __clubProjectionMapping__MovieManager__
 
-#define debugMode TRUE
-
 #include "ofMain.h"
 #include "Settings.h"
+#include "Constant.h"
 
 class MovieManager {
     vector<string> file_names;

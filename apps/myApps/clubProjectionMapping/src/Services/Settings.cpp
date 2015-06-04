@@ -9,21 +9,13 @@
 #include "Settings.h"
 
 ofxXmlSettings Settings::xml;
-ofPoint Settings::mainRectVertices[4];
-vector<string> Settings::mainFileNames;
-int Settings::mainFileNum;
-vector<int> Settings::mainFileOrder;
-string Settings::mainZimaFileName;
+ofPoint Settings::rectVertices[4];
+vector<string> Settings::fileNames;
+int Settings::fileNum;
+vector<int> Settings::fileOrder;
+string Settings::zimaFileName;
 
-ofPoint Settings::subRectVertices[4];
-vector<string> Settings::subFileNames;
-int Settings::subFileNum;
-vector<int> Settings::subFileOrder;
-string Settings::subZimaFileName;
 
-/**
- * @todo xmlからデータをロードする
- */
 void Settings::load(const string file_name){
     xml.load(file_name);
     
@@ -31,55 +23,30 @@ void Settings::load(const string file_name){
     
     string dir_name = xml.getValue(rootPath + ":moviePath", "");
     
-    // main
-    string mainPath = rootPath + ":main";
+    string calibrationPath = rootPath + ":calibration:rect";
+    rectVertices[0] = loadPoint(calibrationPath + ":leftTop");
+    rectVertices[1] = loadPoint(calibrationPath + ":rightTop");
+    rectVertices[2] = loadPoint(calibrationPath + ":rightBottom");
+    rectVertices[3] = loadPoint(calibrationPath + ":leftBottom");
     
-    string mainCalibrationPath = mainPath + ":calibration:rect";
-    mainRectVertices[0] = loadPoint(mainCalibrationPath + ":leftTop");
-    mainRectVertices[1] = loadPoint(mainCalibrationPath + ":rightTop");
-    mainRectVertices[2] = loadPoint(mainCalibrationPath + ":rightBottom");
-    mainRectVertices[3] = loadPoint(mainCalibrationPath + ":leftBottom");
-    
-    string mainMoviesPath = mainPath + ":movies";
-    mainFileNum = xml.getAttribute(mainMoviesPath, "count", 0);
-    for (int i=0; i<mainFileNum; ++i) {
-        mainFileNames.push_back(dir_name + xml.getAttribute(mainMoviesPath + ":movie", "filename", "", i));
+    string moviesPath = rootPath + ":movies";
+    fileNum = xml.getAttribute(moviesPath, "count", 1);
+    if (fileNum) {
+        ofLog(OF_LOG_WARNING) << "動画ファイルが1つも読み込まれていません。`data/settings.xml`内を確認して下さい" << endl;
     }
     
-    string mainOrderPath = mainPath + ":order";
-    int mainOrderNum = xml.getAttribute(mainOrderPath, "count", 0);
-    for (int i=0; i<mainOrderNum; ++i) {
-        mainFileOrder.push_back(xml.getValue(mainOrderPath + "movieId", 0, i));
+    for (int i=0; i<fileNum; ++i) {
+        fileNames.push_back(dir_name + xml.getAttribute(moviesPath + ":movie", "filename", "", i));
     }
     
-    string mainZimaPath = mainPath + ":zimaMovies";
-    mainZimaFileName = dir_name + xml.getAttribute(mainZimaPath + ":movie", "filename", "", 0);
-    
-    
-    
-    // sub
-    string subPath = rootPath + ":sub";
-    
-    string subCalibrationPath = subPath + ":calibration:rect";
-    subRectVertices[0] = loadPoint(subCalibrationPath + ":leftTop");
-    subRectVertices[1] = loadPoint(subCalibrationPath + ":rightTop");
-    subRectVertices[2] = loadPoint(subCalibrationPath + ":rightBottom");
-    subRectVertices[3] = loadPoint(subCalibrationPath + ":leftBottom");
-    
-    string subMoviesPath = subPath + ":movies";
-    subFileNum = xml.getAttribute(subMoviesPath, "count", 0);
-    for (int i=0; i<subFileNum; ++i) {
-        subFileNames.push_back(dir_name + xml.getAttribute(subMoviesPath + ":movie", "filename", "", i));
+    string orderPath = rootPath + ":order";
+    int orderNum = xml.getAttribute(orderPath, "count", 0);
+    for (int i=0; i<orderNum; ++i) {
+        fileOrder.push_back(xml.getValue(orderPath + "movieId", 0, i));
     }
     
-    string subOrderPath = subPath + ":order";
-    int subOrderNum = xml.getAttribute(subOrderPath, "count", 0);
-    for (int i=0; i<subOrderNum; ++i) {
-        subFileOrder.push_back(xml.getValue(subOrderPath + "movieId", 0, i));
-    }
-    
-    string subZimaPath = subPath + ":zimaMovies";
-    subZimaFileName = dir_name + xml.getAttribute(subZimaPath + ":movie", "filename", "", 0);
+    string mainZimaPath = rootPath + ":zimaMovies";
+    zimaFileName = dir_name + xml.getAttribute(mainZimaPath + ":movie", "filename", "", 0);
     
 }
 

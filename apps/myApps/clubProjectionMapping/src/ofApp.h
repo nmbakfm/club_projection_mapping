@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Constant.h"
 #include "Settings.h"
 #include "MovieManager.h"
 
@@ -21,16 +22,13 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    MovieManager mainMovieManager;
-    ofFbo mainFbo;
-    ofMesh mainMesh;
+    bool bReload;
     
-    MovieManager subMovieManager;
-    ofFbo subFbo;
-    ofMesh subMesh;
+    MovieManager movieManager;
+    ofFbo fbo;
+    ofMesh mesh;
     
     ofPoint originalMeshVertex(int x, int y);
-    ofPoint mainRectMeshVertex(int x, int y);
-    ofPoint subRectMeshVertex(int x, int y);
+    ofPoint rectMeshVertex(int x, int y);
 		
 };
