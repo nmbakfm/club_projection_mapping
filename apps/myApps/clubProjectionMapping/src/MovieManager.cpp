@@ -42,6 +42,9 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     zimaAlpha = 0;
     zimaPlayer.setLoopState(OF_LOOP_NORMAL);
     
+    if(!Settings::bMainScreen){
+        zimaPlayer.setLoopState(OF_LOOP_NORMAL);
+    }
     ofLog(OF_LOG_NOTICE) << "start `" << file_names[currentMovieId] << "`";
 }
 

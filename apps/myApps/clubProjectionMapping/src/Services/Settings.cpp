@@ -18,6 +18,7 @@ bool Settings::bMainScreen;
 int Settings::sendPort;
 string Settings::sendHost;
 int Settings::receivePort;
+int Settings::zimaInterval;
 
 void Settings::load(const string file_name){
     xml.load(file_name);
@@ -80,6 +81,7 @@ void Settings::load(const string file_name){
     movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
     
     if (bMainScreen) {
+        zimaInterval = xml.getValue("settings:zimaInterval", 0);
         sendHost = xml.getValue("settings:networking:send:host", "");
         sendPort = 57689;
     }else{

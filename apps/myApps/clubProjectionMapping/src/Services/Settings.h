@@ -30,6 +30,8 @@ public:
     static int sendPort;
     
     static int receivePort;
+    
+    static int zimaInterval;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

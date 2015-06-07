@@ -6,9 +6,10 @@ void ofApp::setup(){
     ofSetBackgroundColor(0);
     ofSetVerticalSync(false);
     ofSetFrameRate(30);
-    
+    ofHideCursor();
     
     ofLogToFile(LOG_FILENAME);
+    
     Settings::load(SETTINGS_XML_FILENAME);
     
     movieWidth = Settings::movieWidth;
@@ -41,6 +42,8 @@ void ofApp::setup(){
     }
     
     fbo.setUseTexture(true);
+    
+    zimaInterval = Settings::zimaInterval;
 }
 
 ofPoint ofApp::originalMeshVertex(int x, int y){
@@ -68,9 +71,7 @@ void ofApp::update(){
 #endif
     if(Settings::bMainScreen){
         int test = ofGetFrameNum();
-        cout << 60*1*30 << endl;
-        cout << ofGetFrameNum() % (60*1*30) << endl;
-        if(ofGetFrameNum() % (60*1*30) == 60*1*30-1){
+        if(ofGetFrameNum() % zimaInterval == zimaInterval-1){
             movieManager.startZima();
         }
     }

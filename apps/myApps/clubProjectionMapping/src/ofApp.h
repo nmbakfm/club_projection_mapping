@@ -32,5 +32,7 @@ class ofApp : public ofBaseApp{
     ofPoint rectMeshVertex(int x, int y);
     
     int movieWidth, movieHeight;
+    
+    int zimaInterval;
 		
 };
