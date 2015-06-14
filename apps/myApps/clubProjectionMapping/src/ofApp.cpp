@@ -15,7 +15,7 @@ void ofApp::setup(){
     movieWidth = Settings::movieWidth;
     movieHeight = Settings::movieHeight;
     
-    movieManager.setup(Settings::fileNames, Settings::fileOrder, Settings::zimaFileName);
+    movieManager.setup(Settings::fileNames, Settings::zimaFileName);
     
     fbo.allocate(movieWidth, movieHeight, GL_RGB);
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);

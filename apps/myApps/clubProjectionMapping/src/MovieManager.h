@@ -16,13 +16,12 @@
 
 class MovieManager {
     vector<string> file_names;
-    vector<int> file_order;
     
     ofVideoPlayer currentPlayer; // 今の映像
     ofVideoPlayer nextPlayer; // 次に流す映像
     ofVideoPlayer zimaPlayer; // zimaの映像
     
-    int fileCount, orderCount;
+    int fileCount;
     
     int currentMovieId;
     int nextMovieId;
@@ -32,9 +31,9 @@ class MovieManager {
     bool isZima;
     
     void switchMovie();
+    int nextIndex();
     
     void assignFileNames(vector<string> _file_names);
-    void assignFileOrder(vector<int> _file_order);
     
     float movieWidth, movieHeight;
     
@@ -45,7 +44,7 @@ class MovieManager {
     
 public:
     MovieManager();
-    void setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name);
+    void setup(vector<string> _file_names, string _zima_file_name);
     void update();
     void draw();
     void startZima();

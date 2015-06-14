@@ -20,7 +20,6 @@ public:
     static void load(const string file_name);
     static ofPoint rectVertices[4];
     static vector<string> fileNames;
-    static vector<int> fileOrder;
     static string zimaFileName;
     
     static float movieWidth, movieHeight;

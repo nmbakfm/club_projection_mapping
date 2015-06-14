@@ -12,9 +12,8 @@ MovieManager::MovieManager(){
     
 }
 
-void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, string _zima_file_name){
+void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     assignFileNames(_file_names);
-    assignFileOrder(_file_order);
     
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
@@ -26,9 +25,6 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _file_order, st
     
     currentIndex = 0;
     int nextIndex = 1 % Settings::fileNames.size();
-    
-    currentMovieId = Settings::fileOrder[currentIndex];
-    nextMovieId = Settings::fileOrder[nextIndex];
     
     currentPlayer.load(file_names[currentIndex]);
     nextPlayer.load(file_names[nextMovieId]);
@@ -140,36 +136,26 @@ void MovieManager::assignFileNames(vector<string> _file_names){
 }
 
 /**
- * @param _file_order ファイルを読み込む順番をIDの配列としたもの
- */
-void MovieManager::assignFileOrder(vector<int> _file_order){
-    file_order = _file_order;
-    orderCount = _file_order.size();
-}
-
-
-/**
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
-    
     // 現在の動画の次の順番へ
-    currentIndex = (currentIndex + 1) % orderCount;
-    int nextIndex = (currentIndex + 1) % orderCount;
-    
-    // 現在と次の動画のIDを取得
-    currentMovieId = Settings::fileOrder[currentIndex];
-    nextMovieId = Settings::fileOrder[nextIndex];
-    
+    currentIndex = nextIndex();
+    if(currentIndex == 0){
+        ofLog(OF_LOG_NOTICE) << "RETURN TO FIRST MOVIE...";
+    }
     // 動画の切り替え
     currentPlayer = nextPlayer;
-    nextPlayer.load(file_names[nextMovieId]);
+    nextPlayer.load(file_names[nextIndex()]);
     nextPlayer.setUseTexture(true);
     
     // 動画を作成
     currentPlayer.firstFrame();
     currentPlayer.play();
     
-    ofLog(OF_LOG_NOTICE) << "switch to `" << file_names[currentMovieId] << "`";
+    ofLog(OF_LOG_NOTICE) << "switch to `" << Settings::fileNames[currentIndex] << "`";
 }
 
+int MovieManager::nextIndex(){
+    return (currentIndex + 1) % fileCount;
+}
