@@ -45,6 +45,7 @@ void Settings::load(const string file_name){
     
     if (fileNum == 0) {
         ofLog(OF_LOG_WARNING) << "動画ファイルが1つも読み込まれていません。`data/settings.xml`内を確認して下さい" << endl;
+        throw "NoFileException";
     }
     
     ofLog(OF_LOG_NOTICE) << "MOVIE ORDERS =================================";
@@ -74,7 +75,17 @@ void Settings::load(const string file_name){
     
     
     movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
+    if(movieWidth <= 0){
+        ofLog(OF_LOG_WARNING) << "動画の幅指定が不正です。0より大きい値を指定してください";
+        throw "MovieSizeInvalidException";
+    }
+    
     movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
+    if(movieHeight <= 0){
+        ofLog(OF_LOG_WARNING) << "動画の高さ指定が不正です。0より大きい値を指定してください";
+        throw "MovieSizeInvalidException";
+    }
+    
     
     if (bMainScreen) {
         zimaInterval = xml.getValue("settings:zimaInterval", 0);

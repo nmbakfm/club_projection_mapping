@@ -17,49 +17,51 @@ void ofApp::setup(){
     
     movieManager.setup(Settings::fileNames, Settings::zimaFileName);
     
-    fbo.allocate(movieWidth, movieHeight, GL_RGB);
-    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    shader.load("glsl/deformation.vert","glsl/deformation.frag");
     
-    for(int i=0; i<MESH_RESOLUTION_X; ++i){
-        for (int j=0; j<MESH_RESOLUTION_Y; ++j) {
-            float ratio_x = i/MESH_RESOLUTION_X;
-            float ratio_y = j/MESH_RESOLUTION_Y;
-            float ratio_x_next = (i+1)/MESH_RESOLUTION_X;
-            float ratio_y_next = (j+1)/MESH_RESOLUTION_Y;
-            
-            mesh.addTexCoord(originalMeshVertex(i,j));
-            mesh.addVertex(rectMeshVertex(i,j));
-            
-            mesh.addTexCoord(originalMeshVertex(i+1,j));
-            mesh.addVertex(rectMeshVertex(i+1,j));
-            
-            mesh.addTexCoord(originalMeshVertex(i,j+1));
-            mesh.addVertex(rectMeshVertex(i,j+1));
-            
-            mesh.addTexCoord(originalMeshVertex(i+1,j+1));
-            mesh.addVertex(rectMeshVertex(i+1,j+1));
-        }
-    }
-    
-    fbo.setUseTexture(true);
+//    fbo.allocate(movieWidth, movieHeight, GL_RGB);
+//    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+//    
+//    for(int i=0; i<MESH_RESOLUTION_X; ++i){
+//        for (int j=0; j<MESH_RESOLUTION_Y; ++j) {
+//            float ratio_x = i/MESH_RESOLUTION_X;
+//            float ratio_y = j/MESH_RESOLUTION_Y;
+//            float ratio_x_next = (i+1)/MESH_RESOLUTION_X;
+//            float ratio_y_next = (j+1)/MESH_RESOLUTION_Y;
+//            
+//            mesh.addTexCoord(originalMeshVertex(i,j));
+//            mesh.addVertex(rectMeshVertex(i,j));
+//            
+//            mesh.addTexCoord(originalMeshVertex(i+1,j));
+//            mesh.addVertex(rectMeshVertex(i+1,j));
+//            
+//            mesh.addTexCoord(originalMeshVertex(i,j+1));
+//            mesh.addVertex(rectMeshVertex(i,j+1));
+//            
+//            mesh.addTexCoord(originalMeshVertex(i+1,j+1));
+//            mesh.addVertex(rectMeshVertex(i+1,j+1));
+//        }
+//    }
+//    
+//    fbo.setUseTexture(true);
     
     zimaInterval = Settings::zimaInterval;
 }
 
-ofPoint ofApp::originalMeshVertex(int x, int y){
-    return ofPoint(x/MESH_RESOLUTION_X*ORIGINAL_WIDTH, y/MESH_RESOLUTION_Y*ORIGINAL_HEIGHT);
-}
-
-ofPoint ofApp::rectMeshVertex(int x, int y){
-    float ratio_x = x/MESH_RESOLUTION_X;
-    float ratio_y = y/MESH_RESOLUTION_Y;
-    
-    ofPoint b = Settings::rectVertices[1] - Settings::rectVertices[0];
-    ofPoint c = Settings::rectVertices[2] - Settings::rectVertices[0];
-    ofPoint d = Settings::rectVertices[3] - Settings::rectVertices[0];
-    
-    return Settings::rectVertices[0] + ratio_x*(1-ratio_y)*b + ratio_x*ratio_y*c + (1-ratio_x)*ratio_y*d;
-}
+//ofPoint ofApp::originalMeshVertex(int x, int y){
+//    return ofPoint(x/MESH_RESOLUTION_X*ORIGINAL_WIDTH, y/MESH_RESOLUTION_Y*ORIGINAL_HEIGHT);
+//}
+//
+//ofPoint ofApp::rectMeshVertex(int x, int y){
+//    float ratio_x = x/MESH_RESOLUTION_X;
+//    float ratio_y = y/MESH_RESOLUTION_Y;
+//    
+//    ofPoint b = Settings::rectVertices[1] - Settings::rectVertices[0];
+//    ofPoint c = Settings::rectVertices[2] - Settings::rectVertices[0];
+//    ofPoint d = Settings::rectVertices[3] - Settings::rectVertices[0];
+//    
+//    return Settings::rectVertices[0] + ratio_x*(1-ratio_y)*b + ratio_x*ratio_y*c + (1-ratio_x)*ratio_y*d;
+//}
 //--------------------------------------------------------------
 void ofApp::update(){
     
@@ -78,16 +80,27 @@ void ofApp::update(){
     
     movieManager.update();
     
-    fbo.begin();
-    movieManager.draw();
-    fbo.end();
+//    fbo.begin();
+//    movieManager.draw();
+//    fbo.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    fbo.getTexture().bind();
-    mesh.draw();
-    fbo.getTexture().unbind();
+//    fbo.getTexture().bind();
+//    mesh.draw();
+//    fbo.getTexture().unbind();
+    
+    shader.begin();
+    shader.setUniform2f("leftTop", Settings::rectVertices[0]);
+    shader.setUniform2f("rightTop", Settings::rectVertices[1]);
+    shader.setUniform2f("rightBottom", Settings::rectVertices[2]);
+    shader.setUniform2f("leftBottom", Settings::rectVertices[3]);
+    shader.setUniform2f("movieSize", movieWidth, movieHeight);
+    
+    movieManager.draw();
+
+    shader.end();
     
 #if DEBUG
     stringstream ss;
