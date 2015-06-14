@@ -1,66 +1,35 @@
 <settings>
-  <moviePath>480pi/</moviePath>
-  <main>
-    <movies count="5">
-      <movie filename="1_fixed.mov"/>
-      <movie filename="6.mov"/>
-      <movie filename="7.mov"/>
-      <movie filename="bubble.mov"/>
-      <movie filename="sound_reaction.mov"/>
+    <mainScreenFlag>0</mainScreenFlag>
+    <moviePath>480pi/</moviePath>
+    <movieSize width="1024" height="399" />
+    <movies>
+        <movie filename="1_fixed.mov"></movie>
+        <movie filename="6.mov"></movie>
+        <movie filename="sound_reaction.mov"></movie>
+        <movie filename="7.mov"></movie>
+        <movie filename="6.mov"></movie>
+        <movie filename="1_fixed.mov"></movie>
+        <movie filename="bubble.mov"></movie>
+        <movie filename="sound_reaction.mov"></movie>
     </movies>
     <zimaMovies>
-      <movie filename="zima_1.mov" />
+        <movie filename="zima_1.mov" />
     </zimaMovies>
     <calibration>
-      <rect>
-        <leftTop x="0" y="0" />
-        <rightTop x="320" y="0" />
-        <rightBottom x="320" y="240" />
-        <leftBottom x="0" y="240" />
-      </rect>
+        <rect>
+            <leftTop x="0" y="0" />
+            <rightTop x="1024" y="0" />
+            <rightBottom x="1024" y="240" />
+            <leftBottom x="0" y="240" />
+        </rect>
     </calibration>
-    <order count="10">
-      <movieId>0</movieId>
-      <movieId>2</movieId>
-      <movieId>1</movieId>
-      <movieId>3</movieId>
-      <movieId>4</movieId>
-      <movieId>2</movieId>
-      <movieId>4</movieId>
-      <movieId>0</movieId>
-      <movieId>3</movieId>
-      <movieId>2</movieId>
-    </order>
-  </main>
-  <sub>
-    <movies count="5">
-      <movie filename="1_fixed.mov" />
-      <movie filename="6.mov"/>
-      <movie filename="7.mov"/>
-      <movie filename="bubble.mov"/>
-      <movie filename="sound_reaction.mov"/>
-    </movies>
-    <zimaMovies>
-      <movie filename="zima_title.mov" />
-    </zimaMovies>
-    <calibration>
-      <rect>
-        <leftTop x="320" y="0" />
-        <rightTop x="640" y="0" />
-        <rightBottom x="640" y="240" />
-        <leftBottom x="320" y="240" />
-      </rect>
-    </calibration>
-    <order count="9">
-      <movieId>2</movieId>
-      <movieId>1</movieId>
-      <movieId>3</movieId>
-      <movieId>0</movieId>
-      <movieId>2</movieId>
-      <movieId>3</movieId>
-      <movieId>4</movieId>
-      <movieId>2</movieId>
-      <movieId>4</movieId>
-    </order>
-  </sub>
+    <networking>
+        <send>
+            <host>127.0.0.1</sendTo>
+            <port>57463</port>
+        </send>
+        <receive>
+            <port>57462</port>
+        </receive>
+    </networking>
 </settings>
