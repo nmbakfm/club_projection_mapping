@@ -9,14 +9,14 @@
 #ifndef clubProjectionMapping_Constant_h
 #define clubProjectionMapping_Constant_h
 
-#define DEBUG TRUE
+#define DEBUG FALSE
 #define CALIBRATION FALSE
 
 #define SETTINGS_XML_FILENAME "settings.xml"
 #define LOG_FILENAME "log/application" + ofGetTimestampString("%Y%m%d%H%M%S") + ".log"
 
-#define MESH_RESOLUTION_X 10.f
-#define MESH_RESOLUTION_Y 5.f
+#define MESH_RESOLUTION_X 3.f
+#define MESH_RESOLUTION_Y 3.f
 
 #define ORIGINAL_WIDTH Settings::movieWidth
 #define ORIGINAL_HEIGHT Settings::movieHeight

@@ -44,6 +44,14 @@ void ofApp::setup(){
     fbo.setUseTexture(true);
     
     zimaInterval = Settings::zimaInterval;
+    
+    ofSetFullscreen(false);
+    if(Settings::bMainScreen){
+        ofSetWindowPosition(0, 0);
+    }else{
+        ofSetWindowPosition(1200, 0);
+    }
+    ofSetFullscreen(true);
 }
 
 ofPoint ofApp::originalMeshVertex(int x, int y){
