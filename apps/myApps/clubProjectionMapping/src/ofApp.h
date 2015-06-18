@@ -25,10 +25,10 @@ class ofApp : public ofBaseApp{
     bool bReload;
     
     MovieManager movieManager;
-//    ofFbo fbo;
-//    ofMesh mesh;
+    ofFbo fbo;
+    ofMesh mesh;
     
-    ofShader shader;
+//    ofShader shader;
     
     ofPoint originalMeshVertex(int x, int y);
     ofPoint rectMeshVertex(int x, int y);
