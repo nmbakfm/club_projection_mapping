@@ -14,6 +14,12 @@
 #include "Constant.h"
 #include "ofxOsc.h"
 
+typedef enum MovieType {
+    MovieTypeNormal = 0,
+    MovieTypeZima = 1,
+    MovieTypeBirthDay = 2,
+} ;
+
 class MovieManager {
     vector<string> file_names;
     
@@ -27,6 +33,10 @@ class MovieManager {
     int nextMovieId;
     
     int currentIndex;
+    
+    string message;
+    MovieType movieType;
+    MovieType nextMovieType;
     
     bool isZima;
     

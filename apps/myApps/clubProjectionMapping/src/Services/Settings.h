@@ -31,6 +31,8 @@ public:
     static int receivePort;
     
     static int zimaInterval;
+    
+    static string birthdayFileName;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

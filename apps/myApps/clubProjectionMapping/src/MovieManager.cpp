@@ -17,9 +17,10 @@ void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
-    }else{
-        receiver.setup(Settings::receivePort);
     }
+    receiver.setup(Settings::receivePort);
+    movieType = MovieTypeNormal;
+    
     movieWidth = Settings::movieWidth;
     movieHeight = Settings::movieHeight;
     
@@ -33,7 +34,7 @@ void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     currentPlayer.setUseTexture(true);
     
     zimaPlayer.load(_zima_file_name);
-    isZima = false;
+    movieType = MovieTypeNormal;
     zimaPlayer.setUseTexture(true);
     zimaAlpha = 0;
     zimaPlayer.setLoopState(OF_LOOP_NORMAL);
@@ -45,11 +46,20 @@ void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
 }
 
 void MovieManager::update(){
-    if(!Settings::bMainScreen){
+    if(Settings::bMainScreen){
+        while (receiver.hasWaitingMessages()) {
+            ofxOscMessage msg;
+            receiver.getNextMessage(&msg);
+            if (msg.getAddress() == "/birthday") {
+                message = msg.getArgAsString(0);
+                nextMovieType = MovieTypeBirthDay;
+                nextPlayer.load(Settings::birthdayFileName);
+            }
+        }
+    }else{
         while(receiver.hasWaitingMessages()){
             ofxOscMessage msg;
             receiver.getNextMessage(&msg);
-           int test = msg.getNumArgs();
             if (msg.getAddress() == "startZima") {
                 if(msg.getArgAsInt32(0) == 0){
                     stopZima();
@@ -60,7 +70,7 @@ void MovieManager::update(){
         }
     }
     
-    if(isZima){
+    if(movieType == MovieTypeZima){
         if(zimaAlpha < 255){
             zimaAlpha = MIN(zimaAlpha + 5, 255);
         }
@@ -96,8 +106,8 @@ void MovieManager::setMoviePosition(double position_pct){
  *
  */
 void MovieManager::startZima(){
-    if(isZima) return;
-    isZima = true;
+    if(movieType == MovieTypeZima) return;
+    movieType = MovieTypeZima;
     
     zimaPlayer.play();
     zimaPlayer.setFrame(0);
@@ -114,7 +124,7 @@ void MovieManager::startZima(){
 }
 
 void MovieManager::stopZima(){
-    isZima = false;
+    movieType = MovieTypeNormal;
     
     if(Settings::bMainScreen){
         ofxOscMessage msg;
@@ -139,20 +149,26 @@ void MovieManager::assignFileNames(vector<string> _file_names){
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
-    // 現在の動画の次の順番へ
-    currentIndex = nextIndex();
-    if(currentIndex == 0){
-        ofLog(OF_LOG_NOTICE) << "RETURN TO FIRST MOVIE...";
-    }
-    // 動画の切り替え
     currentPlayer = nextPlayer;
-    nextPlayer.load(file_names[nextIndex()]);
-    nextPlayer.setUseTexture(true);
-    
+    if(nextMovieType == MovieTypeNormal){
+        // 現在の動画の次の順番へ
+        currentIndex = nextIndex();
+        if(currentIndex == 0){
+            ofLog(OF_LOG_NOTICE) << "RETURN TO FIRST MOVIE...";
+        }
+        
+        // 動画の切り替え
+        nextPlayer.load(file_names[nextIndex()]);
+        nextPlayer.setUseTexture(true);
+    }else if(nextMovieType == MovieTypeBirthDay){
+        ofLog(OF_LOG_NOTICE) << "START BIRTHDAY MOVIE...";
+        nextPlayer.load(file_names[nextIndex()]);
+        nextPlayer.setUseTexture(true);
+        nextMovieType = MovieTypeNormal;
+    }
     // 動画を作成
     currentPlayer.firstFrame();
     currentPlayer.play();
-    
     ofLog(OF_LOG_NOTICE) << "switch to `" << Settings::fileNames[currentIndex] << "`";
 }
 

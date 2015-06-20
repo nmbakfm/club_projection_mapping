@@ -18,6 +18,7 @@ int Settings::sendPort;
 string Settings::sendHost;
 int Settings::receivePort;
 int Settings::zimaInterval;
+string Settings::birthdayFileName;
 
 void Settings::load(const string file_name){
     xml.load(file_name);
@@ -73,6 +74,10 @@ void Settings::load(const string file_name){
     xml.popTag(); // orderPath
     xml.popTag(); // settings
     
+    ofLog(OF_LOG_NOTICE) << "LOAD BIRTHDAY ==============================";
+    xml.pushTag("birthdayMovie");
+    birthdayFileName = xml.getAttribute("movie", "filename", "", 0);
+    xml.popTag();
     
     movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
     if(movieWidth <= 0){
@@ -91,6 +96,7 @@ void Settings::load(const string file_name){
         zimaInterval = xml.getValue("settings:zimaInterval", 0);
         sendHost = xml.getValue("settings:networking:send:host", "");
         sendPort = 57689;
+        receivePort = 57688;
     }else{
         receivePort = 57689;
     }

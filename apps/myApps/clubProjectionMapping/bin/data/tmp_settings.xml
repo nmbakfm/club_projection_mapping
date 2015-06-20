@@ -15,6 +15,9 @@
     <zimaMovies>
         <movie filename="zima_1.mov" />
     </zimaMovies>
+    <birthdayMovies>
+        <movie filename="1_fixed.mov" />
+    </birthdayMovies>
     <calibration>
         <rect>
             <leftTop x="0" y="0" />

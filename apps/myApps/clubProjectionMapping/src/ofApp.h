@@ -28,8 +28,6 @@ class ofApp : public ofBaseApp{
     ofFbo fbo;
     ofMesh mesh;
     
-//    ofShader shader;
-    
     ofPoint originalMeshVertex(int x, int y);
     ofPoint rectMeshVertex(int x, int y);
     
