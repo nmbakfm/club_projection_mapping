@@ -112,3 +112,4 @@ Desktop.ini
 projectGenerator_osx/
 apps/myApps/clubProjectionMapping/bin/data/settings.xml
 apps/myApps/clubProjectionMapping/bin/data/**/*.mov
+apps/myApps/clubProjectionMapping/bin/data/font/*

@@ -15,6 +15,8 @@ MovieManager::MovieManager(){
 void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     assignFileNames(_file_names);
     
+    BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 30);
+    
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
     }
@@ -27,8 +29,8 @@ void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     currentIndex = 0;
     int nextIndex = 1 % Settings::fileNames.size();
     
-    currentPlayer = new ofVideoPlayer();
-    nextPlayer = new ofVideoPlayer();
+    currentPlayer = new NormalVideoPlayer();
+    nextPlayer = new NormalVideoPlayer();
     currentPlayer->load(file_names[currentIndex]);
     nextPlayer->load(file_names[nextMovieId]);
     
@@ -53,9 +55,14 @@ void MovieManager::update(){
             ofxOscMessage msg;
             receiver.getNextMessage(&msg);
             if (msg.getAddress() == "/birthday") {
-                nextPlayer = new ofVideoPlayer();
-                nextPlayer->load(Settings::birthdayFileName);
+                BirthdayVideoPlayer *_birthdayVideoPlayer = new BirthdayVideoPlayer();
+                _birthdayVideoPlayer->load(Settings::birthdayFileName);
                 message = msg.getArgAsString(0);
+                _birthdayVideoPlayer->setMessage(message);
+//                _birthdayVideoPlayer->setPosition(ofGetWidth()/2, ofGetHeight()/2);
+                _birthdayVideoPlayer->setPosition(_birthdayVideoPlayer->width/2, _birthdayVideoPlayer->height/2);
+                
+                nextPlayer = _birthdayVideoPlayer;
                 nextMovieType = MovieTypeBirthDay;
                 ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
             }
@@ -97,9 +104,9 @@ void MovieManager::update(){
 
 void MovieManager::draw(){
     ofSetColor(255);
-    currentPlayer->draw(0, 0, movieWidth, movieHeight);
+    currentPlayer->drawMovie(0, 0, movieWidth, movieHeight);
     ofSetColor(255, zimaAlpha);
-    zimaPlayer.draw(0, 0, movieWidth, movieHeight);
+    zimaPlayer.drawMovie(0, 0, movieWidth, movieHeight);
 }
 
 /**
@@ -151,7 +158,7 @@ void MovieManager::assignFileNames(vector<string> _file_names){
 void MovieManager::switchMovie(){
     currentPlayer = nextPlayer;
     movieType = nextMovieType;
-    nextPlayer = new ofVideoPlayer();
+    nextPlayer = new NormalVideoPlayer();
     nextPlayer->load(file_names[nextIndex()]);
     if(nextMovieType == MovieTypeNormal){
         // 現在の動画の次の順番へ

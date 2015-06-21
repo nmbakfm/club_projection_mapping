@@ -10,9 +10,10 @@
 #define __clubProjectionMapping__MovieManager__
 
 #include "ofMain.h"
+#include "ofxOsc.h"
 #include "Settings.h"
 #include "Constant.h"
-#include "ofxOsc.h"
+#include "ClubVideoPlayer.h"
 
 typedef enum MovieType {
     MovieTypeNormal = 0,
@@ -23,9 +24,9 @@ typedef enum MovieType {
 class MovieManager {
     vector<string> file_names;
     
-    ofVideoPlayer * currentPlayer; // 今の映像
-    ofVideoPlayer * nextPlayer; // 次に流す映像
-    ofVideoPlayer zimaPlayer; // zimaの映像
+    BaseVideoPlayer * currentPlayer; // 今の映像
+    BaseVideoPlayer * nextPlayer; // 次に流す映像
+    BaseVideoPlayer zimaPlayer; // zimaの映像
     
     int fileCount;
     
