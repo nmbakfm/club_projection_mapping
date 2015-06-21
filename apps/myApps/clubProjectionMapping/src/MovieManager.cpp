@@ -1,4 +1,4 @@
-//
+  //
 //  MovieManager.cpp
 //  clubProjectionMapping
 //
@@ -27,11 +27,13 @@ void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     currentIndex = 0;
     int nextIndex = 1 % Settings::fileNames.size();
     
-    currentPlayer.load(file_names[currentIndex]);
-    nextPlayer.load(file_names[nextMovieId]);
+    currentPlayer = new ofVideoPlayer();
+    nextPlayer = new ofVideoPlayer();
+    currentPlayer->load(file_names[currentIndex]);
+    nextPlayer->load(file_names[nextMovieId]);
     
-    currentPlayer.play();
-    currentPlayer.setUseTexture(true);
+    currentPlayer->play();
+    currentPlayer->setUseTexture(true);
     
     zimaPlayer.load(_zima_file_name);
     movieType = MovieTypeNormal;
@@ -51,9 +53,11 @@ void MovieManager::update(){
             ofxOscMessage msg;
             receiver.getNextMessage(&msg);
             if (msg.getAddress() == "/birthday") {
+                nextPlayer = new ofVideoPlayer();
+                nextPlayer->load(Settings::birthdayFileName);
                 message = msg.getArgAsString(0);
                 nextMovieType = MovieTypeBirthDay;
-                nextPlayer.load(Settings::birthdayFileName);
+                ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
             }
         }
     }else{
@@ -85,21 +89,17 @@ void MovieManager::update(){
             zimaAlpha = MAX(zimaAlpha - 5, 0);
         }
     }
-    if(currentPlayer.getIsMovieDone()){
+    if(currentPlayer->getIsMovieDone()){
         switchMovie();
     }
-    currentPlayer.update();
+    currentPlayer->update();
 }
 
 void MovieManager::draw(){
     ofSetColor(255);
-    currentPlayer.draw(0, 0, movieWidth, movieHeight);
+    currentPlayer->draw(0, 0, movieWidth, movieHeight);
     ofSetColor(255, zimaAlpha);
     zimaPlayer.draw(0, 0, movieWidth, movieHeight);
-}
-
-void MovieManager::setMoviePosition(double position_pct){
-    currentPlayer.setPosition(position_pct);
 }
 
 /**
@@ -120,7 +120,7 @@ void MovieManager::startZima(){
         sender.sendMessage(msg);
     }
     
-    ofLog(OF_LOG_NOTICE) << "start `" << Settings::zimaFileName << "`(ZIMA MOVIE)";
+    ofLog(OF_LOG_NOTICE) << "start `" << zimaPlayer.getMoviePath() << "`(ZIMA MOVIE)";
 }
 
 void MovieManager::stopZima(){
@@ -132,7 +132,7 @@ void MovieManager::stopZima(){
         msg.addIntArg(0);
         sender.sendMessage(msg);
     }
-    ofLog(OF_LOG_NOTICE) << "stop `" << Settings::zimaFileName << "`(ZIMA MOVIE)";
+    ofLog(OF_LOG_NOTICE) << "stop `" << zimaPlayer.getMoviePath() << "`(ZIMA MOVIE)";
 }
 
 
@@ -150,28 +150,36 @@ void MovieManager::assignFileNames(vector<string> _file_names){
  */
 void MovieManager::switchMovie(){
     currentPlayer = nextPlayer;
+    movieType = nextMovieType;
+    nextPlayer = new ofVideoPlayer();
+    nextPlayer->load(file_names[nextIndex()]);
     if(nextMovieType == MovieTypeNormal){
         // 現在の動画の次の順番へ
         currentIndex = nextIndex();
-        if(currentIndex == 0){
-            ofLog(OF_LOG_NOTICE) << "RETURN TO FIRST MOVIE...";
-        }
         
         // 動画の切り替え
-        nextPlayer.load(file_names[nextIndex()]);
-        nextPlayer.setUseTexture(true);
+        nextPlayer->setUseTexture(true);
     }else if(nextMovieType == MovieTypeBirthDay){
         ofLog(OF_LOG_NOTICE) << "START BIRTHDAY MOVIE...";
-        nextPlayer.load(file_names[nextIndex()]);
-        nextPlayer.setUseTexture(true);
+        nextPlayer->setUseTexture(true);
         nextMovieType = MovieTypeNormal;
     }
+    
+    if(currentIndex == 0){
+        ofLog(OF_LOG_NOTICE) << "RETURN TO FIRST MOVIE...";
+    }
+    
     // 動画を作成
-    currentPlayer.firstFrame();
-    currentPlayer.play();
-    ofLog(OF_LOG_NOTICE) << "switch to `" << Settings::fileNames[currentIndex] << "`";
+    currentPlayer->firstFrame();
+    currentPlayer->play();
+    ofLog(OF_LOG_NOTICE) << "switch to `" << currentPlayer->getMoviePath() << "`";
 }
 
 int MovieManager::nextIndex(){
     return (currentIndex + 1) % fileCount;
+}
+
+MovieManager::~MovieManager(){
+    delete currentPlayer;
+    delete nextPlayer;
 }

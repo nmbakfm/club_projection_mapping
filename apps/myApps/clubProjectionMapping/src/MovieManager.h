@@ -23,8 +23,8 @@ typedef enum MovieType {
 class MovieManager {
     vector<string> file_names;
     
-    ofVideoPlayer currentPlayer; // 今の映像
-    ofVideoPlayer nextPlayer; // 次に流す映像
+    ofVideoPlayer * currentPlayer; // 今の映像
+    ofVideoPlayer * nextPlayer; // 次に流す映像
     ofVideoPlayer zimaPlayer; // zimaの映像
     
     int fileCount;
@@ -54,6 +54,7 @@ class MovieManager {
     
 public:
     MovieManager();
+    ~MovieManager();
     void setup(vector<string> _file_names, string _zima_file_name);
     void update();
     void draw();

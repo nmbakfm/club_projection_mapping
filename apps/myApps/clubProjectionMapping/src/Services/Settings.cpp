@@ -45,7 +45,7 @@ void Settings::load(const string file_name){
     int fileNum = xml.getNumTags("movie");
     
     if (fileNum == 0) {
-        ofLog(OF_LOG_WARNING) << "動画ファイルが1つも読み込まれていません。`data/settings.xml`内を確認して下さい" << endl;
+        ofLog(OF_LOG_FATAL_ERROR) << "動画ファイルが1つも読み込まれていません。`data/settings.xml`内を確認して下さい" << endl;
         throw "NoFileException";
     }
     
@@ -53,7 +53,7 @@ void Settings::load(const string file_name){
     for (int i=0; i<fileNum; ++i) {
         fileNames.push_back(dir_name + xml.getAttribute("movie","filename","",i));
         if(!ofFile::doesFileExist(fileNames[i])){
-            ofLog(OF_LOG_WARNING) << "`" << fileNames[i] << "` does not exists";
+            ofLog(OF_LOG_FATAL_ERROR) << "`" << fileNames[i] << "` does not exists";
             throw "MovieFileNotFoundException";
         }else{
             ofLog(OF_LOG_NOTICE) << i << ":\t" << fileNames[i];
@@ -65,29 +65,37 @@ void Settings::load(const string file_name){
     xml.pushTag("zimaMovies");
     zimaFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
     if(!ofFile::doesFileExist(zimaFileName)){
-        ofLog(OF_LOG_WARNING) << "`" << zimaFileName << "` does not exist";
+        ofLog(OF_LOG_FATAL_ERROR) << "`" << zimaFileName << "` does not exist";
         throw "MovieFileNotFoundException";
     }else{
         ofLog(OF_LOG_NOTICE) << zimaFileName;
     }
     xml.popTag(); // zimaMovies
-    xml.popTag(); // orderPath
-    xml.popTag(); // settings
+    
+    
     
     ofLog(OF_LOG_NOTICE) << "LOAD BIRTHDAY ==============================";
-    xml.pushTag("birthdayMovie");
-    birthdayFileName = xml.getAttribute("movie", "filename", "", 0);
-    xml.popTag();
+    xml.pushTag("birthdayMovies");
+    birthdayFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    if(!ofFile::doesFileExist(birthdayFileName)){
+        ofLog(OF_LOG_FATAL_ERROR) << "`" << birthdayFileName << "` does not exist";
+        throw "MovieFileNotFoundException";
+    }else{
+        ofLog(OF_LOG_NOTICE) << zimaFileName;
+    }
+    xml.popTag(); // birthday
+    
+    xml.popTag(); // settings
     
     movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
     if(movieWidth <= 0){
-        ofLog(OF_LOG_WARNING) << "動画の幅指定が不正です。0より大きい値を指定してください";
+        ofLog(OF_LOG_FATAL_ERROR) << "動画の幅指定が不正です。0より大きい値を指定してください";
         throw "MovieSizeInvalidException";
     }
     
     movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
     if(movieHeight <= 0){
-        ofLog(OF_LOG_WARNING) << "動画の高さ指定が不正です。0より大きい値を指定してください";
+        ofLog(OF_LOG_FATAL_ERROR) << "動画の高さ指定が不正です。0より大きい値を指定してください";
         throw "MovieSizeInvalidException";
     }
     
