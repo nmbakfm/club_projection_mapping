@@ -15,7 +15,7 @@ MovieManager::MovieManager(){
 void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     assignFileNames(_file_names);
     
-    BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 30);
+    BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 80);
     
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
@@ -59,8 +59,7 @@ void MovieManager::update(){
                 _birthdayVideoPlayer->load(Settings::birthdayFileName);
                 message = msg.getArgAsString(0);
                 _birthdayVideoPlayer->setMessage(message);
-//                _birthdayVideoPlayer->setPosition(ofGetWidth()/2, ofGetHeight()/2);
-                _birthdayVideoPlayer->setPosition(_birthdayVideoPlayer->width/2, _birthdayVideoPlayer->height/2);
+                _birthdayVideoPlayer->setNamePosition(_birthdayVideoPlayer->width/2, _birthdayVideoPlayer->height/2);
                 
                 nextPlayer = _birthdayVideoPlayer;
                 nextMovieType = MovieTypeBirthDay;

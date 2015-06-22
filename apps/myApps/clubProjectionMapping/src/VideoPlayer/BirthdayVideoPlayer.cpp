@@ -24,23 +24,25 @@ void BirthdayVideoPlayer::update(){
     ofVideoPlayer::update();
 }
 
-void BirthdayVideoPlayer::setPosition(float _x, float _y){
+void BirthdayVideoPlayer::setNamePosition(float _x, float _y){
     pos = ofPoint(_x, _y);
 }
 
-void BirthdayVideoPlayer::setPosition(ofPoint _msg_pos){
+void BirthdayVideoPlayer::setNamePosition(ofPoint _msg_pos){
     pos = _msg_pos;
 }
 
-ofPoint BirthdayVideoPlayer::getPosition(){
+ofPoint BirthdayVideoPlayer::getNamePosition(){
     return pos;
 }
 
 void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     BaseVideoPlayer::draw(_x, _y, _w, _h);
     
-    ofSetColor(0);
-    nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2);
+    if (getCurrentFrame() > 522) {
+        ofSetColor(255);
+        nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2+130);
+    }
 }
 
 void BirthdayVideoPlayer::getIsMovieDone(){

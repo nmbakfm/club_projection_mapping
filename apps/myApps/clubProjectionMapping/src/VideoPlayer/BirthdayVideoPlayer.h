@@ -17,9 +17,9 @@ public:
     BirthdayVideoPlayer();
     void setMessage(string _message);
     string getMessage();
-    void setPosition(float _x, float _y);
-    void setPosition(ofPoint _msg_pos);
-    ofPoint getPosition();
+    void setNamePosition(float _x, float _y);
+    void setNamePosition(ofPoint _msg_pos);
+    ofPoint getNamePosition();
     void update();
     void drawMovie(float _x, float _y, float _w, float _h);
     void getIsMovieDone();

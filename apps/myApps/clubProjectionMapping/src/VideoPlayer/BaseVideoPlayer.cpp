@@ -29,7 +29,4 @@ void BaseVideoPlayer::update(){
 
 void BaseVideoPlayer::draw(float _x, float _y, float _w, float _h){
     ofVideoPlayer::draw(_x, _y, _w, _h);
-    
-    ofSetColor(0);
-    nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2);
 }
