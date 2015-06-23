@@ -15,7 +15,7 @@ MovieManager::MovieManager(){
 void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     assignFileNames(_file_names);
     
-    BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 80);
+    BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 72);
     
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
