@@ -15,11 +15,11 @@
 #include "Constant.h"
 #include "ClubVideoPlayer.h"
 
-typedef enum MovieType {
+typedef enum  {
     MovieTypeNormal = 0,
     MovieTypeZima = 1,
     MovieTypeBirthDay = 2,
-} ;
+} MovieType;
 
 class MovieManager {
     vector<string> file_names;

@@ -155,6 +155,7 @@ void MovieManager::assignFileNames(vector<string> _file_names){
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
+    delete currentPlayer;
     currentPlayer = nextPlayer;
     movieType = nextMovieType;
     nextPlayer = new NormalVideoPlayer();

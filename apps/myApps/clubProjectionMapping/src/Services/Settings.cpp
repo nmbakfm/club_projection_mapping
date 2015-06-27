@@ -81,7 +81,7 @@ void Settings::load(const string file_name){
         ofLog(OF_LOG_FATAL_ERROR) << "`" << birthdayFileName << "` does not exist";
         throw "MovieFileNotFoundException";
     }else{
-        ofLog(OF_LOG_NOTICE) << zimaFileName;
+        ofLog(OF_LOG_NOTICE) << birthdayFileName;
     }
     xml.popTag(); // birthday
     

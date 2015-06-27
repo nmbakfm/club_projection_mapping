@@ -17,7 +17,6 @@ BaseVideoPlayer::BaseVideoPlayer(){
 }
 
 void BaseVideoPlayer::setNameFont(string _font_name, int _font_size){
-    nameFont = ofTrueTypeFont();
     font_name = _font_name;
     font_size = _font_size;
     nameFont.load(_font_name, _font_size, true, true, true);
