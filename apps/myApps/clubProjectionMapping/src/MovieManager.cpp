@@ -60,7 +60,7 @@ void MovieManager::update(){
                 message = msg.getArgAsString(0);
                 _birthdayVideoPlayer->setMessage(message);
                 _birthdayVideoPlayer->setNamePosition(_birthdayVideoPlayer->width/2, _birthdayVideoPlayer->height/2);
-                
+                delete nextPlayer;
                 nextPlayer = _birthdayVideoPlayer;
                 nextMovieType = MovieTypeBirthDay;
                 ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
