@@ -23,6 +23,7 @@
 		211975D61B20330A00D2C474 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 211975C61B20330A00D2C474 /* ofxOscReceiver.cpp */; };
 		211975D71B20330A00D2C474 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 211975C81B20330A00D2C474 /* ofxOscSender.cpp */; };
 		219C630D1AF76B6900B8FBE1 /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 219C630B1AF76B6900B8FBE1 /* Settings.cpp */; };
+		21BD49891B4EBB860010166B /* WeddingVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21BD49871B4EBB860010166B /* WeddingVideoPlayer.cpp */; };
 		21C8BFF71B3696B3002A3032 /* BirthdayVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21C8BFF51B3696B3002A3032 /* BirthdayVideoPlayer.cpp */; };
 		21C8BFFA1B36A673002A3032 /* BaseVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21C8BFF81B36A673002A3032 /* BaseVideoPlayer.cpp */; };
 		21C8BFFD1B36A74F002A3032 /* NormalVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21C8BFFB1B36A74F002A3032 /* NormalVideoPlayer.cpp */; };
@@ -116,6 +117,8 @@
 		211975C91B20330A00D2C474 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
 		219C630B1AF76B6900B8FBE1 /* Settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Settings.cpp; path = Services/Settings.cpp; sourceTree = "<group>"; };
 		219C630C1AF76B6900B8FBE1 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Settings.h; path = Services/Settings.h; sourceTree = "<group>"; };
+		21BD49871B4EBB860010166B /* WeddingVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WeddingVideoPlayer.cpp; path = VideoPlayer/WeddingVideoPlayer.cpp; sourceTree = "<group>"; };
+		21BD49881B4EBB860010166B /* WeddingVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeddingVideoPlayer.h; path = VideoPlayer/WeddingVideoPlayer.h; sourceTree = "<group>"; };
 		21C8BFF51B3696B3002A3032 /* BirthdayVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BirthdayVideoPlayer.cpp; path = VideoPlayer/BirthdayVideoPlayer.cpp; sourceTree = "<group>"; };
 		21C8BFF61B3696B3002A3032 /* BirthdayVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BirthdayVideoPlayer.h; path = VideoPlayer/BirthdayVideoPlayer.h; sourceTree = "<group>"; };
 		21C8BFF81B36A673002A3032 /* BaseVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseVideoPlayer.cpp; path = VideoPlayer/BaseVideoPlayer.cpp; sourceTree = "<group>"; };
@@ -302,6 +305,8 @@
 				21C8BFFB1B36A74F002A3032 /* NormalVideoPlayer.cpp */,
 				21C8BFFC1B36A74F002A3032 /* NormalVideoPlayer.h */,
 				21F5F9131B36AA5B000DE183 /* ClubVideoPlayer.h */,
+				21BD49871B4EBB860010166B /* WeddingVideoPlayer.cpp */,
+				21BD49881B4EBB860010166B /* WeddingVideoPlayer.h */,
 			);
 			name = Movie;
 			sourceTree = "<group>";
@@ -506,6 +511,7 @@
 				211975D31B20330A00D2C474 /* ofxOscBundle.cpp in Sources */,
 				211975D71B20330A00D2C474 /* ofxOscSender.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
+				21BD49891B4EBB860010166B /* WeddingVideoPlayer.cpp in Sources */,
 				5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */,
 				211975D51B20330A00D2C474 /* ofxOscParameterSync.cpp in Sources */,
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,

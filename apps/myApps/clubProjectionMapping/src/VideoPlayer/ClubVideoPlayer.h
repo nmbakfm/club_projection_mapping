@@ -12,5 +12,6 @@
 #include "BaseVideoPlayer.h"
 #include "NormalVideoPlayer.h"
 #include "BirthdayVideoPlayer.h"
+#include "WeddingVideoPlayer.h"
 
 #endif

@@ -19,6 +19,7 @@ typedef enum  {
     MovieTypeNormal = 0,
     MovieTypeZima = 1,
     MovieTypeBirthDay = 2,
+    MovieTypeWedding = 3
 } MovieType;
 
 class MovieManager {

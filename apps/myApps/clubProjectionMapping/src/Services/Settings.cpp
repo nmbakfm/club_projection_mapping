@@ -19,6 +19,7 @@ string Settings::sendHost;
 int Settings::receivePort;
 int Settings::zimaInterval;
 string Settings::birthdayFileName;
+string Settings::weddingFileName;
 
 void Settings::load(const string file_name){
     xml.load(file_name);
@@ -84,6 +85,17 @@ void Settings::load(const string file_name){
         ofLog(OF_LOG_NOTICE) << birthdayFileName;
     }
     xml.popTag(); // birthday
+    
+    ofLog(OF_LOG_NOTICE) << "LOAD WEDDING ==============================";
+    xml.pushTag("weddingMovies");
+    weddingFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    if(!ofFile::doesFileExist(weddingFileName)){
+        ofLog(OF_LOG_FATAL_ERROR) << "`" << weddingFileName << "` does not exist";
+        throw "MovieFileNotFoundException";
+    }else{
+        ofLog(OF_LOG_NOTICE) << weddingFileName;
+    }
+    xml.popTag(); // wedding
     
     xml.popTag(); // settings
     

@@ -33,6 +33,7 @@ public:
     static int zimaInterval;
     
     static string birthdayFileName;
+    static string weddingFileName;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

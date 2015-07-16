@@ -64,6 +64,16 @@ void MovieManager::update(){
                 nextPlayer = _birthdayVideoPlayer;
                 nextMovieType = MovieTypeBirthDay;
                 ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
+            }else if (msg.getAddress() == "/wedding") {
+                WeddingVideoPlayer *_weddingVideoPlayer = new WeddingVideoPlayer();
+                _weddingVideoPlayer->load(Settings::weddingFileName);
+                message = msg.getArgAsString(0);
+                _weddingVideoPlayer->setMessage(message);
+                _weddingVideoPlayer->setNamePosition(_weddingVideoPlayer->width/2, _weddingVideoPlayer->height/2);
+                delete nextPlayer;
+                nextPlayer = _weddingVideoPlayer;
+                nextMovieType = MovieTypeWedding;
+                ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
             }
         }
     }else{
@@ -168,6 +178,10 @@ void MovieManager::switchMovie(){
         nextPlayer->setUseTexture(true);
     }else if(nextMovieType == MovieTypeBirthDay){
         ofLog(OF_LOG_NOTICE) << "START BIRTHDAY MOVIE...";
+        nextPlayer->setUseTexture(true);
+        nextMovieType = MovieTypeNormal;
+    }else if(nextMovieType == MovieTypeWedding){
+        ofLog(OF_LOG_NOTICE) << "START WEDDING MOVIE...";
         nextPlayer->setUseTexture(true);
         nextMovieType = MovieTypeNormal;
     }
