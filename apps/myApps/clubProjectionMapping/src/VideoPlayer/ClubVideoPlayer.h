@@ -13,5 +13,6 @@
 #include "NormalVideoPlayer.h"
 #include "BirthdayVideoPlayer.h"
 #include "WeddingVideoPlayer.h"
+#include "SoundReactiveVideoPlayer.h"
 
 #endif

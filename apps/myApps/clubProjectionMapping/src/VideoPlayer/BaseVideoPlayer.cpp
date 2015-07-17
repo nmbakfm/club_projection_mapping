@@ -13,7 +13,7 @@ int BaseVideoPlayer::font_size;
 ofTrueTypeFont BaseVideoPlayer::nameFont;
 
 BaseVideoPlayer::BaseVideoPlayer(){
-    
+    endFrameCount = 0;
 }
 
 void BaseVideoPlayer::setNameFont(string _font_name, int _font_size){
@@ -29,3 +29,7 @@ void BaseVideoPlayer::update(){
 void BaseVideoPlayer::draw(float _x, float _y, float _w, float _h){
     ofVideoPlayer::draw(_x, _y, _w, _h);
 }
+
+void BaseVideoPlayer::setCurrentVolume(float _curVol){
+    curVol = _curVol;
+};

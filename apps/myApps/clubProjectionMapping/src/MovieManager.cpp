@@ -12,8 +12,8 @@ MovieManager::MovieManager(){
     
 }
 
-void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
-    assignFileNames(_file_names);
+void MovieManager::setup(vector<string> _file_names, vector<int> _endFrames, string _zima_file_name){
+    assignFileNames(_file_names, _endFrames);
     
     BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 72);
     
@@ -29,8 +29,18 @@ void MovieManager::setup(vector<string> _file_names, string _zima_file_name){
     currentIndex = 0;
     int nextIndex = 1 % Settings::fileNames.size();
     
-    currentPlayer = new NormalVideoPlayer();
-    nextPlayer = new NormalVideoPlayer();
+    if(endFrames[0] > 0) {
+        currentPlayer = new SoundReactivePlayer(endFrames[0]);
+    }else{
+        currentPlayer = new NormalVideoPlayer();
+    }
+    
+    if(endFrames[nextIndex] > 0) {
+        nextPlayer = new SoundReactivePlayer(endFrames[1]);
+    }else{
+        nextPlayer = new NormalVideoPlayer();
+    }
+    
     currentPlayer->load(file_names[currentIndex]);
     nextPlayer->load(file_names[nextMovieId]);
     
@@ -96,7 +106,7 @@ void MovieManager::update(){
         }
         zimaPlayer.update();
         if(Settings::bMainScreen){
-            if (zimaPlayer.getIsMovieDone()) {
+            if (zimaPlayer.isMovieDone()) {
                 stopZima();
             }
         }
@@ -105,7 +115,7 @@ void MovieManager::update(){
             zimaAlpha = MAX(zimaAlpha - 5, 0);
         }
     }
-    if(currentPlayer->getIsMovieDone()){
+    if(currentPlayer->isMovieDone()){
         switchMovie();
     }
     currentPlayer->update();
@@ -156,9 +166,10 @@ void MovieManager::stopZima(){
 /**
  * @param _file_names 読み込むファイル名
  */
-void MovieManager::assignFileNames(vector<string> _file_names){
+void MovieManager::assignFileNames(vector<string> _file_names, vector<int> _endFrames){
     file_names = _file_names;
     fileCount = _file_names.size();
+    endFrames = _endFrames;
 }
 
 /**
@@ -168,7 +179,11 @@ void MovieManager::switchMovie(){
     delete currentPlayer;
     currentPlayer = nextPlayer;
     movieType = nextMovieType;
-    nextPlayer = new NormalVideoPlayer();
+    if(endFrames[nextIndex()] > 0){
+        nextPlayer = new SoundReactivePlayer(endFrames[nextIndex()]);
+    }else{
+        nextPlayer = new NormalVideoPlayer();
+    }
     nextPlayer->load(file_names[nextIndex()]);
     if(nextMovieType == MovieTypeNormal){
         // 現在の動画の次の順番へ
@@ -194,6 +209,11 @@ void MovieManager::switchMovie(){
     currentPlayer->firstFrame();
     currentPlayer->play();
     ofLog(OF_LOG_NOTICE) << "switch to `" << currentPlayer->getMoviePath() << "`";
+}
+
+void MovieManager::setCurrendVolume(float _curVol){
+//    curVol = _curVol;
+    currentPlayer->setCurrentVolume(_curVol);
 }
 
 int MovieManager::nextIndex(){

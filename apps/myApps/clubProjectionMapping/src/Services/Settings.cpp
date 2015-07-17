@@ -11,6 +11,7 @@
 ofxXmlSettings Settings::xml;
 ofPoint Settings::rectVertices[4];
 vector<string> Settings::fileNames;
+vector<int> Settings::endFrames;
 string Settings::zimaFileName;
 float Settings::movieWidth, Settings::movieHeight;
 bool Settings::bMainScreen;
@@ -53,6 +54,7 @@ void Settings::load(const string file_name){
     ofLog(OF_LOG_NOTICE) << "MOVIE ORDERS =================================";
     for (int i=0; i<fileNum; ++i) {
         fileNames.push_back(dir_name + xml.getAttribute("movie","filename","",i));
+        endFrames.push_back(xml.getAttribute("movie","endFrame", 0, i));
         if(!ofFile::doesFileExist(fileNames[i])){
             ofLog(OF_LOG_FATAL_ERROR) << "`" << fileNames[i] << "` does not exists";
             throw "MovieFileNotFoundException";

@@ -24,10 +24,11 @@ typedef enum  {
 
 class MovieManager {
     vector<string> file_names;
+    vector<int> endFrames;
     
     BaseVideoPlayer * currentPlayer; // 今の映像
     BaseVideoPlayer * nextPlayer; // 次に流す映像
-    BaseVideoPlayer zimaPlayer; // zimaの映像
+    NormalVideoPlayer zimaPlayer; // zimaの映像
     
     int fileCount;
     
@@ -45,9 +46,10 @@ class MovieManager {
     void switchMovie();
     int nextIndex();
     
-    void assignFileNames(vector<string> _file_names);
+    void assignFileNames(vector<string> _file_names, vector<int> _endFrames);
     
     float movieWidth, movieHeight;
+    float curVol;
     
     ofxOscSender sender;
     ofxOscReceiver receiver;
@@ -57,12 +59,13 @@ class MovieManager {
 public:
     MovieManager();
     ~MovieManager();
-    void setup(vector<string> _file_names, string _zima_file_name);
+    void setup(vector<string> _file_names, vector<int> _endFrames, string _zima_file_name);
     void update();
     void draw();
     void startZima();
     void stopZima();
     void setMoviePosition(double position_pct);
+    void setCurrendVolume(float _curVol);
 };
 
 #endif /* defined(__clubProjectionMapping__MovieManager__) */

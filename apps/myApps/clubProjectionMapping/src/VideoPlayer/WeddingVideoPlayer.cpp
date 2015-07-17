@@ -37,7 +37,7 @@ ofPoint WeddingVideoPlayer::getNamePosition(){
 }
 
 void WeddingVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
-    BaseVideoPlayer::draw(_x, _y, _w, _h);
+    draw(_x, _y, _w, _h);
     
     if (getCurrentFrame() > 609) {
         ofSetColor(0, 128);
@@ -47,6 +47,6 @@ void WeddingVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     }
 }
 
-void WeddingVideoPlayer::getIsMovieDone(){
+bool WeddingVideoPlayer::getIsMovieDone(){
     ofVideoPlayer::getIsMovieDone();
 }

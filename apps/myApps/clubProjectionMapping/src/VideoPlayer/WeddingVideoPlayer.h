@@ -22,6 +22,6 @@ public:
     ofPoint getNamePosition();
     void update();
     void drawMovie(float _x, float _y, float _w, float _h);
-    void getIsMovieDone();
+    bool getIsMovieDone();
 };
 #endif /* defined(__clubProjectionMapping__WeddingVideoPlayer__) */

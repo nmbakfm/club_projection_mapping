@@ -20,7 +20,9 @@ public:
     void setPosition(float _x, float _y){};
     void setPosition(ofPoint _msg_pos){};
     ofPoint getPosition(){};
-    void drawMovie(float _x, float _y, float _w, float _h){BaseVideoPlayer::draw(_x, _y, _w, _h);};
+    void drawMovie(float _x, float _y, float _w, float _h){
+        draw(_x, _y, _w, _h);
+    };
 };
 
 #endif /* defined(__clubProjectionMapping__NormalVideoPlayer__) */

@@ -37,7 +37,7 @@ ofPoint BirthdayVideoPlayer::getNamePosition(){
 }
 
 void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
-    BaseVideoPlayer::draw(_x, _y, _w, _h);
+    draw(_x, _y, _w, _h);
     
     if (getCurrentFrame() > 522) {
         ofSetColor(255);
@@ -45,6 +45,6 @@ void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     }
 }
 
-void BirthdayVideoPlayer::getIsMovieDone(){
+bool BirthdayVideoPlayer::getIsMovieDone(){
     ofVideoPlayer::getIsMovieDone();
 }
