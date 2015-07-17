@@ -4,13 +4,13 @@ This is Projection-Mapper to Simple Rectangle Wall
 
 RELEASE NOTE
 ----------------------------------------------
-developing
+### developing
 sound reactive movie
 
-v0.1.0
+### v0.1.0
 added birthday/wedding movie that start when OSCMessage sent
 
-v0.0.0
+### v0.0.0
 added foundamental movie transformation
 enable xml settings
 display special movie every interval
