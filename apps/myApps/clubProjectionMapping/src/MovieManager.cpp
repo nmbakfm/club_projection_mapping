@@ -30,13 +30,13 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _endFrames, str
     int nextIndex = 1 % Settings::fileNames.size();
     
     if(endFrames[0] > 0) {
-        currentPlayer = new SoundReactivePlayer(endFrames[0]);
+        currentPlayer = new SoundReactivePlayer(endFrames[0], Settings::soundSensitivity);
     }else{
         currentPlayer = new NormalVideoPlayer();
     }
     
     if(endFrames[nextIndex] > 0) {
-        nextPlayer = new SoundReactivePlayer(endFrames[1]);
+        nextPlayer = new SoundReactivePlayer(endFrames[1], Settings::soundSensitivity);
     }else{
         nextPlayer = new NormalVideoPlayer();
     }
@@ -118,7 +118,7 @@ void MovieManager::update(){
     if(currentPlayer->isMovieDone()){
         switchMovie();
     }
-    currentPlayer->update();
+    currentPlayer->updateFrame();
 }
 
 void MovieManager::draw(){
@@ -180,7 +180,7 @@ void MovieManager::switchMovie(){
     currentPlayer = nextPlayer;
     movieType = nextMovieType;
     if(endFrames[nextIndex()] > 0){
-        nextPlayer = new SoundReactivePlayer(endFrames[nextIndex()]);
+        nextPlayer = new SoundReactivePlayer(endFrames[nextIndex()], Settings::soundSensitivity);
     }else{
         nextPlayer = new NormalVideoPlayer();
     }
@@ -218,9 +218,4 @@ void MovieManager::setCurrendVolume(float _curVol){
 
 int MovieManager::nextIndex(){
     return (currentIndex + 1) % fileCount;
-}
-
-MovieManager::~MovieManager(){
-    delete currentPlayer;
-    delete nextPlayer;
 }

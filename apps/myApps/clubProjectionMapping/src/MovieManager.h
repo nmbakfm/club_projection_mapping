@@ -58,7 +58,6 @@ class MovieManager {
     
 public:
     MovieManager();
-    ~MovieManager();
     void setup(vector<string> _file_names, vector<int> _endFrames, string _zima_file_name);
     void update();
     void draw();

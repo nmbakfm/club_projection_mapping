@@ -22,14 +22,6 @@ void BaseVideoPlayer::setNameFont(string _font_name, int _font_size){
     nameFont.load(_font_name, _font_size, true, true, true);
 }
 
-void BaseVideoPlayer::update(){
-    ofVideoPlayer::update();
-}
-
-void BaseVideoPlayer::draw(float _x, float _y, float _w, float _h){
-    ofVideoPlayer::draw(_x, _y, _w, _h);
-}
-
 void BaseVideoPlayer::setCurrentVolume(float _curVol){
     curVol = _curVol;
 };

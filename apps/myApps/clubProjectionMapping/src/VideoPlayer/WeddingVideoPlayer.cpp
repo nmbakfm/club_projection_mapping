@@ -20,8 +20,8 @@ string WeddingVideoPlayer::getMessage(){
     return message;
 }
 
-void WeddingVideoPlayer::update(){
-    ofVideoPlayer::update();
+void WeddingVideoPlayer::updateFrame(){
+    update();
 }
 
 void WeddingVideoPlayer::setNamePosition(float _x, float _y){
@@ -45,8 +45,4 @@ void WeddingVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
         ofSetColor(255);
         nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2+130);
     }
-}
-
-bool WeddingVideoPlayer::getIsMovieDone(){
-    ofVideoPlayer::getIsMovieDone();
 }

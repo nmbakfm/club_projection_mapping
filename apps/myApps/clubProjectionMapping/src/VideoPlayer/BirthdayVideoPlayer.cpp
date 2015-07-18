@@ -20,8 +20,8 @@ string BirthdayVideoPlayer::getMessage(){
     return message;
 }
 
-void BirthdayVideoPlayer::update(){
-    ofVideoPlayer::update();
+void BirthdayVideoPlayer::updateFrame(){
+    update();
 }
 
 void BirthdayVideoPlayer::setNamePosition(float _x, float _y){
@@ -43,8 +43,4 @@ void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
         ofSetColor(255);
         nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2+130);
     }
-}
-
-bool BirthdayVideoPlayer::getIsMovieDone(){
-    ofVideoPlayer::getIsMovieDone();
 }

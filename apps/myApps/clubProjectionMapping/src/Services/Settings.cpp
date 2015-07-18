@@ -11,6 +11,7 @@
 ofxXmlSettings Settings::xml;
 ofPoint Settings::rectVertices[4];
 vector<string> Settings::fileNames;
+float Settings::soundSensitivity;
 vector<int> Settings::endFrames;
 string Settings::zimaFileName;
 float Settings::movieWidth, Settings::movieHeight;
@@ -63,6 +64,8 @@ void Settings::load(const string file_name){
         }
     }
     xml.popTag(); // movies
+    
+    soundSensitivity = xml.getValue("soundSensitivity", 1.0);
     
     ofLog(OF_LOG_NOTICE) << "LOAD ZIMA =================================";
     xml.pushTag("zimaMovies");

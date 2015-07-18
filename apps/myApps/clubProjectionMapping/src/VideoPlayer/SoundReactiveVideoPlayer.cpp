@@ -8,34 +8,32 @@
 
 #include "SoundReactiveVideoPlayer.h"
 
-#define FRAME_SMOOTHING_VAL 0.95
+#define FRAME_SMOOTHING_VAL 0
 
 SoundReactivePlayer::SoundReactivePlayer(){
     frameCount = 0;
 }
 
-SoundReactivePlayer::SoundReactivePlayer(int _endFrameCount){
+SoundReactivePlayer::SoundReactivePlayer(int _endFrameCount, float _soundSensitivity){
     frameCount = 0;
     endFrameCount = _endFrameCount;
+    soundSensitivity = _soundSensitivity;
+    currentFrame = 0;
 }
 
 void SoundReactivePlayer::drawMovie(float _x, float _y, float _w, float _h){
     draw(_x, _y, _w, _h);
-//    ofBackground(curVol*255);
+//    ofBackground(ofMap(curVol, 0, soundSensitivity, 0, 1, false)*255);
 }
 
-void SoundReactivePlayer::update(){
-//    ofVideoPlayer::stop();
-    int currentFrame = (int)(currentFrame * FRAME_SMOOTHING_VAL + getTotalNumFrames() * curVol * (1 - FRAME_SMOOTHING_VAL));
-    currentFrame = ofMap(currentFrame, 1, getTotalNumFrames(), 1, getTotalNumFrames());
-    cout << currentFrame << endl;
-//    cout << "total:\t\t\t" << getTotalNumFrames() << endl;
-//    cout << "currentFrame:\t" << currentFrame << endl;
-//    cout << "curVol:\t" << curVol << endl;
-    setFrame(currentFrame);
-//    setFrame(frameCount);
-//    setFrame();
-    ofVideoPlayer::update();
+void SoundReactivePlayer::updateFrame(){
+//    setPaused(true);
+    update();
+    float target_pct = ofMap(curVol, 0, soundSensitivity, 0, 1, false);
+    
+    cout << "targetFrame:" << target_pct << endl;
+    cout << "curVol:\t" << curVol << endl;
+    setPosition(target_pct);
     ++ frameCount;
 }
 

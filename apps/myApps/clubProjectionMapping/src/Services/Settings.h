@@ -22,6 +22,7 @@ public:
     static vector<string> fileNames;
     static vector<int> endFrames;
     static string zimaFileName;
+    static float soundSensitivity;
     
     static float movieWidth, movieHeight;
     static bool bMainScreen;

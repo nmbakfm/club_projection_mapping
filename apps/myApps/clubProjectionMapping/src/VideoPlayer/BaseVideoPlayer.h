@@ -24,17 +24,13 @@ public:
     BaseVideoPlayer();
     virtual void setMessage(string _message){};
     virtual string getMessage(){};
-    virtual void setPosition(float _x, float _y){};
-    virtual void setPosition(ofPoint _msg_pos){};
     virtual ofPoint getPosition(){};
+    virtual void updateFrame(){update();};
     virtual void drawMovie(float _x, float _y, float _w, float _h){ofVideoPlayer::draw(_x, _y, _w, _h);};
     virtual bool isMovieDone(){return getIsMovieDone(); };
     void setCurrentVolume(float _curVol);
     
     static void setNameFont(string _font_name, int _font_size);
-
-    void update();
-    void draw(float _x, float _y, float _w, float _h);
 };
 
 #endif /* defined(__clubProjectionMapping__BaseVideoPlayer__) */

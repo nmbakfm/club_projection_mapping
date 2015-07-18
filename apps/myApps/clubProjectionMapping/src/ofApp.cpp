@@ -86,6 +86,8 @@ ofPoint ofApp::rectMeshVertex(int x, int y){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    movieManager.setCurrendVolume(smoothedVol);
+    
 #if CALIBRATION
     if(bReload){
         Settings::load(SETTINGS_XML_FILENAME);
@@ -145,7 +147,6 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     
     smoothedVol *= 0.93;
     smoothedVol += 0.07 * curVol;
-    movieManager.setCurrendVolume(curVol);
     bufferCounter++;
     
 }

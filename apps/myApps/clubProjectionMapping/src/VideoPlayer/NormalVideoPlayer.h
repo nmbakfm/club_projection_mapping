@@ -17,8 +17,6 @@ public:
     NormalVideoPlayer(){};
     void setMessage(string _message){};
     string getMessage(){};
-    void setPosition(float _x, float _y){};
-    void setPosition(ofPoint _msg_pos){};
     ofPoint getPosition(){};
     void drawMovie(float _x, float _y, float _w, float _h){
         draw(_x, _y, _w, _h);
