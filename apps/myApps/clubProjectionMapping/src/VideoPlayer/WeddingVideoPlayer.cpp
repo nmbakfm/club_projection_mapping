@@ -41,8 +41,8 @@ void WeddingVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     
     if (getCurrentFrame() > 609) {
         ofSetColor(0, 128);
-        nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2+5, pos.y - nameFont.stringHeight(message)/2+130+3);
+        weddingNameFont.drawStringAsShapes(message, pos.x - weddingNameFont.stringWidth(message)/2+5, pos.y - weddingNameFont.stringHeight(message)/2+130+3);
         ofSetColor(255);
-        nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2+130);
+        weddingNameFont.drawStringAsShapes(message, pos.x - weddingNameFont.stringWidth(message)/2, pos.y - weddingNameFont.stringHeight(message)/2+130);
     }
 }

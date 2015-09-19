@@ -15,7 +15,8 @@ class BaseVideoPlayer : public ofVideoPlayer {
 protected:
     string message;
     ofPoint pos;
-    static ofTrueTypeFont nameFont;
+    static ofTrueTypeFont weddingNameFont;
+    static ofTrueTypeFont birthdayNameFont;
     static string font_name;
     static int font_size;
     int endFrameCount;

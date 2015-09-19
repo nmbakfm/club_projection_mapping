@@ -41,6 +41,6 @@ void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     
     if (getCurrentFrame() > 522) {
         ofSetColor(255);
-        nameFont.drawStringAsShapes(message, pos.x - nameFont.stringWidth(message)/2, pos.y - nameFont.stringHeight(message)/2+130);
+        birthdayNameFont.drawStringAsShapes(message, pos.x - birthdayNameFont.stringWidth(message)/2, pos.y - birthdayNameFont.stringHeight(message)/2+130);
     }
 }

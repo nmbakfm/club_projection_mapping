@@ -67,7 +67,11 @@ void MovieManager::update(){
             if (msg.getAddress() == "/birthday") {
                 BirthdayVideoPlayer *_birthdayVideoPlayer = new BirthdayVideoPlayer();
                 _birthdayVideoPlayer->load(Settings::birthdayFileName);
-                message = msg.getArgAsString(0);
+                message = "";
+                for(int i=0; i<msg.getNumArgs(); ++i){
+                    if(i != 0) message += " ";
+                    message += msg.getArgAsString(i);
+                }
                 _birthdayVideoPlayer->setMessage(message);
                 _birthdayVideoPlayer->setNamePosition(_birthdayVideoPlayer->width/2, _birthdayVideoPlayer->height/2);
                 delete nextPlayer;
@@ -77,7 +81,11 @@ void MovieManager::update(){
             }else if (msg.getAddress() == "/wedding") {
                 WeddingVideoPlayer *_weddingVideoPlayer = new WeddingVideoPlayer();
                 _weddingVideoPlayer->load(Settings::weddingFileName);
-                message = msg.getArgAsString(0);
+                message = "";
+                for(int i=0; i<msg.getNumArgs(); ++i){
+                    if(i != 0) message += " ";
+                    message += msg.getArgAsString(i);
+                }
                 _weddingVideoPlayer->setMessage(message);
                 _weddingVideoPlayer->setNamePosition(_weddingVideoPlayer->width/2, _weddingVideoPlayer->height/2);
                 delete nextPlayer;
