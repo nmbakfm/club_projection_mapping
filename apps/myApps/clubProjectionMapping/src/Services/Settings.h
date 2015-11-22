@@ -13,6 +13,7 @@
 #include "Constant.h"
 #include "ofxXmlSettings.h"
 #include "Data.hpp"
+
 class MovieData;
 
 
@@ -33,9 +34,9 @@ public:
     static std::shared_ptr<MovieData> birthdayData;
     static std::shared_ptr<MovieData> weddingData;
     
-    static shared_ptr<ofTrueTypeFont> weddingFont;
-    static shared_ptr<ofTrueTypeFont> birthdayFont;
-    static shared_ptr<ofTrueTypeFont> normalFont;
+    static std::shared_ptr<ofTrueTypeFont> weddingFont;
+    static std::shared_ptr<ofTrueTypeFont> birthdayFont;
+    static std::shared_ptr<ofTrueTypeFont> normalFont;
     
     static float soundSensitivity;
     

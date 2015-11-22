@@ -7,6 +7,8 @@
 //
 
 #include "MovieManager.h"
+#include "Util.hpp"
+#include "Settings.h"
 
 MovieManager::MovieManager(){
     
@@ -26,12 +28,12 @@ void MovieManager::setup(){
     currentIndex = 0;
     int nextIndex = 1 % Settings::movieData.size();
     
-    currentPlayer = MovieData::getLoadedPlayerFrom(Settings::movieData[currentIndex]);
-    nextPlayer = MovieData::getLoadedPlayerFrom(Settings::movieData[nextIndex]);
+    currentPlayer = Util::getPlayerFrom(Settings::movieData[currentIndex]);
+    nextPlayer = Util::getPlayerFrom(Settings::movieData[nextIndex]);
     
     currentPlayer->play();
     
-    zimaPlayer = MovieData::getLoadedPlayerFrom(Settings::zimaData);
+    zimaPlayer = Util::getPlayerFrom(Settings::zimaData);
     zimaAlpha = 0;
     //zimaPlayer->setLoopState(OF_LOOP_NORMAL);
     
@@ -62,12 +64,12 @@ void MovieManager::update(){
             string message = getMessageContentFromOfOSCMessage(msg);
             
             if (msg.getAddress() == "/birthday") {
-                nextPlayer = MovieData::getLoadedPlayerFrom(Settings::birthdayData);
+                nextPlayer = Util::getPlayerFrom(Settings::birthdayData);
                 nextPlayer->setMessage(message);
                 nextPlayer->setMessagePosition(nextPlayer->width/2, nextPlayer->height/2);
                 ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << Settings::birthdayData->getFilePath() << " name:" << message;
             }else if (msg.getAddress() == "/wedding") {
-                nextPlayer = MovieData::getLoadedPlayerFrom(Settings::weddingData);
+                nextPlayer = Util::getPlayerFrom(Settings::weddingData);
                 nextPlayer->setMessage(message);
                 nextPlayer->setMessagePosition(nextPlayer->width/2, nextPlayer->height/2);
                 ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
@@ -177,7 +179,7 @@ void MovieManager::stopZima(){
 void MovieManager::switchMovie(){
     
     currentPlayer = nextPlayer;
-    nextPlayer = MovieData::getLoadedPlayerFrom(Settings::movieData[nextIndex()]);
+    nextPlayer = Util::getPlayerFrom(Settings::movieData[nextIndex()]);
     //ビデオは順番である必要はないから、ここで無条件でindex変えるのありだと思う
     currentIndex = nextIndex();
     

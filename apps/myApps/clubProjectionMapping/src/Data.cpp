@@ -8,36 +8,3 @@
 
 #include "Data.hpp"
 using namespace std;
-
-shared_ptr<BaseVideoPlayer> MovieData::getLoadedPlayerFrom(shared_ptr<MovieData> d){
-    
-    shared_ptr<BaseVideoPlayer> p;
-    
-    switch (d->getMovieType()) {
-        case MovieTypeNormal:{
-            p = shared_ptr<BaseVideoPlayer>(new NormalVideoPlayer());
-            break;
-        }
-        case MovieTypeSoundReactive:{
-            p = shared_ptr<BaseVideoPlayer>(new SoundReactivePlayer(d->getEndFrame(), Settings::soundSensitivity));
-            break;
-        }
-        case MovieTypeWedding:{
-            p = shared_ptr<BaseVideoPlayer>(new WeddingVideoPlayer());
-            break;
-        }
-        case MovieTypeBirthDay:{
-            p = shared_ptr<BaseVideoPlayer>(new BirthdayVideoPlayer());
-            break;
-        }
-        case MovieTypeZima:{
-            p = shared_ptr<BaseVideoPlayer>(new NormalVideoPlayer());
-            break;
-        }
-    }
-    p->load(d->getFilePath());
-    p->setMovieData(d);
-    p->setUseTexture(true);
-    
-    return p;
-}

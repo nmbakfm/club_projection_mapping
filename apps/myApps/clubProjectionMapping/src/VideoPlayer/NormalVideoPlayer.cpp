@@ -7,7 +7,6 @@
 //
 
 #include "NormalVideoPlayer.h"
-#include "Settings.h"
 
 void NormalVideoPlayer::drawMovie(float _x, float _y, float _w, float _h) {
     draw(_x, _y, _w, _h);

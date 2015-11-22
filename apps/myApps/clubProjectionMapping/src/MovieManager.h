@@ -11,7 +11,6 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
-#include "Settings.h"
 #include "Constant.h"
 #include "ClubVideoPlayer.h"
 #include "Data.hpp"

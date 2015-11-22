@@ -7,7 +7,6 @@
 //
 
 #include "WeddingVideoPlayer.h"
-#include "Settings.h"
 
 WeddingVideoPlayer::WeddingVideoPlayer(){
     

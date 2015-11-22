@@ -7,7 +7,6 @@
 //
 
 #include "BirthdayVideoPlayer.h"
-#include "Settings.h"
 
 BirthdayVideoPlayer::BirthdayVideoPlayer(){
     

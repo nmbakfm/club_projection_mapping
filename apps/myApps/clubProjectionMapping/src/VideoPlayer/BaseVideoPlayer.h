@@ -9,8 +9,10 @@
 #ifndef __clubProjectionMapping__BaseVideoPlayer__
 #define __clubProjectionMapping__BaseVideoPlayer__
 
-#include "ofMain.h"
 #include <memory>
+#include "ofMain.h"
+#include "Settings.h"
+
 class MovieData;
 
 class BaseVideoPlayer : public ofVideoPlayer {

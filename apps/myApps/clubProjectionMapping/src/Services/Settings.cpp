@@ -22,6 +22,9 @@ shared_ptr<MovieData> Settings::weddingData;
 shared_ptr<MovieData> Settings::birthdayData;
 vector<shared_ptr<MovieData> > Settings::movieData;
 
+shared_ptr<ofTrueTypeFont> Settings::weddingFont;
+shared_ptr<ofTrueTypeFont> Settings::birthdayFont;
+shared_ptr<ofTrueTypeFont> Settings::normalFont;
 
 void Settings::load(const string file_name){
     xml.load(file_name);

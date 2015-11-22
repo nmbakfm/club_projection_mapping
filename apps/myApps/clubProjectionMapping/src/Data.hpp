@@ -12,8 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <memory>
-#include "Settings.h"
-#include "ClubVideoPlayer.h"
+
 
 typedef enum {
     MovieTypeNormal = 0,
@@ -48,7 +47,6 @@ public:
     MovieType getMovieType(){return this->movie_type;}
     bool isSoundReactive(){return endframe > 0;}
     int getEndFrame(){return endframe;}
-    static std::shared_ptr<BaseVideoPlayer> getLoadedPlayerFrom(shared_ptr<MovieData> d);
 };
 
 #endif /* Data_hpp */
