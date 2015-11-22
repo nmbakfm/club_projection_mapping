@@ -12,16 +12,27 @@
 #include "ofMain.h"
 #include "Constant.h"
 #include "ofxXmlSettings.h"
+#include "Data.hpp"
+class MovieData;
+
+
+
+class MovieInfo{
+    string fileName;
+};
 
 class Settings {
     static ofxXmlSettings xml;
     static ofPoint loadPoint(const string tagPath);
 public:
     static void load(const string file_name);
+    
     static ofPoint rectVertices[4];
-    static vector<string> fileNames;
-    static vector<int> endFrames;
-    static string zimaFileName;
+    static vector<shared_ptr<MovieData> > movieData;
+    static std::shared_ptr<MovieData> zimaData;
+    static std::shared_ptr<MovieData> birthdayData;
+    static std::shared_ptr<MovieData> weddingData;
+    
     static float soundSensitivity;
     
     static float movieWidth, movieHeight;
@@ -34,8 +45,6 @@ public:
     
     static int zimaInterval;
     
-    static string birthdayFileName;
-    static string weddingFileName;
 };
 
 #endif /* defined(__clubProjectionMapping__Settings__) */

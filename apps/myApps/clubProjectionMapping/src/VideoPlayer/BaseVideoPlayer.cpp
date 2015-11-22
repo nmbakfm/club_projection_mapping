@@ -8,22 +8,13 @@
 
 #include "BaseVideoPlayer.h"
 
-string BaseVideoPlayer::font_name;
-int BaseVideoPlayer::font_size;
 ofTrueTypeFont BaseVideoPlayer::weddingNameFont;
 ofTrueTypeFont BaseVideoPlayer::birthdayNameFont;
 
-BaseVideoPlayer::BaseVideoPlayer(){
-    endFrameCount = 0;
-}
+BaseVideoPlayer::BaseVideoPlayer(){}
 
 void BaseVideoPlayer::setNameFont(string _font_name, int _font_size){
-//    font_name = _font_name;
-//    font_size = _font_size;
     birthdayNameFont.load("font/NuevaStd-Bold.otf", 72, true, true, true);
     weddingNameFont.load("font/exmouth_.ttf", 72, true, true, true);
 }
 
-void BaseVideoPlayer::setCurrentVolume(float _curVol){
-    curVol = _curVol;
-};

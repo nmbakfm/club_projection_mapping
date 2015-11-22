@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
     ofSoundStream soundStream;
     
     bool bReload;
+    bool isFirstTime = true;
     
     MovieManager movieManager;
     ofFbo fbo;

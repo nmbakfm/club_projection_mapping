@@ -14,39 +14,22 @@
 #include "Settings.h"
 #include "Constant.h"
 #include "ClubVideoPlayer.h"
+#include "Data.hpp"
 
-typedef enum  {
-    MovieTypeNormal = 0,
-    MovieTypeZima = 1,
-    MovieTypeBirthDay = 2,
-    MovieTypeWedding = 3
-} MovieType;
 
 class MovieManager {
-    vector<string> file_names;
-    vector<int> endFrames;
     
-    BaseVideoPlayer * currentPlayer; // 今の映像
-    BaseVideoPlayer * nextPlayer; // 次に流す映像
-    NormalVideoPlayer zimaPlayer; // zimaの映像
-    
-    int fileCount;
-    
-    int currentMovieId;
-    int nextMovieId;
+    shared_ptr<BaseVideoPlayer>  currentPlayer; // 今の映像
+    shared_ptr<BaseVideoPlayer>  nextPlayer; // 次に流す映像
+    shared_ptr<BaseVideoPlayer> zimaPlayer; // zimaの映像
     
     int currentIndex;
+    shared_ptr<MovieData> currentData;
     
     string message;
-    MovieType movieType;
-    MovieType nextMovieType;
-    
-    bool isZima;
     
     void switchMovie();
     int nextIndex();
-    
-    void assignFileNames(vector<string> _file_names, vector<int> _endFrames);
     
     float movieWidth, movieHeight;
     float curVol;
@@ -56,9 +39,12 @@ class MovieManager {
     
     int zimaAlpha;
     
+private:
+    string getMessageContentFromOfOSCMessage(ofxOscMessage msg);
+    
 public:
     MovieManager();
-    void setup(vector<string> _file_names, vector<int> _endFrames, string _zima_file_name);
+    void setup();
     void update();
     void draw();
     void startZima();

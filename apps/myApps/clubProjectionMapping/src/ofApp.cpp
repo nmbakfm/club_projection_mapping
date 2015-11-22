@@ -8,14 +8,14 @@ void ofApp::setup(){
     ofSetFrameRate(30);
     ofHideCursor();
     
-    ofLogToFile(LOG_FILENAME);
+    //ofLogToFile(LOG_FILENAME);
     
     Settings::load(SETTINGS_XML_FILENAME);
     
     movieWidth = Settings::movieWidth;
     movieHeight = Settings::movieHeight;
     
-    movieManager.setup(Settings::fileNames, Settings::endFrames, Settings::zimaFileName);
+    movieManager.setup();
     
     fbo.allocate(movieWidth, movieHeight, GL_RGB);
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
@@ -95,8 +95,8 @@ void ofApp::update(){
     }
 #endif
     if(Settings::bMainScreen){
-        int test = ofGetFrameNum();
-        if(ofGetFrameNum() % zimaInterval == zimaInterval-1){
+        if(isFirstTime && ofGetFrameNum() % zimaInterval == zimaInterval-1){
+            isFirstTime = false;
             movieManager.startZima();
         }
     }

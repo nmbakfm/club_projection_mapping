@@ -12,8 +12,7 @@ MovieManager::MovieManager(){
     
 }
 
-void MovieManager::setup(vector<string> _file_names, vector<int> _endFrames, string _zima_file_name){
-    assignFileNames(_file_names, _endFrames);
+void MovieManager::setup(){
     
     BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 72);
     
@@ -21,77 +20,58 @@ void MovieManager::setup(vector<string> _file_names, vector<int> _endFrames, str
         sender.setup(Settings::sendHost, Settings::sendPort);
     }
     receiver.setup(Settings::receivePort);
-    movieType = MovieTypeNormal;
     
     movieWidth = Settings::movieWidth;
     movieHeight = Settings::movieHeight;
     
     currentIndex = 0;
-    int nextIndex = 1 % Settings::fileNames.size();
+    int nextIndex = 1 % Settings::movieData.size();
     
-    if(endFrames[0] > 0) {
-        currentPlayer = new SoundReactivePlayer(endFrames[0], Settings::soundSensitivity);
-    }else{
-        currentPlayer = new NormalVideoPlayer();
-    }
-    
-    if(endFrames[nextIndex] > 0) {
-        nextPlayer = new SoundReactivePlayer(endFrames[1], Settings::soundSensitivity);
-    }else{
-        nextPlayer = new NormalVideoPlayer();
-    }
-    
-    currentPlayer->load(file_names[currentIndex]);
-    nextPlayer->load(file_names[nextMovieId]);
+    currentPlayer = MovieData::getLoadedPlayerFrom(Settings::movieData[currentIndex]);
+    nextPlayer = MovieData::getLoadedPlayerFrom(Settings::movieData[nextIndex]);
     
     currentPlayer->play();
-    currentPlayer->setUseTexture(true);
     
-    zimaPlayer.load(_zima_file_name);
-    movieType = MovieTypeNormal;
-    zimaPlayer.setUseTexture(true);
+    zimaPlayer = MovieData::getLoadedPlayerFrom(Settings::zimaData);
     zimaAlpha = 0;
-    zimaPlayer.setLoopState(OF_LOOP_NORMAL);
+    //zimaPlayer->setLoopState(OF_LOOP_NORMAL);
     
-    if(!Settings::bMainScreen){
-        zimaPlayer.setLoopState(OF_LOOP_NORMAL);
-    }
-    ofLog(OF_LOG_NOTICE) << "start `" << file_names[currentMovieId] << "`";
+    ofLog(OF_LOG_NOTICE) << "start `" << Settings::movieData[currentIndex]->getFilePath() << "`";
 }
 
+/**
+    UPDATE TASK LIST
+    1: Message Handling
+        - check if there are message from osc,
+        - if they are swap next Player
+        - TODO:
+ 
+    2: Update zima
+        - check zima end or not
+        - if it is zima start timeing start it
+    
+    3: Check movie swap
+        - if current movie has done, swap to next one...
+ */
 void MovieManager::update(){
+    
+    //1: Message Handling
     if(Settings::bMainScreen){
         while (receiver.hasWaitingMessages()) {
             ofxOscMessage msg;
             receiver.getNextMessage(&msg);
+            string message = getMessageContentFromOfOSCMessage(msg);
+            
             if (msg.getAddress() == "/birthday") {
-                BirthdayVideoPlayer *_birthdayVideoPlayer = new BirthdayVideoPlayer();
-                _birthdayVideoPlayer->load(Settings::birthdayFileName);
-                message = "";
-                for(int i=0; i<msg.getNumArgs(); ++i){
-                    if(i != 0) message += " ";
-                    message += msg.getArgAsString(i);
-                }
-                _birthdayVideoPlayer->setMessage(message);
-                _birthdayVideoPlayer->setNamePosition(_birthdayVideoPlayer->width/2, _birthdayVideoPlayer->height/2);
-                delete nextPlayer;
-                nextPlayer = _birthdayVideoPlayer;
-                nextMovieType = MovieTypeBirthDay;
-                ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
+                nextPlayer = MovieData::getLoadedPlayerFrom(Settings::birthdayData);
+                nextPlayer->setMessage(message);
+                nextPlayer->setMessagePosition(nextPlayer->width/2, nextPlayer->height/2);
+                ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << Settings::birthdayData->getFilePath() << " name:" << message;
             }else if (msg.getAddress() == "/wedding") {
-                WeddingVideoPlayer *_weddingVideoPlayer = new WeddingVideoPlayer();
-                _weddingVideoPlayer->load(Settings::weddingFileName);
-                message = "";
-                for(int i=0; i<msg.getNumArgs(); ++i){
-                    if(i != 0) message += " ";
-                    message += msg.getArgAsString(i);
-                }
-                _weddingVideoPlayer->setMessage(message);
-                _weddingVideoPlayer->setNamePosition(_weddingVideoPlayer->width/2, _weddingVideoPlayer->height/2);
-                delete nextPlayer;
-                nextPlayer = _weddingVideoPlayer;
-                nextMovieType = MovieTypeWedding;
-                ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << nextPlayer->getMoviePath() << " name:" << message;
+                nextPlayer = MovieData::getLoadedPlayerFrom(Settings::weddingData);
+                nextPlayer->setMessage(message);
+                nextPlayer->setMessagePosition(nextPlayer->width/2, nextPlayer->height/2);
+                ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
             }
         }
     }else{
@@ -108,13 +88,14 @@ void MovieManager::update(){
         }
     }
     
-    if(movieType == MovieTypeZima){
+    //2: Update zima
+    if(currentPlayer->getMovieData()->getMovieType() == MovieTypeZima){
         if(zimaAlpha < 255){
             zimaAlpha = MIN(zimaAlpha + 5, 255);
         }
-        zimaPlayer.update();
+        zimaPlayer->update();
         if(Settings::bMainScreen){
-            if (zimaPlayer.isMovieDone()) {
+            if (zimaPlayer->isMovieDone()) {
                 stopZima();
             }
         }
@@ -123,29 +104,41 @@ void MovieManager::update(){
             zimaAlpha = MAX(zimaAlpha - 5, 0);
         }
     }
+    
+    //3: swap
     if(currentPlayer->isMovieDone()){
         switchMovie();
     }
     currentPlayer->updateFrame();
 }
 
+string MovieManager::getMessageContentFromOfOSCMessage(ofxOscMessage msg){
+    string m = "";
+    for(int i=0; i<msg.getNumArgs(); ++i){
+        if(i != 0) m += " ";
+        m += msg.getArgAsString(i);
+    }
+    return m;
+}
+
 void MovieManager::draw(){
     ofSetColor(255);
     currentPlayer->drawMovie(0, 0, movieWidth, movieHeight);
     ofSetColor(255, zimaAlpha);
-    zimaPlayer.drawMovie(0, 0, movieWidth, movieHeight);
+    zimaPlayer->drawMovie(0, 0, movieWidth, movieHeight);
 }
 
 /**
  *
  */
 void MovieManager::startZima(){
-    if(movieType == MovieTypeZima) return;
-    movieType = MovieTypeZima;
+    if(currentPlayer->getMovieData()->getMovieType() == MovieTypeZima) return;
     
-    zimaPlayer.play();
-    zimaPlayer.setFrame(0);
-    zimaPlayer.update();
+    zimaPlayer->play();
+    zimaPlayer->setFrame(0);
+    zimaPlayer->update();
+    
+    currentPlayer = zimaPlayer;
     
     if(Settings::bMainScreen){
         ofxOscMessage msg;
@@ -154,11 +147,10 @@ void MovieManager::startZima(){
         sender.sendMessage(msg);
     }
     
-    ofLog(OF_LOG_NOTICE) << "start `" << zimaPlayer.getMoviePath() << "`(ZIMA MOVIE)";
+    ofLog(OF_LOG_NOTICE) << "start `" << currentPlayer->getMovieData()->getFilePath() << "`(ZIMA MOVIE)";
 }
 
 void MovieManager::stopZima(){
-    movieType = MovieTypeNormal;
     
     if(Settings::bMainScreen){
         ofxOscMessage msg;
@@ -166,7 +158,8 @@ void MovieManager::stopZima(){
         msg.addIntArg(0);
         sender.sendMessage(msg);
     }
-    ofLog(OF_LOG_NOTICE) << "stop `" << zimaPlayer.getMoviePath() << "`(ZIMA MOVIE)";
+    switchMovie();
+    ofLog(OF_LOG_NOTICE) << "stop `" << currentPlayer->getMovieData()->getFilePath() << "`(ZIMA MOVIE)";
 }
 
 
@@ -174,44 +167,17 @@ void MovieManager::stopZima(){
 /**
  * @param _file_names 読み込むファイル名
  */
-void MovieManager::assignFileNames(vector<string> _file_names, vector<int> _endFrames){
-    file_names = _file_names;
-    fileCount = _file_names.size();
-    endFrames = _endFrames;
-}
+
 
 /**
  * @param _nextMovieId 次のmovieのID
  */
 void MovieManager::switchMovie(){
-    delete currentPlayer;
-    currentPlayer = nextPlayer;
-    movieType = nextMovieType;
-    if(endFrames[nextIndex()] > 0){
-        nextPlayer = new SoundReactivePlayer(endFrames[nextIndex()], Settings::soundSensitivity);
-    }else{
-        nextPlayer = new NormalVideoPlayer();
-    }
-    nextPlayer->load(file_names[nextIndex()]);
-    if(nextMovieType == MovieTypeNormal){
-        // 現在の動画の次の順番へ
-        currentIndex = nextIndex();
-        
-        // 動画の切り替え
-        nextPlayer->setUseTexture(true);
-    }else if(nextMovieType == MovieTypeBirthDay){
-        ofLog(OF_LOG_NOTICE) << "START BIRTHDAY MOVIE...";
-        nextPlayer->setUseTexture(true);
-        nextMovieType = MovieTypeNormal;
-    }else if(nextMovieType == MovieTypeWedding){
-        ofLog(OF_LOG_NOTICE) << "START WEDDING MOVIE...";
-        nextPlayer->setUseTexture(true);
-        nextMovieType = MovieTypeNormal;
-    }
     
-    if(currentIndex == 0){
-        ofLog(OF_LOG_NOTICE) << "RETURN TO FIRST MOVIE...";
-    }
+    currentPlayer = nextPlayer;
+    nextPlayer = MovieData::getLoadedPlayerFrom(Settings::movieData[nextIndex()]);
+    //ビデオは順番である必要はないから、ここで無条件でindex変えるのありだと思う
+    currentIndex = nextIndex();
     
     // 動画を作成
     currentPlayer->firstFrame();
@@ -220,10 +186,9 @@ void MovieManager::switchMovie(){
 }
 
 void MovieManager::setCurrendVolume(float _curVol){
-//    curVol = _curVol;
     currentPlayer->setCurrentVolume(_curVol);
 }
 
 int MovieManager::nextIndex(){
-    return (currentIndex + 1) % fileCount;
+    return (currentIndex + 1) % Settings::movieData.size();
 }

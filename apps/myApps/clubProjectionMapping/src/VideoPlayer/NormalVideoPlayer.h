@@ -13,14 +13,14 @@
 #include "BaseVideoPlayer.h"
 
 class NormalVideoPlayer : public BaseVideoPlayer {
+private:
+    bool hasMessage();
+    
+    
 public:
     NormalVideoPlayer(){};
-    void setMessage(string _message){};
-    string getMessage(){};
     ofPoint getPosition(){};
-    void drawMovie(float _x, float _y, float _w, float _h){
-        draw(_x, _y, _w, _h);
-    };
+    void drawMovie(float _x, float _y, float _w, float _h);
 };
 
 #endif /* defined(__clubProjectionMapping__NormalVideoPlayer__) */

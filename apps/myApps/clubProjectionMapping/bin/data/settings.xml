@@ -1,0 +1,38 @@
+<settings>
+    <mainScreenFlag>1</mainScreenFlag>
+    <moviePath>movie/</moviePath>
+    <zimaInterval>300</zimaInterval>
+    <movieSize width="1024" height="399" />
+    <movies>
+        <movie filename="1_1.mov" endFrame="300" ></movie>
+        <movie filename="2_1.mov"></movie>
+        <movie filename="10_1.mov"></movie>
+    </movies>
+    <zimaMovies>
+        <movie filename="5_1.mov"></movie>
+    </zimaMovies>
+    <birthdayMovies>
+        <movie filename="BD_1.mov"></movie>
+    </birthdayMovies>
+    <weddingMovies>
+        <movie filename="WD_1.mov"></movie>
+    </weddingMovies>
+    <calibration>
+        <rect>
+            <leftTop x="0" y="0" />
+            <rightTop x="1024" y="000" />
+            <rightBottom x="1024" y="240" />
+            <leftBottom x="0" y="240" />
+        </rect>
+    </calibration>
+    <networking>
+        <send>
+            <host>127.0.0.1</host>
+            <sendTo>127.0.0.1</sendTo>
+            <port>57688</port>
+        </send>
+        <receive>
+            <port>57688</port>
+        </receive>
+    </networking>
+</settings>

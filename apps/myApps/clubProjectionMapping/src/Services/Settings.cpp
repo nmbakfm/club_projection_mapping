@@ -10,18 +10,18 @@
 
 ofxXmlSettings Settings::xml;
 ofPoint Settings::rectVertices[4];
-vector<string> Settings::fileNames;
 float Settings::soundSensitivity;
-vector<int> Settings::endFrames;
-string Settings::zimaFileName;
 float Settings::movieWidth, Settings::movieHeight;
 bool Settings::bMainScreen;
 int Settings::sendPort;
 string Settings::sendHost;
 int Settings::receivePort;
 int Settings::zimaInterval;
-string Settings::birthdayFileName;
-string Settings::weddingFileName;
+shared_ptr<MovieData> Settings::zimaData;
+shared_ptr<MovieData> Settings::weddingData;
+shared_ptr<MovieData> Settings::birthdayData;
+vector<shared_ptr<MovieData> > Settings::movieData;
+
 
 void Settings::load(const string file_name){
     xml.load(file_name);
@@ -54,13 +54,19 @@ void Settings::load(const string file_name){
     
     ofLog(OF_LOG_NOTICE) << "MOVIE ORDERS =================================";
     for (int i=0; i<fileNum; ++i) {
-        fileNames.push_back(dir_name + xml.getAttribute("movie","filename","",i));
-        endFrames.push_back(xml.getAttribute("movie","endFrame", 0, i));
-        if(!ofFile::doesFileExist(fileNames[i])){
-            ofLog(OF_LOG_FATAL_ERROR) << "`" << fileNames[i] << "` does not exists";
+        string filename = (dir_name + xml.getAttribute("movie","filename","",i));
+        int endframe = (xml.getAttribute("movie","endFrame", 0, i));
+        
+        auto p = shared_ptr<MovieData>(new MovieData(filename, MovieTypeNormal));
+        p->setEndFrameForSoundReactPlayer(endframe);
+        
+        movieData.push_back(p);
+        
+        if(!ofFile::doesFileExist(filename)){
+            ofLog(OF_LOG_FATAL_ERROR) << "`" << filename << "` does not exists";
             throw "MovieFileNotFoundException";
         }else{
-            ofLog(OF_LOG_NOTICE) << i << ":\t" << fileNames[i];
+            ofLog(OF_LOG_NOTICE) << i << ":\t" << filename;
         }
     }
     xml.popTag(); // movies
@@ -69,7 +75,10 @@ void Settings::load(const string file_name){
     
     ofLog(OF_LOG_NOTICE) << "LOAD ZIMA =================================";
     xml.pushTag("zimaMovies");
-    zimaFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    string zimaFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    zimaData = shared_ptr<MovieData>(new MovieData(zimaFileName, MovieTypeZima));
+    
+    
     if(!ofFile::doesFileExist(zimaFileName)){
         ofLog(OF_LOG_FATAL_ERROR) << "`" << zimaFileName << "` does not exist";
         throw "MovieFileNotFoundException";
@@ -82,7 +91,9 @@ void Settings::load(const string file_name){
     
     ofLog(OF_LOG_NOTICE) << "LOAD BIRTHDAY ==============================";
     xml.pushTag("birthdayMovies");
-    birthdayFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    string birthdayFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    birthdayData = shared_ptr<MovieData>(new MovieData(birthdayFileName, MovieTypeBirthDay));
+    
     if(!ofFile::doesFileExist(birthdayFileName)){
         ofLog(OF_LOG_FATAL_ERROR) << "`" << birthdayFileName << "` does not exist";
         throw "MovieFileNotFoundException";
@@ -93,7 +104,9 @@ void Settings::load(const string file_name){
     
     ofLog(OF_LOG_NOTICE) << "LOAD WEDDING ==============================";
     xml.pushTag("weddingMovies");
-    weddingFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    string weddingFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
+    weddingData = shared_ptr<MovieData>(new MovieData(weddingFileName, MovieTypeWedding));
+    
     if(!ofFile::doesFileExist(weddingFileName)){
         ofLog(OF_LOG_FATAL_ERROR) << "`" << weddingFileName << "` does not exist";
         throw "MovieFileNotFoundException";

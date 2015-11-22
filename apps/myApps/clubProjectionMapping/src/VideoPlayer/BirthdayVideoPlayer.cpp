@@ -12,32 +12,15 @@ BirthdayVideoPlayer::BirthdayVideoPlayer(){
     
 }
 
-void BirthdayVideoPlayer::setMessage(string _message){
-    message = _message;
-}
-
-string BirthdayVideoPlayer::getMessage(){
-    return message;
-}
-
 void BirthdayVideoPlayer::updateFrame(){
     update();
 }
 
-void BirthdayVideoPlayer::setNamePosition(float _x, float _y){
-    pos = ofPoint(_x, _y);
-}
-
-void BirthdayVideoPlayer::setNamePosition(ofPoint _msg_pos){
-    pos = _msg_pos;
-}
-
-ofPoint BirthdayVideoPlayer::getNamePosition(){
-    return pos;
-}
-
 void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     draw(_x, _y, _w, _h);
+    
+    string message = this->getMessage();
+    ofPoint pos = this->getPosition();
     
     if (getCurrentFrame() > 522) {
         ofSetColor(255);

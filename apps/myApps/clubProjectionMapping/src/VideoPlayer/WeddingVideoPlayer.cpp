@@ -12,32 +12,14 @@ WeddingVideoPlayer::WeddingVideoPlayer(){
     
 }
 
-void WeddingVideoPlayer::setMessage(string _message){
-    message = _message;
-}
-
-string WeddingVideoPlayer::getMessage(){
-    return message;
-}
-
 void WeddingVideoPlayer::updateFrame(){
     update();
 }
 
-void WeddingVideoPlayer::setNamePosition(float _x, float _y){
-    pos = ofPoint(_x, _y);
-}
-
-void WeddingVideoPlayer::setNamePosition(ofPoint _msg_pos){
-    pos = _msg_pos;
-}
-
-ofPoint WeddingVideoPlayer::getNamePosition(){
-    return pos;
-}
-
 void WeddingVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     draw(_x, _y, _w, _h);
+    string message = this->getMessage();
+    ofPoint pos = this->getMessagePosition();
     
     if (getCurrentFrame() > 609) {
         ofSetColor(0, 128);

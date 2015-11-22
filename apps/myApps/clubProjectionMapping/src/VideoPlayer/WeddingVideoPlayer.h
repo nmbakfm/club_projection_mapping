@@ -15,11 +15,7 @@
 class WeddingVideoPlayer : public BaseVideoPlayer {
 public:
     WeddingVideoPlayer();
-    void setMessage(string _message);
-    string getMessage();
-    void setNamePosition(float _x, float _y);
-    void setNamePosition(ofPoint _msg_pos);
-    ofPoint getNamePosition();
+    
     void updateFrame();
     void drawMovie(float _x, float _y, float _w, float _h);
     bool getIsMovieDone();
