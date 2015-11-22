@@ -49,6 +49,7 @@ public:
     void draw();
     void startZima();
     void stopZima();
+    void reserveZima();
     void setMoviePosition(double position_pct);
     void setCurrendVolume(float _curVol);
 };

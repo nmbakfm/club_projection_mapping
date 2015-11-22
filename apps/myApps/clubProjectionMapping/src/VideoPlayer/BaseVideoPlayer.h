@@ -20,10 +20,9 @@ private:
     ofPoint pos = ofPoint(0,0);
     float curVol = 0;
     std::shared_ptr<MovieData> data;
+    bool _messageSensitive = false;
     
 protected:
-    static ofTrueTypeFont weddingNameFont;
-    static ofTrueTypeFont birthdayNameFont;
     
     
 public:
@@ -34,9 +33,21 @@ public:
     shared_ptr<MovieData> getMovieData(){return data;};
     void setMovieData(shared_ptr<MovieData> _data){this->data = _data;}
     
+    
+    //MessageSensitive
+    //動画とメッセージが密接な関係を持っているかどうかの判定
+    //この値がtrueの際はメッセージ描画を控えることを推奨する
+    //デフォルトではfalse
+    void setMessageSensitive(bool b){this->_messageSensitive = b;}
+    bool isMessageSensitive(){return this->_messageSensitive;}
+    
     //Message getter,setter
+    //旧ビデオプレイヤーがMessageと結合していた名残
+    //Wedding等ビデオプレーヤーと密接な関係を持つものに対して現在も有効
+    //MessageDrawerを利用させるようにリファクタリングの対象
     string getMessage(){return this->message;}
-    void setMessage(string _message){this->message = message;}
+    void setMessage(string _message){this->message = _message;}
+    bool hasMessage(){return this->message != "";}
     
     //Message position getter,setter
     ofPoint getMessagePosition(){return this->pos;}
@@ -48,10 +59,9 @@ public:
     float getCurrentVolume(){return curVol;};
     
     void updateFrame(){update();}
-    void drawMovie(float _x, float _y, float _w, float _h){draw(_x, _y, _w, _h);}
+    virtual void drawMovie(float _x, float _y, float _w, float _h) = 0;
     bool isMovieDone(){return getIsMovieDone(); }
     
-    static void setNameFont(string _font_name, int _font_size);
 };
 
 #endif /* defined(__clubProjectionMapping__BaseVideoPlayer__) */

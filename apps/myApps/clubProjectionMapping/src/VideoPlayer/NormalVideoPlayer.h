@@ -14,8 +14,6 @@
 
 class NormalVideoPlayer : public BaseVideoPlayer {
 private:
-    bool hasMessage();
-    
     
 public:
     NormalVideoPlayer(){};

@@ -138,6 +138,14 @@ void Settings::load(const string file_name){
     }else{
         receivePort = 57689;
     }
+    
+    //font loading
+    birthdayFont = shared_ptr<ofTrueTypeFont>(new ofTrueTypeFont());
+    weddingFont = shared_ptr<ofTrueTypeFont>(new ofTrueTypeFont());
+    normalFont = shared_ptr<ofTrueTypeFont>(new ofTrueTypeFont());
+    birthdayFont->load("font/NuevaStd-Bold.otf", 72, true, true, true);
+    normalFont->load("font/NuevaStd-Bold.otf", 72, true, true, true);
+    weddingFont->load("font/exmouth_.ttf", 72, true, true, true);
 }
 
 ofPoint Settings::loadPoint(const string tagPath){

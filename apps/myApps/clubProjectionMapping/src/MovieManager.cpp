@@ -14,7 +14,6 @@ MovieManager::MovieManager(){
 
 void MovieManager::setup(){
     
-    BaseVideoPlayer::setNameFont("font/NuevaStd-Bold.otf", 72);
     
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
@@ -128,9 +127,12 @@ void MovieManager::draw(){
     zimaPlayer->drawMovie(0, 0, movieWidth, movieHeight);
 }
 
-/**
- *
- */
+
+void MovieManager::reserveZima(){
+    
+}
+
+
 void MovieManager::startZima(){
     if(currentPlayer->getMovieData()->getMovieType() == MovieTypeZima) return;
     

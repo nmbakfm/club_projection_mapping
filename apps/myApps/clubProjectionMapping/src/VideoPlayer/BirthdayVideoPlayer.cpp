@@ -7,6 +7,7 @@
 //
 
 #include "BirthdayVideoPlayer.h"
+#include "Settings.h"
 
 BirthdayVideoPlayer::BirthdayVideoPlayer(){
     
@@ -24,6 +25,6 @@ void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     
     if (getCurrentFrame() > 522) {
         ofSetColor(255);
-        birthdayNameFont.drawStringAsShapes(message, pos.x - birthdayNameFont.stringWidth(message)/2, pos.y - birthdayNameFont.stringHeight(message)/2+130);
+        Settings::birthdayFont->drawStringAsShapes(message, pos.x - Settings::birthdayFont->stringWidth(message)/2, pos.y - Settings::birthdayFont->stringHeight(message)/2+130);
     }
 }

@@ -7,6 +7,7 @@
 //
 
 #include "NormalVideoPlayer.h"
+#include "Settings.h"
 
 void NormalVideoPlayer::drawMovie(float _x, float _y, float _w, float _h) {
     draw(_x, _y, _w, _h);
@@ -16,10 +17,8 @@ void NormalVideoPlayer::drawMovie(float _x, float _y, float _w, float _h) {
     
     if(this->hasMessage()){
         ofSetColor(255);
-        birthdayNameFont.drawStringAsShapes(message, pos.x - birthdayNameFont.stringWidth(message)/2, pos.y - birthdayNameFont.stringHeight(message)/2+130);
+        Settings::birthdayFont->drawStringAsShapes(message, pos.x - Settings::birthdayFont->stringWidth(message)/2, pos.y - Settings::birthdayFont->stringHeight(message)/2+130);
+        ofPopMatrix();
     }
 };
 
-bool NormalVideoPlayer::hasMessage(){
-    return this->getMessage() !=  "";
-}

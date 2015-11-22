@@ -38,6 +38,7 @@
 		933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B40EDA85BEB63E46785BC29 /* tinyxml.cpp */; };
 		9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832BDC407620CDBA568B713D /* tinyxmlerror.cpp */; };
 		AA0ECC021C01C74900CE4DDA /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC011C01C74900CE4DDA /* Data.cpp */; };
+		AA0ECC061C01E28D00CE4DDA /* TextDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC041C01E28D00CE4DDA /* TextDrawer.cpp */; };
 		B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */; };
 		B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 802251BAF1B35B1D67B32FD0 /* ofxSliderGroup.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -146,6 +147,8 @@
 		9604B925D32EE39065747725 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxBaseGui.cpp; path = ../../../addons/ofxGui/src/ofxBaseGui.cpp; sourceTree = SOURCE_ROOT; };
 		AA0ECC001C01C74900CE4DDA /* Data.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Data.hpp; sourceTree = "<group>"; };
 		AA0ECC011C01C74900CE4DDA /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
+		AA0ECC041C01E28D00CE4DDA /* TextDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextDrawer.cpp; sourceTree = "<group>"; };
+		AA0ECC051C01E28D00CE4DDA /* TextDrawer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextDrawer.hpp; sourceTree = "<group>"; };
 		B21E7E5F548EEA92F368040B /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
 		B87C60311EC1FE841C1ECD89 /* ofxLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxLabel.h; path = ../../../addons/ofxGui/src/ofxLabel.h; sourceTree = SOURCE_ROOT; };
 		C70D8946940288799E82131E /* ofxSliderGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSliderGroup.h; path = ../../../addons/ofxGui/src/ofxSliderGroup.h; sourceTree = SOURCE_ROOT; };
@@ -373,6 +376,17 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		AA0ECC031C01E26800CE4DDA /* util */ = {
+			isa = PBXGroup;
+			children = (
+				AA0ECC001C01C74900CE4DDA /* Data.hpp */,
+				AA0ECC011C01C74900CE4DDA /* Data.cpp */,
+				AA0ECC041C01E28D00CE4DDA /* TextDrawer.cpp */,
+				AA0ECC051C01E28D00CE4DDA /* TextDrawer.hpp */,
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,8 +420,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				AA0ECC001C01C74900CE4DDA /* Data.hpp */,
-				AA0ECC011C01C74900CE4DDA /* Data.cpp */,
+				AA0ECC031C01E26800CE4DDA /* util */,
 				21C8BFF41B369677002A3032 /* Movie */,
 				219C630A1AF76B2C00B8FBE1 /* Services */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
@@ -547,6 +560,7 @@
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				21E981A61B116CC2003132DF /* MovieManager.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
+				AA0ECC061C01E28D00CE4DDA /* TextDrawer.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
 				211975CA1B20330A00D2C474 /* IpEndpointName.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,
