@@ -12,17 +12,66 @@
 #include <stdio.h>
 #include <memory>
 #include "ofMain.h"
+#include "Animator.hpp"
+
+typedef enum {
+    NormalFontType = 0,
+    WeddingFontType = 1,
+    BirthdayFontType = 2
+} FontType;
+
+class TextDrawer;
 
 
 class TextDrawer{
+private:
+    typedef std::shared_ptr<TextDrawer> d_p;
+    ofPoint position;
 public:
-    std::shared_ptr<TextDrawer> Alloc(){
-        return std::shared_ptr<TextDrawer>(new TextDrawer());
+    
+    static std::shared_ptr<TextDrawer> Alloc();
+    void draw();
+    void update();
+    void restart();
+    bool isDone();
+    
+    
+    d_p setMessage(string message){this->message = message;return self.lock();}
+    string getMessage(){return this->message;}
+    
+    d_p setFontType(FontType t){this->fontType = t; return self.lock();}
+    FontType getFontType(){return this->fontType;}
+    
+    d_p setPosition(ofPoint p){this->position = p; return self.lock();}
+    ofPoint getPosition(){return this->position;}
+    
+    
+    d_p setTiming(int animationEndFrame = -1, int showEndFrame = -1){
+        if(animationEndFrame > 0)this->animeEndFrame = animationEndFrame;
+        if(showEndFrame > 0)this->showEndFrame = showEndFrame;
+        return self.lock();
     }
+    d_p setAnimationProperty(shared_ptr<Animator> a, int animeEndFrame, int showEndframe){
+        this->animator = a;
+        this->setTiming(animeEndFrame, showEndframe);
+        return self.lock();
+    }
+    ~TextDrawer(){ ofLogNotice("=========textDrawer '" + this->getMessage() +  "' deallcated========="); }
+    
+    
+    
+    
     
 private:
+    std::weak_ptr<TextDrawer> self;
+    string message = "";
+    shared_ptr<Animator> animator;
+    FontType fontType = NormalFontType;
     TextDrawer(){};
-    
+    shared_ptr<ofTrueTypeFont> getTrueTypeFont();
+    int animeEndFrame;
+    int currentFrame = 0;
+    int showEndFrame;
 };
 
 typedef TextDrawer MessageDrawer;

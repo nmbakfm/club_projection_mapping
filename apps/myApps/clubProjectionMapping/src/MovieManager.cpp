@@ -16,7 +16,6 @@ MovieManager::MovieManager(){
 
 void MovieManager::setup(){
     
-    
     if(Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
     }
@@ -36,6 +35,11 @@ void MovieManager::setup(){
     zimaPlayer = Util::getPlayerFrom(Settings::zimaData);
     zimaAlpha = 0;
     //zimaPlayer->setLoopState(OF_LOOP_NORMAL);
+    
+    this->textAnimationManager->setNext(TextDrawer::Alloc())
+    ->setMessage("aaaaaa:")
+    ->setTiming(0, 90);
+    
     
     ofLog(OF_LOG_NOTICE) << "start `" << Settings::movieData[currentIndex]->getFilePath() << "`";
 }
@@ -66,13 +70,17 @@ void MovieManager::update(){
             if (msg.getAddress() == "/birthday") {
                 nextPlayer = Util::getPlayerFrom(Settings::birthdayData);
                 nextPlayer->setMessage(message);
-                nextPlayer->setMessagePosition(nextPlayer->width/2, nextPlayer->height/2);
+                nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
                 ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << Settings::birthdayData->getFilePath() << " name:" << message;
             }else if (msg.getAddress() == "/wedding") {
                 nextPlayer = Util::getPlayerFrom(Settings::weddingData);
                 nextPlayer->setMessage(message);
-                nextPlayer->setMessagePosition(nextPlayer->width/2, nextPlayer->height/2);
+                nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
                 ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
+            }else if (msg.getAddress() == "/message") {
+                this->textAnimationManager->setNext(TextDrawer::Alloc())->setMessage(message)->setTiming(0,30)
+                ->setPosition(getCenterOf(currentPlayer));
+                ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
             }
         }
     }else{
@@ -111,22 +119,30 @@ void MovieManager::update(){
         switchMovie();
     }
     currentPlayer->updateFrame();
+    
+    this->textAnimationManager->update();
 }
 
 string MovieManager::getMessageContentFromOfOSCMessage(ofxOscMessage msg){
     string m = "";
     for(int i=0; i<msg.getNumArgs(); ++i){
-        if(i != 0) m += " ";
-        m += msg.getArgAsString(i);
+        string buf = msg.getArgAsString(i);
+        if(buf == "" || buf == " ")continue;
+        if(i != 0 && i != msg.getNumArgs()-1) m += "  ";
+        m += buf;
     }
     return m;
+}
+ofPoint MovieManager::getCenterOf(shared_ptr<BaseVideoPlayer> p){
+    return ofPoint(p->getWidth()/ 2, p->getHeight() / 2);
 }
 
 void MovieManager::draw(){
     ofSetColor(255);
     currentPlayer->drawMovie(0, 0, movieWidth, movieHeight);
-    ofSetColor(255, zimaAlpha);
-    zimaPlayer->drawMovie(0, 0, movieWidth, movieHeight);
+    //ofSetColor(255, zimaAlpha);
+    //zimaPlayer->drawMovie(0, 0, movieWidth, movieHeight);
+    this->textAnimationManager->draw();
 }
 
 

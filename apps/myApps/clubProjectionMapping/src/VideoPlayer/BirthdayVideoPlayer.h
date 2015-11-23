@@ -18,7 +18,6 @@ public:
     
     void updateFrame();
     void drawMovie(float _x, float _y, float _w, float _h);
-    bool getIsMovieDone();
 };
 
 #endif /* defined(__clubProjectionMapping__BirthdayVideoPlayer__) */

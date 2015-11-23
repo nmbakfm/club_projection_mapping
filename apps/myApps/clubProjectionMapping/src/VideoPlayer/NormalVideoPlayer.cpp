@@ -17,7 +17,6 @@ void NormalVideoPlayer::drawMovie(float _x, float _y, float _w, float _h) {
     if(this->hasMessage()){
         ofSetColor(255);
         Settings::birthdayFont->drawStringAsShapes(message, pos.x - Settings::birthdayFont->stringWidth(message)/2, pos.y - Settings::birthdayFont->stringHeight(message)/2+130);
-        ofPopMatrix();
     }
 };
 

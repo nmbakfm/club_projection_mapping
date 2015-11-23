@@ -14,6 +14,7 @@
 #include "Constant.h"
 #include "ClubVideoPlayer.h"
 #include "Data.hpp"
+#include "TextAnimationManager.hpp"
 
 
 class MovieManager {
@@ -21,6 +22,8 @@ class MovieManager {
     shared_ptr<BaseVideoPlayer>  currentPlayer; // 今の映像
     shared_ptr<BaseVideoPlayer>  nextPlayer; // 次に流す映像
     shared_ptr<BaseVideoPlayer> zimaPlayer; // zimaの映像
+    
+    shared_ptr<TextAnimationManager> textAnimationManager = TextAnimationManager::getInstance();
     
     int currentIndex;
     shared_ptr<MovieData> currentData;
@@ -40,6 +43,7 @@ class MovieManager {
     
 private:
     string getMessageContentFromOfOSCMessage(ofxOscMessage msg);
+    ofPoint getCenterOf(shared_ptr<BaseVideoPlayer> p);
     
 public:
     MovieManager();

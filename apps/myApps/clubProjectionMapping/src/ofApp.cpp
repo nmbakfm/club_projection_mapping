@@ -8,6 +8,7 @@ void ofApp::setup(){
     ofSetFrameRate(30);
     ofHideCursor();
     
+    //TODO:戻す
     //ofLogToFile(LOG_FILENAME);
     
     Settings::load(SETTINGS_XML_FILENAME);
@@ -52,6 +53,8 @@ void ofApp::setup(){
         ofSetWindowPosition(1200, 0);
     }
     ofSetFullscreen(true);
+    //TODO:戻す
+    ofSetFullscreen(false);
     
     
     int bufferSize = 256;

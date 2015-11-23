@@ -64,6 +64,8 @@ public:
     virtual void drawMovie(float _x, float _y, float _w, float _h) = 0;
     bool isMovieDone(){return getIsMovieDone(); }
     
+    ~BaseVideoPlayer(){ ofLogNotice("=========movie " + this->getMovieData()->getFilePath() +  " deallcated========="); }
+    
 };
 
 #endif /* defined(__clubProjectionMapping__BaseVideoPlayer__) */

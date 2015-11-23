@@ -40,6 +40,9 @@
 		AA0ECC021C01C74900CE4DDA /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC011C01C74900CE4DDA /* Data.cpp */; };
 		AA0ECC061C01E28D00CE4DDA /* TextDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC041C01E28D00CE4DDA /* TextDrawer.cpp */; };
 		AA0ECC091C01EE2400CE4DDA /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC071C01EE2400CE4DDA /* Util.cpp */; };
+		AA0ECC0E1C01FD7700CE4DDA /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC0D1C01FD7700CE4DDA /* Animator.cpp */; };
+		AA0ECC111C020E5500CE4DDA /* TextAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC0F1C020E5500CE4DDA /* TextAnimationManager.cpp */; };
+		AA0ECC141C02D36A00CE4DDA /* TextNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0ECC121C02D36A00CE4DDA /* TextNode.cpp */; };
 		B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */; };
 		B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 802251BAF1B35B1D67B32FD0 /* ofxSliderGroup.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -152,6 +155,12 @@
 		AA0ECC051C01E28D00CE4DDA /* TextDrawer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextDrawer.hpp; sourceTree = "<group>"; };
 		AA0ECC071C01EE2400CE4DDA /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		AA0ECC081C01EE2400CE4DDA /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		AA0ECC0B1C01F9CD00CE4DDA /* Animator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Animator.hpp; sourceTree = "<group>"; };
+		AA0ECC0D1C01FD7700CE4DDA /* Animator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animator.cpp; sourceTree = "<group>"; };
+		AA0ECC0F1C020E5500CE4DDA /* TextAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextAnimationManager.cpp; sourceTree = "<group>"; };
+		AA0ECC101C020E5500CE4DDA /* TextAnimationManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextAnimationManager.hpp; sourceTree = "<group>"; };
+		AA0ECC121C02D36A00CE4DDA /* TextNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextNode.cpp; sourceTree = "<group>"; };
+		AA0ECC131C02D36A00CE4DDA /* TextNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextNode.hpp; sourceTree = "<group>"; };
 		B21E7E5F548EEA92F368040B /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
 		B87C60311EC1FE841C1ECD89 /* ofxLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxLabel.h; path = ../../../addons/ofxGui/src/ofxLabel.h; sourceTree = SOURCE_ROOT; };
 		C70D8946940288799E82131E /* ofxSliderGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSliderGroup.h; path = ../../../addons/ofxGui/src/ofxSliderGroup.h; sourceTree = SOURCE_ROOT; };
@@ -160,7 +169,7 @@
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* clubProjectionMappingDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = clubProjectionMappingDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -386,8 +395,14 @@
 				AA0ECC011C01C74900CE4DDA /* Data.cpp */,
 				AA0ECC041C01E28D00CE4DDA /* TextDrawer.cpp */,
 				AA0ECC051C01E28D00CE4DDA /* TextDrawer.hpp */,
+				AA0ECC0F1C020E5500CE4DDA /* TextAnimationManager.cpp */,
+				AA0ECC101C020E5500CE4DDA /* TextAnimationManager.hpp */,
 				AA0ECC071C01EE2400CE4DDA /* Util.cpp */,
 				AA0ECC081C01EE2400CE4DDA /* Util.hpp */,
+				AA0ECC0B1C01F9CD00CE4DDA /* Animator.hpp */,
+				AA0ECC0D1C01FD7700CE4DDA /* Animator.cpp */,
+				AA0ECC121C02D36A00CE4DDA /* TextNode.cpp */,
+				AA0ECC131C02D36A00CE4DDA /* TextNode.hpp */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -550,6 +565,7 @@
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				21C8BFFD1B36A74F002A3032 /* NormalVideoPlayer.cpp in Sources */,
 				21A1C3F91B57E21000ADB9FE /* SoundReactiveVideoPlayer.cpp in Sources */,
+				AA0ECC0E1C01FD7700CE4DDA /* Animator.cpp in Sources */,
 				211975D61B20330A00D2C474 /* ofxOscReceiver.cpp in Sources */,
 				211975D11B20330A00D2C474 /* OscReceivedElements.cpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
@@ -557,6 +573,7 @@
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
 				21C8BFF71B3696B3002A3032 /* BirthdayVideoPlayer.cpp in Sources */,
 				211975CB1B20330A00D2C474 /* NetworkingUtils.cpp in Sources */,
+				AA0ECC141C02D36A00CE4DDA /* TextNode.cpp in Sources */,
 				211975D41B20330A00D2C474 /* ofxOscMessage.cpp in Sources */,
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
 				211975CE1B20330A00D2C474 /* UdpSocket.cpp in Sources */,
@@ -564,6 +581,7 @@
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
 				211975D01B20330A00D2C474 /* OscPrintReceivedElements.cpp in Sources */,
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
+				AA0ECC111C020E5500CE4DDA /* TextAnimationManager.cpp in Sources */,
 				21E981A61B116CC2003132DF /* MovieManager.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
 				AA0ECC061C01E28D00CE4DDA /* TextDrawer.cpp in Sources */,

@@ -1,7 +1,7 @@
 <settings>
     <mainScreenFlag>1</mainScreenFlag>
     <moviePath>movie/</moviePath>
-    <zimaInterval>300</zimaInterval>
+    <zimaInterval>300000</zimaInterval>
     <movieSize width="1024" height="399" />
     <movies>
         <movie filename="1_1.mov" endFrame="300" ></movie>
@@ -12,10 +12,10 @@
         <movie filename="5_1.mov"></movie>
     </zimaMovies>
     <birthdayMovies>
-        <movie filename="BD_1.mov"></movie>
+        <movie filename="10_1.mov"></movie>
     </birthdayMovies>
     <weddingMovies>
-        <movie filename="WD_1.mov"></movie>
+        <movie filename="10_1.mov"></movie>
     </weddingMovies>
     <calibration>
         <rect>
