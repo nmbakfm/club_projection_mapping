@@ -9,6 +9,7 @@
 #include "MovieManager.h"
 #include "Util.hpp"
 #include "Settings.h"
+#include "NodeAnimator.hpp"
 
 MovieManager::MovieManager(){
     
@@ -35,11 +36,6 @@ void MovieManager::setup(){
     zimaPlayer = Util::getPlayerFrom(Settings::zimaData);
     zimaAlpha = 0;
     //zimaPlayer->setLoopState(OF_LOOP_NORMAL);
-    
-    this->textAnimationManager->setNext(TextDrawer::Alloc())
-    ->setMessage("aaaaaa:")
-    ->setTiming(0, 90);
-    
     
     ofLog(OF_LOG_NOTICE) << "start `" << Settings::movieData[currentIndex]->getFilePath() << "`";
 }
@@ -77,9 +73,32 @@ void MovieManager::update(){
                 nextPlayer->setMessage(message);
                 nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
                 ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
-            }else if (msg.getAddress() == "/message") {
-                this->textAnimationManager->setNext(TextDrawer::Alloc())->setMessage(message)->setTiming(0,30)
-                ->setPosition(getCenterOf(currentPlayer));
+            }else if (msg.getAddress() == "/message1") {
+                
+                this->textAnimationManager->setNext(TextDrawer::Alloc())
+                ->setMessage(message)->setTiming(0,150)
+                ->setPosition(getCenterOf(nextPlayer))
+                ->setAnimator(FastDrop::Alloc());
+                
+                ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
+                
+                
+            }else if (msg.getAddress() == "/message2") {
+                
+                this->textAnimationManager->setNext(TextDrawer::Alloc())
+                ->setMessage(message)->setTiming(0,150)
+                ->setPosition(getCenterOf(nextPlayer))
+                ->setAnimator(ScaleIn::Alloc());
+                
+                ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
+                
+            }else if (msg.getAddress() == "/message3") {
+                
+                this->textAnimationManager->setNext(TextDrawer::Alloc())
+                ->setMessage(message)->setTiming(0,150)
+                ->setPosition(getCenterOf(nextPlayer))
+                ->setAnimator(SpinIn::Alloc());
+                
                 ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
             }
         }
@@ -128,7 +147,7 @@ string MovieManager::getMessageContentFromOfOSCMessage(ofxOscMessage msg){
     for(int i=0; i<msg.getNumArgs(); ++i){
         string buf = msg.getArgAsString(i);
         if(buf == "" || buf == " ")continue;
-        if(i != 0 && i != msg.getNumArgs()-1) m += "  ";
+        if(i != 0 && i != msg.getNumArgs()) m += " ";
         m += buf;
     }
     return m;

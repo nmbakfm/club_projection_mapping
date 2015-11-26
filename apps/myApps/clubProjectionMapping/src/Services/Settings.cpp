@@ -11,6 +11,7 @@
 ofxXmlSettings Settings::xml;
 ofPoint Settings::rectVertices[4];
 float Settings::soundSensitivity;
+float Settings::soFarMaxVol;
 float Settings::movieWidth, Settings::movieHeight;
 bool Settings::bMainScreen;
 int Settings::sendPort;
@@ -34,6 +35,7 @@ void Settings::load(const string file_name){
     bMainScreen = (xml.getValue("mainScreenFlag", 1) != 0);
     
     string dir_name = xml.getValue("moviePath", "");
+    soFarMaxVol = 0;
     
     // calibration
     xml.pushTag("calibration");
@@ -147,8 +149,8 @@ void Settings::load(const string file_name){
     weddingFont = shared_ptr<ofTrueTypeFont>(new ofTrueTypeFont());
     normalFont = shared_ptr<ofTrueTypeFont>(new ofTrueTypeFont());
     birthdayFont->load("font/NuevaStd-Bold.otf", 72, true, true, true);
-    normalFont->load("font/NuevaStd-Bold.otf", 72, true, true, true);
-    weddingFont->load("font/exmouth_.ttf", 72, true, true, true);
+    normalFont->load("font/Impact.ttf", 72, true, true, true);
+    weddingFont->load("font/lucida-bright.ttf", 72, true, true, true);
 }
 
 ofPoint Settings::loadPoint(const string tagPath){

@@ -9,7 +9,7 @@
 #ifndef clubProjectionMapping_Constant_h
 #define clubProjectionMapping_Constant_h
 
-#define DEBUG TRUE
+#define DEBUG FALSE
 #define CALIBRATION FALSE
 
 #define SETTINGS_XML_FILENAME "settings.xml"

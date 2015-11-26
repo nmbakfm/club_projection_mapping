@@ -27,10 +27,10 @@ void SoundReactivePlayer::drawMovie(float _x, float _y, float _w, float _h){
 }
 
 void SoundReactivePlayer::updateFrame(){
-//    setPaused(true);
+    //setPaused(true);
     update();
     float curVol = this->getCurrentVolume();
-    float target_pct = ofMap(curVol, 0, soundSensitivity, 0, 1, false);
+    float target_pct = ofMap(curVol, 0, this->soundSensitivity, 0, 1, true);
     
     cout << "targetFrame:" << target_pct << endl;
     cout << "curVol:\t" << curVol << endl;

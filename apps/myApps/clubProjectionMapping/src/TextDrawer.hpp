@@ -13,6 +13,8 @@
 #include <memory>
 #include "ofMain.h"
 #include "Animator.hpp"
+#include "TextNode.hpp"
+#include "NodeAnimator.hpp"
 
 typedef enum {
     NormalFontType = 0,
@@ -26,7 +28,6 @@ class TextDrawer;
 class TextDrawer{
 private:
     typedef std::shared_ptr<TextDrawer> d_p;
-    ofPoint position;
 public:
     
     static std::shared_ptr<TextDrawer> Alloc();
@@ -35,11 +36,12 @@ public:
     void restart();
     bool isDone();
     
+    d_p setAnimator(shared_ptr<NodeAnimator> ani);
     
-    d_p setMessage(string message){this->message = message;return self.lock();}
+    d_p setMessage(string message);
     string getMessage(){return this->message;}
     
-    d_p setFontType(FontType t){this->fontType = t; return self.lock();}
+    d_p setFontType(FontType t);
     FontType getFontType(){return this->fontType;}
     
     d_p setPosition(ofPoint p){this->position = p; return self.lock();}
@@ -51,11 +53,6 @@ public:
         if(showEndFrame > 0)this->showEndFrame = showEndFrame;
         return self.lock();
     }
-    d_p setAnimationProperty(shared_ptr<Animator> a, int animeEndFrame, int showEndframe){
-        this->animator = a;
-        this->setTiming(animeEndFrame, showEndframe);
-        return self.lock();
-    }
     ~TextDrawer(){ ofLogNotice("=========textDrawer '" + this->getMessage() +  "' deallcated========="); }
     
     
@@ -63,15 +60,21 @@ public:
     
     
 private:
+    std::vector<TextNode> nodes;
+    std::vector<shared_ptr<NodeAnimator> > animator_nodes;
+    ofPoint position;
+    int getMessageWidth();
+    int getMessageHeight();
     std::weak_ptr<TextDrawer> self;
     string message = "";
-    shared_ptr<Animator> animator;
     FontType fontType = NormalFontType;
     TextDrawer(){};
     shared_ptr<ofTrueTypeFont> getTrueTypeFont();
     int animeEndFrame;
     int currentFrame = 0;
     int showEndFrame;
+    shared_ptr<NodeAnimator> base_animator = shared_ptr<NodeAnimator>(new NodeAnimator());
+    void updateAnimator();
 };
 
 typedef TextDrawer MessageDrawer;

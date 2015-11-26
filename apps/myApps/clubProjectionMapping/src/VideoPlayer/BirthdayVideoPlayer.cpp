@@ -20,7 +20,7 @@ void BirthdayVideoPlayer::drawMovie(float _x, float _y, float _w, float _h){
     draw(_x, _y, _w, _h);
     
     string message = this->getMessage();
-    ofPoint pos = this->getPosition();
+    ofPoint pos = this->getMessagePosition();
     
     if (getCurrentFrame() > 522) {
         ofSetColor(255);

@@ -39,6 +39,7 @@ public:
     static std::shared_ptr<ofTrueTypeFont> normalFont;
     
     static float soundSensitivity;
+    static float soFarMaxVol;
     
     static float movieWidth, movieHeight;
     static bool bMainScreen;

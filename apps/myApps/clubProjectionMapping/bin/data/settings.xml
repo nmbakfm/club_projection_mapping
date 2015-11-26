@@ -2,9 +2,13 @@
     <mainScreenFlag>1</mainScreenFlag>
     <moviePath>movie/</moviePath>
     <zimaInterval>300000</zimaInterval>
+    <soundSensitivity>1</soundSensitivity>
     <movieSize width="1024" height="399" />
     <movies>
-        <movie filename="1_1.mov" endFrame="300" ></movie>
+        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
+        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
+        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
+        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
         <movie filename="2_1.mov"></movie>
         <movie filename="10_1.mov"></movie>
     </movies>
@@ -12,10 +16,10 @@
         <movie filename="5_1.mov"></movie>
     </zimaMovies>
     <birthdayMovies>
-        <movie filename="10_1.mov"></movie>
+        <movie filename="BD_1.mov"></movie>
     </birthdayMovies>
     <weddingMovies>
-        <movie filename="10_1.mov"></movie>
+        <movie filename="WD_1.mov"></movie>
     </weddingMovies>
     <calibration>
         <rect>

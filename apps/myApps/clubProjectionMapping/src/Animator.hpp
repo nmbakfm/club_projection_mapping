@@ -25,8 +25,8 @@ public:
         return shared_ptr<Animator>(new LinerAnimator());
     }
     float Map(float value){
-        value = MAX(value, 1);
-        value = MIN(value, 0);
+        value = MIN(value, 1);
+        value = MAX(value, 0);
         return value;
     }
 };

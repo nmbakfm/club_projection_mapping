@@ -8,8 +8,7 @@ void ofApp::setup(){
     ofSetFrameRate(30);
     ofHideCursor();
     
-    //TODO:戻す
-    //ofLogToFile(LOG_FILENAME);
+    ofLogToFile(LOG_FILENAME);
     
     Settings::load(SETTINGS_XML_FILENAME);
     
@@ -54,7 +53,6 @@ void ofApp::setup(){
     }
     ofSetFullscreen(true);
     //TODO:戻す
-    ofSetFullscreen(false);
     
     
     int bufferSize = 256;
@@ -144,6 +142,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     
     //this is how we get the mean of rms :)
     curVol /= (float)numCounted;
+    Settings::soFarMaxVol = MAX(curVol, Settings::soFarMaxVol);
     
     // this is how we get the root of rms :)
     curVol = sqrt( curVol );
