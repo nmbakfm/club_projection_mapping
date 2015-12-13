@@ -32,7 +32,7 @@ void Settings::load(const string file_name){
     
     xml.pushTag("settings");
     
-    bMainScreen = (xml.getValue("mainScreenFlag", 1) != 0);
+    bMainScreen = true;//(xml.getValue("mainScreenFlag", 1) != 0);
     
     string dir_name = xml.getValue("moviePath", "");
     soFarMaxVol = 0;
@@ -135,7 +135,7 @@ void Settings::load(const string file_name){
     }
     
     
-    if (bMainScreen) {
+    if (true){//bMainScreen) {
         zimaInterval = xml.getValue("settings:zimaInterval", 0);
         sendHost = xml.getValue("settings:networking:send:host", "");
         sendPort = 57689;

@@ -17,7 +17,7 @@ MovieManager::MovieManager(){
 
 void MovieManager::setup(){
     
-    if(Settings::bMainScreen){
+    if(true){//Settings::bMainScreen){
         sender.setup(Settings::sendHost, Settings::sendPort);
     }
     receiver.setup(Settings::receivePort);
@@ -57,7 +57,7 @@ void MovieManager::setup(){
 void MovieManager::update(){
     
     //1: Message Handling
-    if(Settings::bMainScreen){
+    if(true){//Settings::bMainScreen){
         while (receiver.hasWaitingMessages()) {
             ofxOscMessage msg;
             receiver.getNextMessage(&msg);
@@ -122,7 +122,7 @@ void MovieManager::update(){
             zimaAlpha = MIN(zimaAlpha + 5, 255);
         }
         zimaPlayer->update();
-        if(Settings::bMainScreen){
+        if(true){//Settings::bMainScreen){
             if (zimaPlayer->isMovieDone()) {
                 stopZima();
             }
@@ -179,7 +179,7 @@ void MovieManager::startZima(){
     
     currentPlayer = zimaPlayer;
     
-    if(Settings::bMainScreen){
+    if(true){//Settings::bMainScreen){
         ofxOscMessage msg;
         msg.setAddress("startZima");
         msg.addIntArg(1);
@@ -191,7 +191,7 @@ void MovieManager::startZima(){
 
 void MovieManager::stopZima(){
     
-    if(Settings::bMainScreen){
+    if(true){//Settings::bMainScreen){
         ofxOscMessage msg;
         msg.setAddress("startZima");
         msg.addIntArg(0);

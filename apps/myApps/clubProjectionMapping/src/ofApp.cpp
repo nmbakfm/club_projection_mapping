@@ -95,7 +95,7 @@ void ofApp::update(){
         bReload = false;
     }
 #endif
-    if(Settings::bMainScreen){
+    if(true){//Settings::bMainScreen){
         if(isFirstTime && ofGetFrameNum() % zimaInterval == zimaInterval-1){
             isFirstTime = false;
             movieManager.startZima();
