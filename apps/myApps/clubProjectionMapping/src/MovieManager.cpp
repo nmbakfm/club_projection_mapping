@@ -179,24 +179,11 @@ void MovieManager::startZima(){
     
     currentPlayer = zimaPlayer;
     
-    if(true){//Settings::bMainScreen){
-        ofxOscMessage msg;
-        msg.setAddress("startZima");
-        msg.addIntArg(1);
-        sender.sendMessage(msg);
-    }
-    
     ofLog(OF_LOG_NOTICE) << "start `" << currentPlayer->getMovieData()->getFilePath() << "`(ZIMA MOVIE)";
 }
 
 void MovieManager::stopZima(){
     
-    if(true){//Settings::bMainScreen){
-        ofxOscMessage msg;
-        msg.setAddress("startZima");
-        msg.addIntArg(0);
-        sender.sendMessage(msg);
-    }
     switchMovie();
     ofLog(OF_LOG_NOTICE) << "stop `" << currentPlayer->getMovieData()->getFilePath() << "`(ZIMA MOVIE)";
 }
