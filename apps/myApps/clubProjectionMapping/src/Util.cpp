@@ -30,7 +30,7 @@ shared_ptr<BaseVideoPlayer> Util::getPlayerFrom(shared_ptr<MovieData> d){
             p = shared_ptr<BaseVideoPlayer>(new BirthdayVideoPlayer());
             break;
         }
-        case MovieTypeZima:{
+        case MovieTypeAd:{
             p = shared_ptr<BaseVideoPlayer>(new NormalVideoPlayer());
             break;
         }

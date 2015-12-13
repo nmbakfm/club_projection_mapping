@@ -33,9 +33,6 @@ void MovieManager::setup(){
     
     currentPlayer->play();
     
-    zimaPlayer = Util::getPlayerFrom(Settings::zimaData);
-    zimaAlpha = 0;
-    //zimaPlayer->setLoopState(OF_LOOP_NORMAL);
     
     ofLog(OF_LOG_NOTICE) << "start `" << Settings::movieData[currentIndex]->getFilePath() << "`";
 }
@@ -47,91 +44,56 @@ void MovieManager::setup(){
         - if they are swap next Player
         - TODO:
  
-    2: Update zima
-        - check zima end or not
-        - if it is zima start timeing start it
-    
     3: Check movie swap
         - if current movie has done, swap to next one...
  */
 void MovieManager::update(){
     
     //1: Message Handling
-    if(true){//Settings::bMainScreen){
-        while (receiver.hasWaitingMessages()) {
-            ofxOscMessage msg;
-            receiver.getNextMessage(&msg);
-            string message = getMessageContentFromOfOSCMessage(msg);
+    while (receiver.hasWaitingMessages()) {
+        ofxOscMessage msg;
+        receiver.getNextMessage(&msg);
+        string message = getMessageContentFromOfOSCMessage(msg);
+        
+        if (msg.getAddress() == "/birthday") {
+            nextPlayer = Util::getPlayerFrom(Settings::birthdayData);
+            nextPlayer->setMessage(message);
+            nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
+            ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << Settings::birthdayData->getFilePath() << " name:" << message;
+        }else if (msg.getAddress() == "/wedding") {
+            nextPlayer = Util::getPlayerFrom(Settings::weddingData);
+            nextPlayer->setMessage(message);
+            nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
+            ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
+        }else if (msg.getAddress() == "/message1") {
             
-            if (msg.getAddress() == "/birthday") {
-                nextPlayer = Util::getPlayerFrom(Settings::birthdayData);
-                nextPlayer->setMessage(message);
-                nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
-                ofLog(OF_LOG_NOTICE) << "receive birthday message: fileName=" << Settings::birthdayData->getFilePath() << " name:" << message;
-            }else if (msg.getAddress() == "/wedding") {
-                nextPlayer = Util::getPlayerFrom(Settings::weddingData);
-                nextPlayer->setMessage(message);
-                nextPlayer->setMessagePosition(getCenterOf(nextPlayer));
-                ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
-            }else if (msg.getAddress() == "/message1") {
-                
-                this->textAnimationManager->setNext(TextDrawer::Alloc())
-                ->setMessage(message)->setTiming(0,150)
-                ->setPosition(getCenterOf(nextPlayer))
-                ->setAnimator(FastDrop::Alloc());
-                
-                ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
-                
-                
-            }else if (msg.getAddress() == "/message2") {
-                
-                this->textAnimationManager->setNext(TextDrawer::Alloc())
-                ->setMessage(message)->setTiming(0,150)
-                ->setPosition(getCenterOf(nextPlayer))
-                ->setAnimator(ScaleIn::Alloc());
-                
-                ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
-                
-            }else if (msg.getAddress() == "/message3") {
-                
-                this->textAnimationManager->setNext(TextDrawer::Alloc())
-                ->setMessage(message)->setTiming(0,150)
-                ->setPosition(getCenterOf(nextPlayer))
-                ->setAnimator(SpinIn::Alloc());
-                
-                ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
-            }
-        }
-    }else{
-        while(receiver.hasWaitingMessages()){
-            ofxOscMessage msg;
-            receiver.getNextMessage(&msg);
-            if (msg.getAddress() == "startZima") {
-                if(msg.getArgAsInt32(0) == 0){
-                    stopZima();
-                }else{
-                    startZima();
-                }
-            }
+            this->textAnimationManager->setNext(TextDrawer::Alloc())
+            ->setMessage(message)->setTiming(0,1500)
+            ->setPosition(getCenterOf(nextPlayer))
+            ->setAnimator(FastDrop::Alloc());
+            
+            ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
+            
+        }else if (msg.getAddress() == "/message2") {
+            
+            this->textAnimationManager->setNext(TextDrawer::Alloc())
+            ->setMessage(message)->setTiming(0,1500)
+            ->setPosition(getCenterOf(nextPlayer))
+            ->setAnimator(ScaleIn::Alloc());
+            
+            ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
+            
+        }else if (msg.getAddress() == "/message3") {
+            
+            this->textAnimationManager->setNext(TextDrawer::Alloc())
+            ->setMessage(message)->setTiming(0,1500)
+            ->setPosition(getCenterOf(nextPlayer))
+            ->setAnimator(SpinIn::Alloc());
+            
+            ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
         }
     }
     
-    //2: Update zima
-    if(currentPlayer->getMovieData()->getMovieType() == MovieTypeZima){
-        if(zimaAlpha < 255){
-            zimaAlpha = MIN(zimaAlpha + 5, 255);
-        }
-        zimaPlayer->update();
-        if(true){//Settings::bMainScreen){
-            if (zimaPlayer->isMovieDone()) {
-                stopZima();
-            }
-        }
-    }else{
-        if (zimaAlpha > 0) {
-            zimaAlpha = MAX(zimaAlpha - 5, 0);
-        }
-    }
     
     //3: swap
     if(currentPlayer->isMovieDone()){
@@ -159,34 +121,12 @@ ofPoint MovieManager::getCenterOf(shared_ptr<BaseVideoPlayer> p){
 void MovieManager::draw(){
     ofSetColor(255);
     currentPlayer->drawMovie(0, 0, movieWidth, movieHeight);
-    //ofSetColor(255, zimaAlpha);
-    //zimaPlayer->drawMovie(0, 0, movieWidth, movieHeight);
     this->textAnimationManager->draw();
 }
 
 
-void MovieManager::reserveZima(){
-    
-}
 
 
-void MovieManager::startZima(){
-    if(currentPlayer->getMovieData()->getMovieType() == MovieTypeZima) return;
-    
-    zimaPlayer->play();
-    zimaPlayer->setFrame(0);
-    zimaPlayer->update();
-    
-    currentPlayer = zimaPlayer;
-    
-    ofLog(OF_LOG_NOTICE) << "start `" << currentPlayer->getMovieData()->getFilePath() << "`(ZIMA MOVIE)";
-}
-
-void MovieManager::stopZima(){
-    
-    switchMovie();
-    ofLog(OF_LOG_NOTICE) << "stop `" << currentPlayer->getMovieData()->getFilePath() << "`(ZIMA MOVIE)";
-}
 
 
 // private
@@ -207,7 +147,6 @@ void MovieManager::switchMovie(){
     
     // 動画を作成
     currentPlayer->firstFrame();
-    currentPlayer->play();
     ofLog(OF_LOG_NOTICE) << "switch to `" << currentPlayer->getMoviePath() << "`";
 }
 

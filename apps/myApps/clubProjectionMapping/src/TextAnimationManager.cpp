@@ -15,6 +15,13 @@ void TextAnimationManager::draw(){
     drawer_queue.front()->draw();
 }
 
+void TextAnimationManager::clear(){
+}
+
+void TextAnimationManager::nextImidiate(){
+    
+}
+
 void TextAnimationManager::update(){
     if (drawer_queue.empty())return;
     drawer_queue.front()->update();

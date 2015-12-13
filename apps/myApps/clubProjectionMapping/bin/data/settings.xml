@@ -1,25 +1,16 @@
 <settings>
     <moviePath>movie/</moviePath>
-    <zimaInterval>300000</zimaInterval>
     <soundSensitivity>1</soundSensitivity>
     <movieSize width="1024" height="399" />
     <movies>
-        <movie filename="sound reaction_3.mov" endFrame="300" ></movie>
-        <movie filename="sound reaction_3.mov" endFrame="300" ></movie>
-        <movie filename="sound reaction_3.mov" endFrame="300" ></movie>
-        <movie filename="sound reaction_3.mov" endFrame="300" ></movie>
-        <movie filename="2_1.mov"></movie>
         <movie filename="10_1.mov"></movie>
+        
+        <movie filename="2_1.mov"  type="soundReactive" endFrame="300"></movie>
+        <movie filename="5_1.mov"  type="advertise" interval="300"></movie>
+        <movie filename="BD_1.mov" type="birthday"></movie>
+        <movie filename="WD_1.mov" type="wedding"></movie>
     </movies>
-    <zimaMovies>
-        <movie filename="5_1.mov"></movie>
-    </zimaMovies>
-    <birthdayMovies>
-        <movie filename="BD_1.mov"></movie>
-    </birthdayMovies>
-    <weddingMovies>
-        <movie filename="WD_1.mov"></movie>
-    </weddingMovies>
+    
     <calibration>
         <rect>
             <leftTop x="0" y="0" />

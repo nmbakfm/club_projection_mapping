@@ -48,6 +48,5 @@ class ofApp : public ofBaseApp{
     
     int movieWidth, movieHeight;
     
-    int zimaInterval;
 		
 };

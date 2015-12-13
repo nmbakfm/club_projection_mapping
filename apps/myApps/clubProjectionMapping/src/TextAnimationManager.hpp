@@ -25,6 +25,8 @@ public:
     }
     void update();
     void draw();
+    void clear();
+    void nextImidiate();
     shared_ptr<TextDrawer> setNext(shared_ptr<TextDrawer> drawer);
     
 private:

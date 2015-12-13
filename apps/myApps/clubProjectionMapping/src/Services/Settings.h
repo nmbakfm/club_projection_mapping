@@ -30,7 +30,6 @@ public:
     
     static ofPoint rectVertices[4];
     static vector<shared_ptr<MovieData> > movieData;
-    static std::shared_ptr<MovieData> zimaData;
     static std::shared_ptr<MovieData> birthdayData;
     static std::shared_ptr<MovieData> weddingData;
     
@@ -49,7 +48,6 @@ public:
     
     static int receivePort;
     
-    static int zimaInterval;
     
 };
 

@@ -17,8 +17,6 @@ bool Settings::bMainScreen;
 int Settings::sendPort;
 string Settings::sendHost;
 int Settings::receivePort;
-int Settings::zimaInterval;
-shared_ptr<MovieData> Settings::zimaData;
 shared_ptr<MovieData> Settings::weddingData;
 shared_ptr<MovieData> Settings::birthdayData;
 vector<shared_ptr<MovieData> > Settings::movieData;
@@ -57,92 +55,60 @@ void Settings::load(const string file_name){
         throw "NoFileException";
     }
     
-    ofLog(OF_LOG_NOTICE) << "MOVIE ORDERS =================================";
+    ofLog(OF_LOG_NOTICE) << "LOAD MOVIES =================================";
     for (int i=0; i<fileNum; ++i) {
-        string filename = (dir_name + xml.getAttribute("movie","filename","",i));
-        int endframe = (xml.getAttribute("movie","endFrame", 0, i));
         
-        auto p = shared_ptr<MovieData>(new MovieData(filename, MovieTypeNormal));
-        p->setEndFrameForSoundReactPlayer(endframe);
-        
-        movieData.push_back(p);
-        
-        if(!ofFile::doesFileExist(filename)){
-            ofLog(OF_LOG_FATAL_ERROR) << "`" << filename << "` does not exists";
+        //check if there are movie
+        string filepath= (dir_name + xml.getAttribute("movie","filename","",i));
+        if(!ofFile::doesFileExist(filepath)){
+            ofLog(OF_LOG_FATAL_ERROR) << "`" << filepath << "` does not exists";
             throw "MovieFileNotFoundException";
         }else{
-            ofLog(OF_LOG_NOTICE) << i << ":\t" << filename;
+            ofLog(OF_LOG_NOTICE) << i << ":\t" << filepath;
         }
+        
+        //put movie according to type
+        string type = (xml.getAttribute("movie","type","normal",i));
+        if(type == "normal"){
+            auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeNormal));
+            movieData.push_back(p);
+            
+        }else if(type == "soundReactive"){
+            auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeSoundReactive));
+            int endframe = (xml.getAttribute("movie","endFrame", 0, i));
+            p->setEndFrameForSoundReactPlayer(endframe);
+            movieData.push_back(p);
+            
+        }else if(type == "advertise"){
+            //zimaData = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeAd));
+            
+        }else if(type == "birthday"){
+            birthdayData = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeBirthDay));
+            
+        }else if(type == "wedding"){
+            weddingData = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeWedding));
+        }
+        
     }
     xml.popTag(); // movies
-    
     soundSensitivity = xml.getValue("soundSensitivity", 1.0);
     
-    ofLog(OF_LOG_NOTICE) << "LOAD ZIMA =================================";
-    xml.pushTag("zimaMovies");
-    string zimaFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
-    zimaData = shared_ptr<MovieData>(new MovieData(zimaFileName, MovieTypeZima));
-    
-    
-    if(!ofFile::doesFileExist(zimaFileName)){
-        ofLog(OF_LOG_FATAL_ERROR) << "`" << zimaFileName << "` does not exist";
-        throw "MovieFileNotFoundException";
-    }else{
-        ofLog(OF_LOG_NOTICE) << zimaFileName;
-    }
-    xml.popTag(); // zimaMovies
-    
-    
-    
-    ofLog(OF_LOG_NOTICE) << "LOAD BIRTHDAY ==============================";
-    xml.pushTag("birthdayMovies");
-    string birthdayFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
-    birthdayData = shared_ptr<MovieData>(new MovieData(birthdayFileName, MovieTypeBirthDay));
-    
-    if(!ofFile::doesFileExist(birthdayFileName)){
-        ofLog(OF_LOG_FATAL_ERROR) << "`" << birthdayFileName << "` does not exist";
-        throw "MovieFileNotFoundException";
-    }else{
-        ofLog(OF_LOG_NOTICE) << birthdayFileName;
-    }
-    xml.popTag(); // birthday
-    
-    ofLog(OF_LOG_NOTICE) << "LOAD WEDDING ==============================";
-    xml.pushTag("weddingMovies");
-    string weddingFileName = dir_name + xml.getAttribute("movie", "filename", "", 0);
-    weddingData = shared_ptr<MovieData>(new MovieData(weddingFileName, MovieTypeWedding));
-    
-    if(!ofFile::doesFileExist(weddingFileName)){
-        ofLog(OF_LOG_FATAL_ERROR) << "`" << weddingFileName << "` does not exist";
-        throw "MovieFileNotFoundException";
-    }else{
-        ofLog(OF_LOG_NOTICE) << weddingFileName;
-    }
-    xml.popTag(); // wedding
-    
-    xml.popTag(); // settings
-    
-    movieWidth = xml.getAttribute("settings:movieSize", "width", 0.0);
+    movieWidth = xml.getAttribute("movieSize", "width", 0.0);
     if(movieWidth <= 0){
         ofLog(OF_LOG_FATAL_ERROR) << "動画の幅指定が不正です。0より大きい値を指定してください";
         throw "MovieSizeInvalidException";
     }
     
-    movieHeight = xml.getAttribute("settings:movieSize", "height", 0.0);
+    movieHeight = xml.getAttribute("movieSize", "height", 0.0);
     if(movieHeight <= 0){
         ofLog(OF_LOG_FATAL_ERROR) << "動画の高さ指定が不正です。0より大きい値を指定してください";
         throw "MovieSizeInvalidException";
     }
     
     
-    if (true){//bMainScreen) {
-        zimaInterval = xml.getValue("settings:zimaInterval", 0);
-        sendHost = xml.getValue("settings:networking:send:host", "");
-        sendPort = 57689;
-        receivePort = 57688;
-    }else{
-        receivePort = 57689;
-    }
+    sendHost = xml.getValue("networking:send:host", "");
+    sendPort = 57689;
+    receivePort = 57688;
     
     //font loading
     birthdayFont = shared_ptr<ofTrueTypeFont>(new ofTrueTypeFont());

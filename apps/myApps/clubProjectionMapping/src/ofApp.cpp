@@ -43,15 +43,10 @@ void ofApp::setup(){
     
     fbo.setUseTexture(true);
     
-    zimaInterval = Settings::zimaInterval;
     
     ofSetFullscreen(false);
-    if(Settings::bMainScreen){
-        ofSetWindowPosition(0, 0);
-    }else{
-        ofSetWindowPosition(1200, 0);
-    }
-    ofSetFullscreen(true);
+    ofSetWindowPosition(0, 0);
+    //ofSetFullscreen(true);
     //TODO:戻す
     
     
@@ -87,7 +82,6 @@ ofPoint ofApp::rectMeshVertex(int x, int y){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    movieManager.setCurrendVolume(smoothedVol);
     
 #if CALIBRATION
     if(bReload){
@@ -95,13 +89,8 @@ void ofApp::update(){
         bReload = false;
     }
 #endif
-    if(true){//Settings::bMainScreen){
-        if(isFirstTime && ofGetFrameNum() % zimaInterval == zimaInterval-1){
-            isFirstTime = false;
-            movieManager.startZima();
-        }
-    }
     
+    movieManager.setCurrendVolume(smoothedVol);
     movieManager.update();
     
     fbo.begin();

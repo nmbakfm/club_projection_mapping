@@ -16,7 +16,7 @@
 
 typedef enum {
     MovieTypeNormal = 0,
-    MovieTypeZima = 1,
+    MovieTypeAd = 1,
     MovieTypeBirthDay = 2,
     MovieTypeWedding = 3,
     MovieTypeSoundReactive = 4,

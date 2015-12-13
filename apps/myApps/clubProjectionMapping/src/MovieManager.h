@@ -21,7 +21,6 @@ class MovieManager {
     
     shared_ptr<BaseVideoPlayer>  currentPlayer; // 今の映像
     shared_ptr<BaseVideoPlayer>  nextPlayer; // 次に流す映像
-    shared_ptr<BaseVideoPlayer> zimaPlayer; // zimaの映像
     
     shared_ptr<TextAnimationManager> textAnimationManager = TextAnimationManager::getInstance();
     
@@ -39,7 +38,6 @@ class MovieManager {
     ofxOscSender sender;
     ofxOscReceiver receiver;
     
-    int zimaAlpha;
     
 private:
     string getMessageContentFromOfOSCMessage(ofxOscMessage msg);
@@ -50,9 +48,6 @@ public:
     void setup();
     void update();
     void draw();
-    void startZima();
-    void stopZima();
-    void reserveZima();
     void setMoviePosition(double position_pct);
     void setCurrendVolume(float _curVol);
 };
