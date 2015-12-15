@@ -10,6 +10,7 @@
 #include "Util.hpp"
 #include "Settings.h"
 #include "NodeAnimator.hpp"
+#include <ctime>
 
 MovieManager::MovieManager(){
     
@@ -17,21 +18,30 @@ MovieManager::MovieManager(){
 
 void MovieManager::setup(){
     
-    if(true){//Settings::bMainScreen){
-        sender.setup(Settings::sendHost, Settings::sendPort);
-    }
     receiver.setup(Settings::receivePort);
     
     movieWidth = Settings::movieWidth;
     movieHeight = Settings::movieHeight;
     
     currentIndex = 0;
+    currentFrameSum = 0;
+    currentAdIndex = 1;
+
     int nextIndex = 1 % Settings::movieData.size();
     
     currentPlayer = Util::getPlayerFrom(Settings::movieData[currentIndex]);
     nextPlayer = Util::getPlayerFrom(Settings::movieData[nextIndex]);
-    
     currentPlayer->play();
+    
+    //make Ad sequence according to the times-par-houre for each ad
+    for (int i = 0; i < Settings::adMovieData.size(); i++) {
+        //10時間分の連番をつくって入れることによって0.1までのtimesParHoureに対応
+        auto data = Settings::adMovieData[i];
+        float APH = data->getAdTimesParHoure();
+        for (int j = 0; j < APH * 10.0; j ++){
+            adDataSequence.push_back(data);
+        }
+    }
     
     
     ofLog(OF_LOG_NOTICE) << "start `" << Settings::movieData[currentIndex]->getFilePath() << "`";
@@ -67,6 +77,7 @@ void MovieManager::update(){
             ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
         }else if (msg.getAddress() == "/message1") {
             
+            this->textAnimationManager->clear();
             this->textAnimationManager->setNext(TextDrawer::Alloc())
             ->setMessage(message)->setTiming(0,1500)
             ->setPosition(getCenterOf(nextPlayer))
@@ -76,6 +87,7 @@ void MovieManager::update(){
             
         }else if (msg.getAddress() == "/message2") {
             
+            this->textAnimationManager->clear();
             this->textAnimationManager->setNext(TextDrawer::Alloc())
             ->setMessage(message)->setTiming(0,1500)
             ->setPosition(getCenterOf(nextPlayer))
@@ -85,14 +97,21 @@ void MovieManager::update(){
             
         }else if (msg.getAddress() == "/message3") {
             
+            this->textAnimationManager->clear();
             this->textAnimationManager->setNext(TextDrawer::Alloc())
             ->setMessage(message)->setTiming(0,1500)
             ->setPosition(getCenterOf(nextPlayer))
             ->setAnimator(SpinIn::Alloc());
             
             ofLog(OF_LOG_NOTICE) << "receive new message:" << message;
-        }
+         }else if (msg.getAddress() == "/clearMessage") {
+             this->textAnimationManager->clear();
+         }else if (msg.getAddress() == "/nextMovie") {
+             this->switchMovie();
+         }
+        
     }
+    
     
     
     //3: swap
@@ -100,6 +119,7 @@ void MovieManager::update(){
         switchMovie();
     }
     currentPlayer->updateFrame();
+    currentFrameSum ++;
     
     this->textAnimationManager->update();
 }
@@ -125,28 +145,47 @@ void MovieManager::draw(){
 }
 
 
+bool MovieManager::isAdTiming(){
+    
+    if ( adDataSequence.empty() ) return false;
+    int interval = 3600 * Settings::FPS / adDataSequence.size() * 10;
+    int currentIndexShouldBe = currentFrameSum / interval;
+    
+    cout << "interval is " << interval << " currentIndex (" << currentFrameSum << ") should be is " << currentIndexShouldBe << endl;
+    
+    if( currentIndexShouldBe > currentAdIndex ){
+        currentAdIndex = currentIndexShouldBe;
+        cout << endl;
+        cout << endl;
+        cout << "+++++" << Util::printDate() << "++++++";
+        cout << endl;
+        cout << endl;
+        return true;
+    }
+    
+    return false;
+}
+
+shared_ptr<MovieData> MovieManager::getNextAd(){
+    int a = rand() % (adDataSequence.size() - 1);
+    cout << "next ad index is " << a << endl;
+    return adDataSequence[a];
+}
 
 
-
-
-// private
-/**
- * @param _file_names 読み込むファイル名
- */
-
-
-/**
- * @param _nextMovieId 次のmovieのID
- */
 void MovieManager::switchMovie(){
     
     currentPlayer = nextPlayer;
-    nextPlayer = Util::getPlayerFrom(Settings::movieData[nextIndex()]);
-    //ビデオは順番である必要はないから、ここで無条件でindex変えるのありだと思う
     currentIndex = nextIndex();
     
-    // 動画を作成
+    if(this->isAdTiming()){
+        nextPlayer = Util::getPlayerFrom(this->getNextAd());
+    }else{
+        nextPlayer = Util::getPlayerFrom(Settings::movieData[currentIndex]);
+    }
+    
     currentPlayer->firstFrame();
+    currentPlayer->play();
     ofLog(OF_LOG_NOTICE) << "switch to `" << currentPlayer->getMoviePath() << "`";
 }
 

@@ -16,10 +16,14 @@ void TextAnimationManager::draw(){
 }
 
 void TextAnimationManager::clear(){
+    while (!drawer_queue.empty()) {
+        drawer_queue.pop();
+    }
 }
 
 void TextAnimationManager::nextImidiate(){
-    
+    if (drawer_queue.empty())return;
+    drawer_queue.pop();
 }
 
 void TextAnimationManager::update(){

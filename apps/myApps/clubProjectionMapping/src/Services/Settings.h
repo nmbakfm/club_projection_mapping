@@ -30,6 +30,7 @@ public:
     
     static ofPoint rectVertices[4];
     static vector<shared_ptr<MovieData> > movieData;
+    static vector<shared_ptr<MovieData> > adMovieData;
     static std::shared_ptr<MovieData> birthdayData;
     static std::shared_ptr<MovieData> weddingData;
     
@@ -39,9 +40,9 @@ public:
     
     static float soundSensitivity;
     static float soFarMaxVol;
+    static int FPS;
     
     static float movieWidth, movieHeight;
-    static bool bMainScreen;
     
     static string sendHost;
     static int sendPort;

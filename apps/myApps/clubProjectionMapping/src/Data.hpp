@@ -27,6 +27,7 @@ private:
     std::string file_path;
     MovieType movie_type;
     int endframe = 0;
+    float adTPH = 0;
     
 public:
     //settergetterのみなのでめんどくさいのでヘッダに実装書く奴
@@ -40,6 +41,9 @@ public:
         this->endframe = _end_frame;
         this->movie_type = MovieTypeSoundReactive;
     }
+    void setAdTimesParHoure(float tph){
+        this->adTPH = tph;
+    }
     
     //getter
     std::string getFilePath(){return this->file_path;}
@@ -47,6 +51,7 @@ public:
     MovieType getMovieType(){return this->movie_type;}
     bool isSoundReactive(){return endframe > 0;}
     int getEndFrame(){return endframe;}
+    int getAdTimesParHoure(){return adTPH;}
 };
 
 #endif /* Data_hpp */

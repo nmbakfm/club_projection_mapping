@@ -5,7 +5,7 @@
 void ofApp::setup(){
     ofSetBackgroundColor(0);
     ofSetVerticalSync(false);
-    ofSetFrameRate(30);
+    ofSetFrameRate(Settings::FPS);
     ofHideCursor();
     
     ofLogToFile(LOG_FILENAME);

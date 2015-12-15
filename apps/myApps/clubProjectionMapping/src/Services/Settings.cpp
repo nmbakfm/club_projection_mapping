@@ -13,13 +13,14 @@ ofPoint Settings::rectVertices[4];
 float Settings::soundSensitivity;
 float Settings::soFarMaxVol;
 float Settings::movieWidth, Settings::movieHeight;
-bool Settings::bMainScreen;
 int Settings::sendPort;
+int Settings::FPS = 30;
 string Settings::sendHost;
 int Settings::receivePort;
 shared_ptr<MovieData> Settings::weddingData;
 shared_ptr<MovieData> Settings::birthdayData;
 vector<shared_ptr<MovieData> > Settings::movieData;
+vector<shared_ptr<MovieData> > Settings::adMovieData;
 
 shared_ptr<ofTrueTypeFont> Settings::weddingFont;
 shared_ptr<ofTrueTypeFont> Settings::birthdayFont;
@@ -29,8 +30,6 @@ void Settings::load(const string file_name){
     xml.load(file_name);
     
     xml.pushTag("settings");
-    
-    bMainScreen = true;//(xml.getValue("mainScreenFlag", 1) != 0);
     
     string dir_name = xml.getValue("moviePath", "");
     soFarMaxVol = 0;
@@ -80,7 +79,10 @@ void Settings::load(const string file_name){
             movieData.push_back(p);
             
         }else if(type == "advertise"){
-            //zimaData = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeAd));
+            auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeAd));
+            float timesParHouer = (xml.getAttribute("movie","timesParHouer", 1, i));
+            p->setAdTimesParHoure(timesParHouer);
+            adMovieData.push_back(p);
             
         }else if(type == "birthday"){
             birthdayData = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeBirthDay));

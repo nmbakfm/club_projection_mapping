@@ -18,5 +18,6 @@
 class Util{
 public:
     static std::shared_ptr<BaseVideoPlayer> getPlayerFrom( std::shared_ptr<MovieData> d);
+    static string printDate();
 };
 #endif /* Util_hpp */

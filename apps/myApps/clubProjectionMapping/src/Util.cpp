@@ -7,7 +7,22 @@
 //
 
 #include "Util.hpp"
+#include <ctime>
 using namespace std;
+
+string Util::printDate(){
+  
+    // current date/time based on current system
+    time_t now = time(0);
+    
+    // convert now to string form
+    char* dt = ctime(&now);
+    
+    stringstream ss;
+    ss << "The local date and time is: " << dt ;
+    
+    return ss.str();
+}
 
 shared_ptr<BaseVideoPlayer> Util::getPlayerFrom(shared_ptr<MovieData> d){
     

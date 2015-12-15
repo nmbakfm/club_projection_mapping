@@ -21,13 +21,13 @@ class MovieManager {
     
     shared_ptr<BaseVideoPlayer>  currentPlayer; // 今の映像
     shared_ptr<BaseVideoPlayer>  nextPlayer; // 次に流す映像
-    
+    vector<shared_ptr<MovieData> > adDataSequence; // 広告の順番
     shared_ptr<TextAnimationManager> textAnimationManager = TextAnimationManager::getInstance();
     
     int currentIndex;
-    shared_ptr<MovieData> currentData;
     
-    string message;
+    int currentAdIndex;
+    int currentFrameSum;
     
     void switchMovie();
     int nextIndex();
@@ -35,13 +35,15 @@ class MovieManager {
     float movieWidth, movieHeight;
     float curVol;
     
-    ofxOscSender sender;
     ofxOscReceiver receiver;
     
     
 private:
     string getMessageContentFromOfOSCMessage(ofxOscMessage msg);
     ofPoint getCenterOf(shared_ptr<BaseVideoPlayer> p);
+    bool isAdTiming();
+    shared_ptr<MovieData> getNextAd();
+    
     
 public:
     MovieManager();

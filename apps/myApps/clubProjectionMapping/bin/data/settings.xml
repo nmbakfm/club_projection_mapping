@@ -2,14 +2,23 @@
     <moviePath>movie/</moviePath>
     <soundSensitivity>1</soundSensitivity>
     <movieSize width="1024" height="399" />
+    
     <movies>
-        <movie filename="10_1.mov"></movie>
-        
-        <movie filename="2_1.mov"  type="soundReactive" endFrame="300"></movie>
-        <movie filename="5_1.mov"  type="advertise" interval="300"></movie>
-        <movie filename="BD_1.mov" type="birthday"></movie>
-        <movie filename="WD_1.mov" type="wedding"></movie>
+        <movie filename="10_1.mov"/>
+        <movie filename="2_1.mov"/>
+        <!--
+        <movie filename="2_1.mov"  type="soundReactive" endFrame="300"/>
+         -->
+        <movie filename="5_1.mov"  type="advertise" timesParHouer="30"/>
+        <movie filename="BD_1.mov" type="birthday"/>
+        <movie filename="WD_1.mov" type="wedding"/>
+        <!--
+         <movie filename="WD_1.mov" type="countDown" beforeFrame="100", date="2015/1/14">
+         <popText before="00" text="10 Min before!!"/>
+         </movie>
+         -->
     </movies>
+    
     
     <calibration>
         <rect>
