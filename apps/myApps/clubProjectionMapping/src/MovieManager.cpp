@@ -77,9 +77,8 @@ void MovieManager::update(){
             ofLog(OF_LOG_NOTICE) << "receive wedding message: fileName=" << Settings::weddingData->getFilePath() << " name:" << message;
         }else if (msg.getAddress() == "/message1") {
             
-            this->textAnimationManager->clear();
             this->textAnimationManager->setNext(TextDrawer::Alloc())
-            ->setMessage(message)->setTiming(0,1500)
+            ->setMessage(message)->setTiming(0,Settings::FPS * 15)
             ->setPosition(getCenterOf(nextPlayer))
             ->setAnimator(FastDrop::Alloc());
             
@@ -87,9 +86,8 @@ void MovieManager::update(){
             
         }else if (msg.getAddress() == "/message2") {
             
-            this->textAnimationManager->clear();
             this->textAnimationManager->setNext(TextDrawer::Alloc())
-            ->setMessage(message)->setTiming(0,1500)
+            ->setMessage(message)->setTiming(0,Settings::FPS * 15)
             ->setPosition(getCenterOf(nextPlayer))
             ->setAnimator(ScaleIn::Alloc());
             
@@ -97,9 +95,8 @@ void MovieManager::update(){
             
         }else if (msg.getAddress() == "/message3") {
             
-            this->textAnimationManager->clear();
             this->textAnimationManager->setNext(TextDrawer::Alloc())
-            ->setMessage(message)->setTiming(0,1500)
+            ->setMessage(message)->setTiming(0,Settings::FPS * 15)
             ->setPosition(getCenterOf(nextPlayer))
             ->setAnimator(SpinIn::Alloc());
             

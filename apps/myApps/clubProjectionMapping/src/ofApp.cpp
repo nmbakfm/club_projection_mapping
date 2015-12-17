@@ -46,7 +46,7 @@ void ofApp::setup(){
     
     ofSetFullscreen(false);
     ofSetWindowPosition(0, 0);
-    //ofSetFullscreen(true);
+    ofSetFullscreen(true);
     //TODO:戻す
     
     
