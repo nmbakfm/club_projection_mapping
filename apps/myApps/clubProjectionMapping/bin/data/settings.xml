@@ -3,23 +3,30 @@
     <soundSensitivity>1</soundSensitivity>
     <movieSize width="1024" height="399" />
     
-    <movies>
-        <movie filename="10_1.mov"/>
-        <movie filename="2_1.mov"/>
-        <!--
-        <movie filename="2_1.mov"  type="soundReactive" endFrame="300"/>
-         -->
-        <movie filename="5_1.mov"  type="advertise" timesParHouer="30"/>
-        <movie filename="BD_1.mov" type="birthday"/>
-        <movie filename="WD_1.mov" type="wedding"/>
-        <!--
-         <movie filename="WD_1.mov" type="countDown" beforeFrame="100", date="2015/1/14">
-         <popText before="00" text="10 Min before!!"/>
-         </movie>
-         -->
+    <!--
+     <movies>
+     <movie filename="10_1.mov"/>
+     <movie filename="2_1.mov"/>
+     <movie filename="2_1.mov"  type="soundReactive" endFrame="300"/>
+     <movie filename="5_1.mov"  type="advertise" timesParHouer="30"/>
+     <movie filename="BD_1.mov" type="birthday"/>
+     <movie filename="WD_1.mov" type="wedding"/>
+     <movie filename="WD_1.mov" type="countDown" beforeFrame="100", date="2015/1/14">
+     <popText before="00" text="10 Min before!!"/>
+     </movie>
+     </movies>
+     -->
+    <movie filename="test.mov" endFrame="3000" ></movie>
     </movies>
-    
-    
+    <zimaMovies>
+        <movie filename="test.mov"></movie>
+    </zimaMovies>
+    <birthdayMovies>
+        <movie filename="test.mov"></movie>
+    </birthdayMovies>
+    <weddingMovies>
+        <movie filename="test.mov"></movie>
+    </weddingMovies>
     <calibration>
         <rect>
             <leftTop x="0" y="0" />

@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "SoundReactiveDataSetManager.hpp"
 
 
 //--------------------------------------------------------------
@@ -46,8 +47,20 @@ void ofApp::setup(){
     
     ofSetFullscreen(false);
     ofSetWindowPosition(0, 0);
-    ofSetFullscreen(true);
+    
+    //if(Settings::bMainScreen){
+    //    ofSetWindowPosition(0, 0);
+    //}else{
+    //    ofSetWindowPosition(1200, 0);
+    //}
+    //ofSetFullscreen(true);
     //TODO:戻す
+    
+    for(auto data : Settings::movieData){
+        if(data->getMovieType() == MovieType::MovieTypeSoundReactive){
+            SoundRactiveDataManager::addPath(data->getFilePath());
+        }
+    }
     
     
     int bufferSize = 256;
@@ -91,9 +104,11 @@ void ofApp::update(){
 #endif
     
     movieManager.setCurrendVolume(smoothedVol);
+    SoundRactiveDataManager::loadData();
     movieManager.update();
     
     fbo.begin();
+    ofBackground(0);
     movieManager.draw();
     fbo.end();
 }
@@ -103,6 +118,7 @@ void ofApp::draw(){
     fbo.getTexture().bind();
     mesh.draw();
     fbo.getTexture().unbind();
+    
     
 #if DEBUG
     stringstream ss;
