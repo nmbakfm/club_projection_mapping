@@ -5,21 +5,16 @@
     <soundSensitivity>1</soundSensitivity>
     <movieSize width="1024" height="399" />
     <movies>
-        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
-        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
-        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
-        <movie filename="sound reaction_3.mov" endFrame="30" ></movie>
-        <movie filename="2_1.mov"></movie>
-        <movie filename="10_1.mov"></movie>
+        <movie filename="test.mov" endFrame="3000" ></movie>
     </movies>
     <zimaMovies>
-        <movie filename="5_1.mov"></movie>
+        <movie filename="test.mov"></movie>
     </zimaMovies>
     <birthdayMovies>
-        <movie filename="BD_1.mov"></movie>
+        <movie filename="test.mov"></movie>
     </birthdayMovies>
     <weddingMovies>
-        <movie filename="WD_1.mov"></movie>
+        <movie filename="test.mov"></movie>
     </weddingMovies>
     <calibration>
         <rect>

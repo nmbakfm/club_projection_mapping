@@ -7,8 +7,11 @@
 //
 
 #include "SoundReactiveVideoPlayer.h"
+#include "SoundReactiveDataSetManager.hpp"
 
 #define FRAME_SMOOTHING_VAL 0
+
+float SoundReactivePlayer::soFarMax = 0;
 
 SoundReactivePlayer::SoundReactivePlayer(){
     frameCount = 0;
@@ -22,20 +25,28 @@ SoundReactivePlayer::SoundReactivePlayer(int _endFrameCount, float _soundSensiti
 }
 
 void SoundReactivePlayer::drawMovie(float _x, float _y, float _w, float _h){
-    draw(_x, _y, _w, _h);
+    //draw(_x, _y, _w, _h);
+    auto&& data = SoundRactiveDataManager::datas.at(getMoviePath());
+    if(data.size() == 0 )return;
+    if(currentFrame >= data.size())currentFrame = data.size() - 1;
+    data[currentFrame].draw(0, 0);
+    cout << data[currentFrame].getTextureData().textureID << endl;
 //    ofBackground(ofMap(curVol, 0, soundSensitivity, 0, 1, false)*255);
+    
 }
 
 void SoundReactivePlayer::updateFrame(){
-    //setPaused(true);
-    update();
-    float curVol = this->getCurrentVolume();
-    float target_pct = ofMap(curVol, 0, this->soundSensitivity, 0, 1, true);
     
-    cout << "targetFrame:" << target_pct << endl;
-    cout << "curVol:\t" << curVol << endl;
-    setPosition(target_pct);
+    float curVol = this->getCurrentVolume();
+    soFarMax = MAX(curVol, soFarMax);
+    float max = soFarMax;
+    float target_pct = ofMap(curVol, 0, max, 0, 1, true);
+    
+    target_pct *= getTotalNumFrames();
+    
+    currentFrame = target_pct;
     ++ frameCount;
+    soFarMax *= 0.995;
 }
 
 bool SoundReactivePlayer::isMovieDone(){

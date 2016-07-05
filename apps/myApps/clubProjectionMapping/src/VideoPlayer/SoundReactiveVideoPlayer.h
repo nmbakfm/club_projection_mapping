@@ -17,6 +17,7 @@ class SoundReactivePlayer : public BaseVideoPlayer {
     float soundSensitivity;
     int currentFrame;
     int endFrameCount;
+    static float soFarMax;
 public:
     SoundReactivePlayer();
     SoundReactivePlayer(int _endFrameCount, float _soundSensitivity);
