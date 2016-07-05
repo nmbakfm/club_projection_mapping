@@ -40,7 +40,6 @@ bool SoundRactiveDataManager::loadData(){
                 ofBackground(0);
                 p.draw(0, 0, p.getWidth(), p.getHeight());
                 fbo.end();
-                
                 d.second.push_back(fbo.getTexture());
             }
             p.stop();

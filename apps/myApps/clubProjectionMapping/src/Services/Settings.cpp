@@ -70,16 +70,16 @@ void Settings::load(const string file_name){
         //put movie according to type
         int testSR = (xml.getAttribute("movie","endFrame", 0, i));
         string type = (xml.getAttribute("movie","type","normal",i));
-        if(type == "normal"){
-            auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeNormal));
-            movieData.push_back(p);
-            
-        }else if(type == "soundReactive" || testSR != 0){
+        
+        if(type == "soundReactive" || testSR != 0){
             auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeSoundReactive));
             int endframe = (xml.getAttribute("movie","endFrame", 0, i));
             p->setEndFrameForSoundReactPlayer(endframe);
             movieData.push_back(p);
             
+        }else if(type == "normal"){
+            auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeNormal));
+            movieData.push_back(p);
         }else if(type == "advertise"){
             auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeAd));
             float timesParHouer = (xml.getAttribute("movie","timesParHouer", 1, i));

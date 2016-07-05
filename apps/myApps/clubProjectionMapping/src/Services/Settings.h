@@ -13,6 +13,7 @@
 #include "Constant.h"
 #include "ofxXmlSettings.h"
 #include "Data.hpp"
+#include "CountDownManager.hpp"
 
 class MovieData;
 
