@@ -52,7 +52,7 @@ void ofApp::setup(){
     }else{
         ofSetWindowPosition(1200, 0);
     }
-    //ofSetFullscreen(true);
+    ofSetFullscreen(true);
     //TODO:戻す
     
     for(auto data : Settings::movieData){

@@ -5,6 +5,10 @@
     <soundSensitivity>1</soundSensitivity>
     <movieSize width="1024" height="399" />
     <movies>
+        <movie filename="test.mov" ></movie>
+        <movie filename="test.mov" ></movie>
+        <movie filename="test.mov" ></movie>
+        <movie filename="test.mov" ></movie>
         <movie filename="test.mov" endFrame="3000" ></movie>
     </movies>
     <zimaMovies>
