@@ -45,7 +45,6 @@ void ofApp::setup(){
     fbo.setUseTexture(true);
     
     
-    ofSetFullscreen(false);
     ofSetWindowPosition(0, 0);
     
     //if(Settings::bMainScreen){
@@ -54,6 +53,7 @@ void ofApp::setup(){
     //    ofSetWindowPosition(1200, 0);
     //}
     //ofSetFullscreen(true);
+    ofSetFullscreen(true);
     //TODO:戻す
     
     for(auto data : Settings::movieData){
