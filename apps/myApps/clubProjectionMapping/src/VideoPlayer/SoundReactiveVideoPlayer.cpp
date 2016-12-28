@@ -29,7 +29,7 @@ void SoundReactivePlayer::drawMovie(float _x, float _y, float _w, float _h){
     auto&& data = SoundRactiveDataManager::datas.at(getMoviePath());
     if(data.size() == 0 )return;
     if(currentFrame >= data.size())currentFrame = data.size() - 1;
-    data[currentFrame].draw(0, 0);
+    data[currentFrame].draw(0, 0, 1024, 394);
     //cout << data[currentFrame].getTextureData().textureID << endl;
 //    ofBackground(ofMap(curVol, 0, soundSensitivity, 0, 1, false)*255);
     
