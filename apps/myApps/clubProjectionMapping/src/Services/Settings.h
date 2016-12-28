@@ -39,6 +39,9 @@ public:
     static std::shared_ptr<ofTrueTypeFont> birthdayFont;
     static std::shared_ptr<ofTrueTypeFont> normalFont;
     
+    static CountDownManager<MovieData> movieCountDownManager;
+    static CountDownManager<string> textCountManager;
+    
     static float soundSensitivity;
     static float soFarMaxVol;
     static int FPS;

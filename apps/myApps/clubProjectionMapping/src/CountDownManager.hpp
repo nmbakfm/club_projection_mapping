@@ -40,12 +40,13 @@ public:
     }
     
     res_p checkTiming(){
+        time_t now = time(NULL);
         for(int i = 0; i < timers.size(); i ++){
-            if(timers.first().isTiming()){
-                return timers.second();
+            if(timers[i].first.isTiming(now)){
+                return timers[i].second;
             }
         }
-        return res_p(NULL);
+        return res_p();
     }
 
 };

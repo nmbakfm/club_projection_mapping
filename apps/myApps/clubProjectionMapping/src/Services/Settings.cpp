@@ -26,7 +26,47 @@ shared_ptr<ofTrueTypeFont> Settings::weddingFont;
 shared_ptr<ofTrueTypeFont> Settings::birthdayFont;
 shared_ptr<ofTrueTypeFont> Settings::normalFont;
 
+CountDownManager<string> Settings::textCountManager;
+CountDownManager<MovieData> Settings::movieCountDownManager;
+
+
+
+time_t makeTime (
+                  int year,
+                  int month,
+                  int day,
+                  int hour,
+                  int min,
+                  int sec
+) {
+    struct tm timeinfo;
+
+    timeinfo.tm_year = year - 1900;
+    timeinfo.tm_mon = month - 1;
+    timeinfo.tm_mday = day;
+    timeinfo.tm_hour = hour;
+    timeinfo.tm_min = min;
+    timeinfo.tm_sec = sec;
+    timeinfo.tm_isdst = 0;
+    return mktime ( &timeinfo );
+}
+
+time_t parseTime(ofxXmlSettings& xml, string key , int index){
+    int year =   xml.getAttribute(key, "year",   0, index);
+    int month =  xml.getAttribute(key, "month",  0, index);
+    int day =    xml.getAttribute(key, "day",    0, index);
+    int hour =   xml.getAttribute(key, "hour",   0, index);
+    int minute = xml.getAttribute(key, "minute", 0, index);
+    int second = xml.getAttribute(key, "second", 0, index);
+    
+    return makeTime(year, month, day, hour, minute, second);
+}
+
 void Settings::load(const string file_name){
+  
+    time_t unixTime = time(NULL);
+    auto test = localtime(&unixTime);
+    
     xml.load(file_name);
     
     xml.pushTag("settings");
@@ -77,7 +117,10 @@ void Settings::load(const string file_name){
             p->setEndFrameForSoundReactPlayer(endframe);
             movieData.push_back(p);
             
-        }else if(type == "normal"){
+        } else if(type == "countDown" || testSR != 0){
+           
+            
+        } else if(type == "normal"){
             auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeNormal));
             movieData.push_back(p);
         }else if(type == "advertise"){
@@ -95,6 +138,28 @@ void Settings::load(const string file_name){
         
     }
     xml.popTag(); // movies
+    
+    xml.pushTag("countDown");
+    
+    const int countDownMovieNum = xml.getNumTags("movie");
+    for(int i = 0; i < countDownMovieNum; i ++) {
+        string filepath= (dir_name + xml.getAttribute("movie","filename","",i));
+        auto t = parseTime(xml, "movie", i);
+        cout << "movie : " << ctime(&t);
+        auto p = shared_ptr<MovieData>(new MovieData(filepath, MovieTypeNormal));
+        movieCountDownManager.setTimer(t, p);
+    }
+    
+    const int countDownTextNum = xml.getNumTags("text");
+    for(int i = 0; i < countDownTextNum; i ++) {
+        const string content = xml.getValue("text", "no-text", i);
+        auto t = parseTime(xml, "text", i);
+        cout << "text : " <<  ctime(&t);
+        textCountManager.setTimer(t, shared_ptr<string>(new string(content)));
+    }
+    
+    xml.popTag();
+    
     soundSensitivity = xml.getValue("soundSensitivity", 1.0);
     
     movieWidth = xml.getAttribute("movieSize", "width", 0.0);
@@ -126,3 +191,4 @@ void Settings::load(const string file_name){
 ofPoint Settings::loadPoint(const string tagPath){
     return ofPoint(xml.getAttribute(tagPath, "x", 0.0), xml.getAttribute(tagPath, "y", 0.0));
 }
+

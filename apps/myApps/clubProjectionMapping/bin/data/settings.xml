@@ -13,17 +13,21 @@
          <movie filename="WD_1.mov" type="wedding"/>
          <movie filename="WD_1.mov" type="countDown" beforeFrame="100", date="2015/1/14">
          <popText before="00" text="10 Min before!!"/>
+             <movie filename="test.mov" endFrame="3000" ></movie>
          </movie>
          -->
-        <movie filename="test.mov" endFrame="3000" ></movie>
-        <movie filename="test.mov" endFrame="3000" ></movie>
-        <movie filename="test.mov" endFrame="3000" ></movie>
-        <movie filename="test.mov" ></movie>
-        <movie filename="test.mov" ></movie>
-        <movie filename="test.mov" ></movie>
-        <movie filename="test.mov" ></movie>
-        <movie filename="test.mov" endFrame="3000" ></movie>
+        <movie filename="test.mov" />
+        <movie filename="test.mov" />
+        <movie filename="test.mov" />
+        <movie filename="test.mov" />
+        
     </movies>
+    
+    <countDown>
+        <movie year=2016 month=12 day=28 hour=3 minute=25 second=57 filename="countdown.mov"/>
+        <text year=2016 month=12 day=27 hour=23 minute=36 second=10> 15 min before </text>
+    </countDown>
+    
     <zimaMovies>
         <movie filename="test.mov"></movie>
     </zimaMovies>

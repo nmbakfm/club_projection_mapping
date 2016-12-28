@@ -110,6 +110,21 @@ void MovieManager::update(){
     }
     
     
+    auto message = Settings::textCountManager.checkTiming();
+    if(message){
+        this->textAnimationManager
+        ->setNext(TextDrawer::Alloc())
+        ->setMessage(*message)
+        ->setTiming(0,Settings::FPS * 15)
+        ->setPosition(getCenterOf(nextPlayer))
+        ->setAnimator(ScaleIn::Alloc());
+    }
+    
+    auto movie_data = Settings::movieCountDownManager.checkTiming();
+    if (movie_data) {
+        nextPlayer = Util::getPlayerFrom(movie_data);
+        switchMovie();
+    }
     
     //3: swap
     if(currentPlayer->isMovieDone()){

@@ -10,7 +10,7 @@
 
 Timer::Timer(time_t ti) {
     _timing = ti;
-    if (difftime(ti, time(0)) < 0)
+    if (difftime(ti, time(NULL)) > 0)
         _done = false;
     else
         _done = true;
@@ -19,7 +19,12 @@ Timer::Timer(time_t ti) {
 bool Timer::isTiming(time_t t){
     if( _done )return false;
     
-    if (difftime(_timing, t) > 0){
+    auto diff =  difftime(_timing, t);
+
+    // cout << ctime(&_timing) << " <-> " << ctime(&t) << endl;
+    
+    if (difftime(_timing, t) <= 0){
+        cout << "====" << ctime(&t) << "=====" << endl;
         _done = true;
         return true;
     }
